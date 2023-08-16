@@ -3,4 +3,5 @@ This project is a warmup for web. You will need to realize, a small, instagram-l
 
 ## References
 
-- [Superposition d'images](https://openclassrooms.com/forum/sujet/bd-transparence-png-et-superposition-d-images)
+- [Image superposition](https://openclassrooms.com/forum/sujet/bd-transparence-png-et-superposition-d-images)
+- [FileField](https://wtforms.readthedocs.io/en/2.3.x/fields/)
