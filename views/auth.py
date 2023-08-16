@@ -8,6 +8,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 auth_blueprint = Blueprint('auth', __name__)
 
+@auth_blueprint.route("/", methods=['GET', 'POST'])
+def shit():
+    return 'cey buguey'
+
 @auth_blueprint.route("/login", methods=['GET', 'POST'])
 def login():
     return 'lol'

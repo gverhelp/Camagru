@@ -28,10 +28,10 @@ app.register_blueprint(auth_blueprint)
 """
 Creation of the Databse if it's doesn´t exist
 """ 
-try:
-    os.makedirs(basedir + 'db')
-except OSError:
-    pass
+# try:
+#     os.makedirs(basedir + 'db')
+# except OSError:
+#     pass
 
 with app.app_context():
     db.create_all()
