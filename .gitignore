@@ -284,4 +284,4 @@ poetry.toml
 pyrightconfig.json
 
 #Database
-*.db
+db/*
