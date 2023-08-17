@@ -1,0 +1,23 @@
+{% import "macros/macro.html" as macro %}
+
+<html>
+    <head>
+        <title>Instgram</title>
+        <link rel="stylesheet" href="static/css/header.css"/>
+    </head>
+    <body>
+        <header>
+            <!-- Header content goes here -->
+            {{ macro.header(current_user) }}
+        </header>
+        <main>
+            <!-- Main content of the page goes here -->
+            {% block main %} {% endblock %}
+        </main>
+        <footer>
+            <!-- Footer content goes here -->
+            {% block footer %} {% endblock %}
+        </footer>
+    </body>
+    <script src="static/js/script.js"></script>
+</html>

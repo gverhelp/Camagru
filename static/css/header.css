@@ -1,0 +1,71 @@
+body { 
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header with a grey background and some padding */
+.header {
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  }
+
+.header-right {
+  float: right;
+}
+
+.header-center {
+  display: flex;
+  justify-content: center; /* Horizontally center content */
+  align-items: center; /* Vertically center content */
+}
+
+.header-left {
+  float: left;
+}
+
+@media screen and (max-width: 500px) {
+  .header-right {
+    float: none;
+  }
+}
+
+
+
+
+
+.btn-container {
+    position: relative;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.signup {
+    background-color: rgb(206, 51, 120);
+    color: white;
+    position: absolute; /* Position the second button absolutely */
+    left: -50px; /* Adjust the value to overlap with the first button */
+    z-index: 2; /* Give it a higher z-index to place it above the first button */
+}
+
+.signup:hover {
+    background-color: rgb(117, 37, 120);
+}
+
+.login {
+    background-color: rgb(211, 73, 87);
+    color: white;
+    position: relative; /* Default position for first button */
+    z-index: 1; /* Give it a higher z-index to make it visible above */
+    width: 105px;
+    padding-left: 45px;
+}
+
+.login:hover {
+    background-color: rgb(218, 88, 67);
+}
