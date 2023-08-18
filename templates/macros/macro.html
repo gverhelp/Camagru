@@ -1,15 +1,20 @@
 {% macro header(current_user) %}
 
 <div class="header">
-    <div class="header-left">
-        <button>Test</button>
-    </div>
-    <div class="header-right">
-        <div class="btn-container">
-            <button class="btn signup">Sign Up</button>
-            <button class="btn login">Log in</button>
+    <a class="logo">
+        <img class="image" src="static/img/instgranm.png">
+    </a>
+    <a class="search">
+        <div class="searchbar" onmouseover="changeFilter(1)" onmouseout="changeFilter(0)">
+            <input class="search-input" type="text" placeholder="What are you looking for?">
+            <button class="submit search-btn">
+                <img id="google" class="search-icon" src="static/img/searchIcon.svg" width="25px">
+            </button>
         </div>
-    </div>
+    </a>
+    <a class="auth">
+        <img src="static/img/instgranm.png" width="50px" height="50px" style="float: right;">
+    </a>
 </div>
 
 {% endmacro %}

@@ -7,9 +7,6 @@ body {
   display: flex;
   background-color: #FCFCFB;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-  animation-name: appear;
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
 }
 
 .header a.logo {
@@ -24,15 +21,6 @@ body {
   flex: 100%;
 }
 
-.image {
-  margin-left: 10px;
-  width: 50px;
-  height: 50px;
-  /* animation-name: appear;
-  animation-duration: 1s;
-  animation-fill-mode: forwards; */
-}
-
 .searchbar {
   background-color: rgb(217, 217, 217);
   border-radius: 20px;
@@ -40,27 +28,22 @@ body {
   width: 100%;
   height: 50%;
   margin-top: 6px;
-  border: 1px solid rgba(0, 0, 0, 0);
 }
 
-.searchbar:hover {
-  border: 1px solid rgb(224, 3, 240);
-}
-
-.search-input {
+.searchbar input[type=text] {
   background-color: rgb(217, 217, 217);
   width: 90%;
   height: 100%;
   float: left;
   border: none;
-  padding-left: 20px;
+  text-align: center;
 }
 
-.search-input:focus {
-  outline: none;
+.searchbar input[type=text]:focus {
+  border-color: rgb(244, 5, 5);
 }
 
-.search-btn {
+.searchbar button {
   width: 10%;
   cursor: pointer;
   height: 100%;
@@ -69,15 +52,4 @@ body {
   border-left: solid;
   border-left-color: rgb(184, 183, 183);
   background-color: rgb(217, 217, 217);
-}
-
-@media screen and (max-width: 600px) {
-  .searchbar {
-    display: none;
-  }
-}
-
-@keyframes appear {
-  from {opacity: 0;}
-  to {opacity: 1;}
 }
