@@ -285,3 +285,6 @@ pyrightconfig.json
 
 #Database
 db/*
+
+#MacOS
+.DS_Store
