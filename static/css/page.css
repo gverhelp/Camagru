@@ -1,5 +1,8 @@
 .home {
     display: flex;
+    position: relative;
+    height: 100%;
+    /* height: calc(100% - 66px); ca pue faut changer */
 }
 
 .home a.left {
@@ -12,6 +15,8 @@
     width: 100%;
     align-items: center;
     flex-direction: column;
+    margin-top: 66px;
+    overflow-y: scroll;
     border-right: 1px solid var(--home-border);
     border-left: 1px solid var(--home-border);
 }
@@ -29,7 +34,7 @@
 }
 
 .post:hover {
-    background-color: var(--home-bg);
+    background-color: rgb(240, 240, 240);
     border: 1px solid rgba(210, 210, 210, 0);
 }
 
@@ -48,7 +53,32 @@
 }
 
 .post-footer {
-    height: 80px;
+    display: flex;
+    height: 55px;
+    padding: 5px;
+    align-items: center;
+}
+
+.footer-btn {
+    display: flex;
+    border-radius: 20px;
+    height: 35px;
+    background-color: rgb(230, 230, 230);
+    border: none;
+    margin-left: 15px;
+    align-items: center;
+}
+
+.footer-btn-ctn {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    margin-left: 7px;
+    margin-right: 10px;
+}
+
+.footer-btn:hover {
+    background-color: rgb(220, 220, 220);
 }
 
 .pictures {

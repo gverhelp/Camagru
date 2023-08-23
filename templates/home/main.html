@@ -6,6 +6,7 @@
     <a class="left">
     </a>
     <a class="center">
+        {% for i in range(5) %}
         <div class="post">
             <div class="post-header">
                 <div class="avatar">
@@ -17,9 +18,22 @@
                 <img class="pictures" src="static/img/lol2.JPG">
             </div>
             <div class="post-footer">
+                <button class="footer-btn" onclick="changeLikeButton()">
+                    <div class="footer-btn-ctn">
+                        <img src="static/img/heart.png" id="heart" alt="like" style="width: auto; height: 80%">
+                        1300
+                    </div>
+                </button>
+                <button class="footer-btn">
+                    <div class="footer-btn-ctn">
+                        <img src="static/img/comment2.png" alt="comments" style="width: auto; height: 80%">
+                        1340
+                    </div>
+                </button>
             </div>
         </div>
-        <div class="post">
+        {% endfor %}
+        <!-- <div class="post">
             <div class="post-header">
                 <div class="avatar">
                     <img src="static/img/pepe.jpeg" alt="Avatar" style="width: 100%; height: auto;">
@@ -30,7 +44,7 @@
             </div>
             <div class="post-footer">
             </div>
-        </div>
+        </div> -->
     </a>
     <a class="right">
     </a>

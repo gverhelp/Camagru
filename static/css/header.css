@@ -8,45 +8,51 @@ body {
   align-items: center;
   background-color: rgb(252, 252, 251);
   border-bottom: 1px solid rgb(210, 210, 210);
-  /* box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1); */
+  height: 65px;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
 }
 
 .header a.logo {
   flex: 100%;
+  height: 100%;
+}
+
+.header a.search {
+  height: 100%;
+  flex: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.header a.auth {
+  height: 100%;
+  display: flex;
+  flex: 100%;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.image {
+  margin-left: 10px;
+  width: auto;
+  height: 100%;
   animation-name: appear;
   animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
-.header a.search {
-  flex: 100%;
-  align-items: center;
-}
-
-.header a.auth {
-  flex: 100%;
-}
-
-.image {
-  margin-left: 10px;
-  width: 50px;
-  height: 50px;
-  /* animation-name: appear;
-  animation-duration: 1s;
-  animation-fill-mode: forwards; */
-}
-
 .search-box {
-  padding: 6px;
   display: flex;
   flex: 1;
-  height: 35px;
+  height: 70%;
 }
 
 .searchbar {
   background-color: rgb(230, 230, 230);
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
   display: flex;
   flex: 1;
   flex-direction: row;
@@ -64,6 +70,7 @@ body {
   display: flex;
   flex: 1;
   border: none;
+  font-size: medium;
 }
 
 .search-input:focus {
@@ -71,8 +78,8 @@ body {
 }
 
 .search-btn {
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
   cursor: pointer;
   width: 50px;
   border-right: 1px solid rgb(170, 170, 170);
@@ -86,6 +93,24 @@ body {
   background-color: rgb(210, 210, 210);
 }
 
+.sign-btn {
+  height: 70%;
+  width: 100px;
+  border: none;
+  font-size: medium;
+  background-color: rgb(230, 230, 230);
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.sign-btn:hover {
+  background: linear-gradient(45deg, #daae51 0%, #d53369 100%);
+  background-size: 400% 400%;
+  animation-name: ani-btn;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
 @media screen and (max-width: 750px) {
   .search-box {
     display: none;
@@ -95,4 +120,16 @@ body {
 @keyframes appear {
   from {opacity: 0;}
   to {opacity: 1;}
+}
+
+@keyframes ani-btn {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+  /* 100% {
+    background-position: 0% 50%;
+  } */
 }
