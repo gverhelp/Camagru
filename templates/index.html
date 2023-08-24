@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="static/css/modal.css"/>
     </head>
     <body>
-        <div class="modal"></div>
+        {% include 'auth/signin.html' %}
         <header>
             <!-- Header content goes here -->
             {{ macro.header(current_user) }}
@@ -23,5 +23,6 @@
             {% block footer %} {% endblock %}
         </footer>
     </body>
+
     <script src="static/js/script.js"></script>
 </html>

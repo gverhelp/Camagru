@@ -1,12 +1,34 @@
 .modal {
     display: none;
-    /* display: flex; */
     z-index: 2;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     position: fixed;
+    justify-content: center;
+    align-items: center;
     /* overflow: hidden; */
     background-color: rgba(0, 0, 0, 0.6);
+}
+
+.signin {
+    height: 640px;
+    width: 400px;
+    background-color: rgb(252, 252, 251);
+    border-radius: 10px;
+    animation: animate-zoom 0.3s;
+}
+
+.signup {
+    height: 640px;
+    width: 400px;
+    background-color: rgb(252, 252, 251);
+    border-radius: 10px;
+    animation: animate-zoom 0.3s;
+}
+
+@keyframes animate-zoom {
+    from {transform: scale(0)}
+    to {transform: scale(1)}
 }

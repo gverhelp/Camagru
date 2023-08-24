@@ -1,3 +1,9 @@
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                               Home                               ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
 .home {
     display: flex;
     position: relative;
@@ -7,7 +13,7 @@
 
 .home a.left {
     width: 600px;
-    background-color: var(--home-bg);
+    background-color: rgb(230, 230, 230);
 }
 
 .home a.center {
@@ -23,8 +29,14 @@
 
 .home a.right {
     width: 600px;
-    background-color: var(--home-bg);
+    background-color: rgb(230, 230, 230);
 }
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                               Posts                              ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
 .post {
     width: 700px;
@@ -47,7 +59,7 @@
 
 .post-body {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     margin-left: 20px;
     margin-right: 20px;
 }
@@ -59,7 +71,7 @@
     align-items: center;
 }
 
-.footer-btn {
+.post-footer-btn {
     display: flex;
     border-radius: 20px;
     height: 35px;
@@ -69,7 +81,7 @@
     align-items: center;
 }
 
-.footer-btn-ctn {
+.post-footer-btn-ctn {
     display: flex;
     height: 100%;
     align-items: center;
@@ -77,22 +89,28 @@
     margin-right: 10px;
 }
 
-.footer-btn:hover {
+.post-footer-btn:hover {
     background-color: rgb(220, 220, 220);
 }
 
-.pictures {
+.post-pictures {
     width: 100%;
     height: auto;
     border-radius: 20px;
 }
 
-.avatar {
+.post-avatar {
     border-radius: 50%;
     height: 60px;
     width: 60px;
     overflow: hidden;
 }
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                       Page / Keyframes                           ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
 @media screen and (max-width: 1000px) {
     .home a.left {

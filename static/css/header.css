@@ -3,6 +3,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                              Header                              ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
 .header {
   display: flex;
   align-items: center;
@@ -43,6 +49,12 @@ body {
   animation-fill-mode: forwards;
 }
 
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                          Search bar                              ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
 .search-box {
   display: flex;
   flex: 1;
@@ -57,12 +69,11 @@ body {
   flex: 1;
   flex-direction: row;
   position: relative;
-  padding-left: 20px;
-  border: 1px solid rgb(170, 170, 170);
+  border: 1px solid rgba(170, 170, 170, 0);
 }
 
 .searchbar:hover {
-  border: 1px solid rgb(183, 15, 131);
+  border: 1px solid rgb(213, 51, 105);
 }
 
 .search-input {
@@ -71,6 +82,7 @@ body {
   flex: 1;
   border: none;
   font-size: medium;
+  margin-left: 20px;
 }
 
 .search-input:focus {
@@ -82,10 +94,7 @@ body {
   border-bottom-right-radius: 30px;
   cursor: pointer;
   width: 50px;
-  border-right: 1px solid rgb(170, 170, 170);
-  border-top: 1px solid rgb(170, 170, 170);
-  border-bottom: 1px solid rgb(170, 170, 170);
-  border-left: none;
+  border: none;
   background-color: rgb(220, 220, 220);
 }
 
@@ -93,7 +102,13 @@ body {
   background-color: rgb(210, 210, 210);
 }
 
-.sign-btn {
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                         Sign buttons                             ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
+.signup-btn {
   height: 70%;
   width: 100px;
   border: none;
@@ -103,13 +118,34 @@ body {
   margin-right: 10px;
 }
 
-.sign-btn:hover {
+.signup-btn:hover {
+  border: 1px solid rgb(213, 51, 105);
+}
+
+.signin-btn {
+  height: 70%;
+  width: 100px;
+  border: none;
+  font-size: medium;
   background: linear-gradient(45deg, #daae51 0%, #d53369 100%);
+  /* background-size: 400% 400%; */
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.signin-btn:hover {
+  /* background: linear-gradient(45deg, #daae51 0%, #d53369 100%); */
   background-size: 400% 400%;
   animation-name: ani-btn;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                       Page / Keyframes                           ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
 @media screen and (max-width: 750px) {
   .search-box {
