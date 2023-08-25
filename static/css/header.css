@@ -85,7 +85,7 @@ body {
   margin-left: 20px;
 }
 
-.search-input:focus {
+.search-input:focus {     /* TO DO : change border color while focus */
   outline: none;
 }
 

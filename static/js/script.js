@@ -1,5 +1,6 @@
 var like = 0;
 var modal = 0;
+var ctn = 0;
 
 function changeFilter(hover) {
     if (hover == 1) {
@@ -19,6 +20,15 @@ function changeLikeButton() {
 }
 
 function login(type) {
+    const signin = document.getElementById('signin');
+    const signup = document.getElementById('signup');
+
+    signin.addEventListener("click", (event) => {ctn = 1;})
+    signup.addEventListener("click", (event) => {ctn = 1;})
+    if (ctn == 1) {
+        ctn = 0;
+        return;
+    }
     if (modal == 0) {
         document.getElementById('modal').style.display = 'flex';
         if (type == 'signin') {

@@ -19,6 +19,7 @@
 .home a.center {
     display: flex;
     width: 100%;
+    min-width: 800px;
     align-items: center;
     flex-direction: column;
     margin-top: 66px;
@@ -118,7 +119,7 @@
     }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 900px) {
     .home a.right {
       display: none;
     }
