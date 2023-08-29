@@ -1,6 +1,7 @@
 var like = 0;
-var modal = 0;
-var ctn = 0;
+var modalSign = 0;
+var activeCtn = 0;
+var modalPost = 0;
 
 function changeFilter(hover) {
     if (hover == 1) {
@@ -19,18 +20,18 @@ function changeLikeButton() {
     like = !like;
 }
 
-function login(type) {
+function modalSignDisplay(type) {
     const signin = document.getElementById('signin');
     const signup = document.getElementById('signup');
 
-    signin.addEventListener("click", (event) => {ctn = 1;})
-    signup.addEventListener("click", (event) => {ctn = 1;})
-    if (ctn == 1) {
-        ctn = 0;
+    signin.addEventListener("click", (event) => {activeCtn = 1;})
+    signup.addEventListener("click", (event) => {activeCtn = 1;})
+    if (activeCtn == 1) {
+        activeCtn = 0;
         return;
     }
-    if (modal == 0) {
-        document.getElementById('modal').style.display = 'flex';
+    if (modalSign == 0) {
+        document.getElementById('modal-sign').style.display = 'flex';
         if (type == 'signin') {
             document.getElementById('signin').hidden = false;
         }
@@ -38,9 +39,25 @@ function login(type) {
             document.getElementById('signup').hidden = false;
         }
     } else {
-        document.getElementById('modal').style.display = 'none';
+        document.getElementById('modal-sign').style.display = 'none';
         document.getElementById('signin').hidden = true;
         document.getElementById('signup').hidden = true;
     }
-    modal = !modal;
+    modalSign = !modalSign;
+}
+
+function modalPostDisplay() {
+    const createPostCtn = document.getElementById('createPostCtn');
+
+    createPostCtn.addEventListener("click", (event) => {activeCtn = 1;})
+    if (activeCtn == 1) {
+        activeCtn = 0;
+        return;
+    }
+    if (modalPost == 0) {
+        document.getElementById('modal-post').style.display = 'flex';
+    } else {
+        document.getElementById('modal-post').style.display = 'none';
+    }
+    modalPost = !modalPost;
 }

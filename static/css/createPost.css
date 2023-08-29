@@ -1,0 +1,8 @@
+.createPost-ctn {
+    height: 800px;
+    width: 900px;
+    padding: 5px;
+    border-radius: 13px;
+    background-color: rgb(255, 255, 255);
+    animation: animate-zoom 0.3s
+}

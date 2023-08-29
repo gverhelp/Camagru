@@ -14,6 +14,12 @@
 .home a.left {
     width: 600px;
     background-color: rgb(230, 230, 230);
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 300px;
+    margin-top: 66px;
 }
 
 .home a.center {
@@ -24,13 +30,16 @@
     flex-direction: column;
     margin-top: 66px;
     overflow-y: scroll;
-    border-right: 1px solid var(--home-border);
-    border-left: 1px solid var(--home-border);
+    border-right: 1px solid rgb(210, 210, 210);
+    border-left: 1px solid rgb(210, 210, 210);
 }
 
 .home a.right {
     width: 600px;
     background-color: rgb(230, 230, 230);
+
+    min-width: 300px;
+    margin-top: 66px;
 }
 
 /*##########################################################################*/
@@ -42,7 +51,7 @@
 .post {
     width: 700px;
     border-radius: 20px;
-    border: 1px solid var(--home-border);
+    border: 1px solid rgb(210, 210, 210);
     margin: 30px;
 }
 
@@ -106,6 +115,55 @@
     width: 60px;
     overflow: hidden;
 }
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                         Left container                           ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
+.left-ctn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 250px;
+    height: 300px;
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(210, 210, 210);
+    margin-top: 30px;
+}
+
+.left-btn {
+    height: 40px;
+    width: 200px;
+    border: none;
+    font-size: medium;
+    background-color: rgb(230, 230, 230);
+    border-radius: 10px;
+    /* margin: 15px; */
+}
+
+.createPost-btn {
+    height: 40px;
+    width: 200px;
+    border: none;
+    font-size: medium;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #daae51 0%, #d53369 100%);
+}
+
+.createPost-btn:hover {
+    background-size: 400% 400%;
+    animation-name: ani-btn;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+  }
+
+.left-btn:hover {
+    border: 1px solid rgb(213, 51, 105);
+  }
 
 /*##########################################################################*/
 /*##########################################################################*/

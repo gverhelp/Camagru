@@ -3,13 +3,15 @@
 <html>
     <head>
         <title>Instgram</title>
+        <link rel="icon" type="image/png" href="static/img/instgram.png">
         <link rel="stylesheet" href="static/css/header.css"/>
         <link rel="stylesheet" href="static/css/page.css"/>
-        <link rel="stylesheet" href="static/css/variables.css"/>
         <link rel="stylesheet" href="static/css/modal.css"/>
+        <link rel="stylesheet" href="static/css/createPost.css"/>
     </head>
     <body>
-        {% include 'auth/signin.html' %}
+        {% include 'auth/sign.html' %}
+        {% include 'home/newPost.html' %}
         <header>
             <!-- Header content goes here -->
             {{ macro.header(current_user) }}
