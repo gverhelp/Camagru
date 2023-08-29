@@ -31,7 +31,7 @@ function modalSignDisplay(type) {
         return;
     }
     if (modalSign == 0) {
-        document.getElementById('modal-sign').style.display = 'flex';
+        document.getElementById('modal').style.display = 'flex';
         if (type == 'signin') {
             document.getElementById('signin').hidden = false;
         }
@@ -39,7 +39,7 @@ function modalSignDisplay(type) {
             document.getElementById('signup').hidden = false;
         }
     } else {
-        document.getElementById('modal-sign').style.display = 'none';
+        document.getElementById('modal').style.display = 'none';
         document.getElementById('signin').hidden = true;
         document.getElementById('signup').hidden = true;
     }
@@ -55,9 +55,30 @@ function modalPostDisplay() {
         return;
     }
     if (modalPost == 0) {
-        document.getElementById('modal-post').style.display = 'flex';
+        document.getElementById('modal-left').style.display = 'flex';
     } else {
-        document.getElementById('modal-post').style.display = 'none';
+        document.getElementById('modal-left').style.display = 'none';
     }
     modalPost = !modalPost;
+}
+
+function changeLeftIcon(icon) {
+    // const modal = document.getElementById('modal-left');
+
+    if (icon == 'createIcon') {
+        document.getElementById('createIcon').setAttribute("src", "static/img/post-fill.png");
+    } else if (icon == 'userIcon') {
+        document.getElementById('userIcon').setAttribute("src", "static/img/user-fill.png"); 
+    } else if (icon == 'notificationIcon') {
+        document.getElementById('notificationIcon').setAttribute("src", "static/img/notification-fill.png"); 
+    } else if (icon == 'settingsIcon') {
+        document.getElementById('settingsIcon').setAttribute("src", "static/img/setting-fill.png"); 
+    }
+    // modal.addEventListener("click", (event) => {
+    //     console.log('lol');
+    //     document.getElementById('createIcon').setAttribute("src", "static/img/post-empty.png");
+    //     document.getElementById('userIcon').setAttribute("src", "static/img/user-empty.png");
+    //     document.getElementById('notificationIcon').setAttribute("src", "static/img/notification-empty.png");
+    //     document.getElementById('settingsIcon').setAttribute("src", "static/img/setting-empty.png"); 
+    // })
 }

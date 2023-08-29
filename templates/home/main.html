@@ -5,10 +5,22 @@
 <div class="home">
     <a class="left">
         <div class="left-ctn">
-            <button class="createPost-btn" onclick="modalPostDisplay()"> Create a post </button>
-            <button class="left-btn"> Profile </button>
-            <button class="left-btn"> Messages </button>
-            <button class="left-btn"> Settings </button>
+            <button class="left-btn" onclick="modalPostDisplay(); changeLeftIcon('createIcon');"> 
+                <img class="left-btn-image" id='createIcon' src="static/img/post-empty.png">
+                <p class="left-btn-text"> Create a post </p>
+            </button>
+            <button class="left-btn" onclick="changeLeftIcon('userIcon')">
+                <img class="left-btn-image" id='userIcon' src="static/img/user-empty.png">
+                 <p class="left-btn-text"> Profile </p>
+            </button>
+            <button class="left-btn" onclick="changeLeftIcon('notificationIcon')">
+                <img class="left-btn-image" id='notificationIcon' src="static/img/notification-empty.png">
+                <p class="left-btn-text"> Notifications </p>
+            </button>
+            <button class="left-btn" onclick="changeLeftIcon('settingsIcon')">
+                <img class="left-btn-image" id='settingsIcon' src="static/img/setting-empty.png">
+                <p class="left-btn-text"> Settings </p>
+            </button>
         </div>
     </a>
     <a class="center">

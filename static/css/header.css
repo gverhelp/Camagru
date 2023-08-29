@@ -41,7 +41,7 @@ body {
 }
 
 .image {
-  margin-left: 10px;
+  margin-left: 40px;
   width: auto;
   height: 100%;
   animation-name: appear;
@@ -130,7 +130,7 @@ body {
   background: linear-gradient(45deg, #daae51 0%, #d53369 100%);
   /* background-size: 400% 400%; */
   border-radius: 20px;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 .signin-btn:hover {
