@@ -177,13 +177,13 @@
 /*##########################################################################*/
 /*##########################################################################*/
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1570px) {
     .home a.right {
       width: 0;
     }
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1220px) {
     .home a.left {
         width: 120px;
     }
