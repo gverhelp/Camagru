@@ -1,7 +1,6 @@
 var like = 0;
 var modalSign = 0;
 var activeCtn = 0;
-var modalPost = 0;
 
 function changeFilter(hover) {
     if (hover == 1) {
@@ -46,24 +45,12 @@ function modalSignDisplay(type) {
     modalSign = !modalSign;
 }
 
-function modalPostDisplay() {
-    const createPostCtn = document.getElementById('createPostCtn');
-
-    createPostCtn.addEventListener("click", (event) => {activeCtn = 1;})
-    if (activeCtn == 1) {
-        activeCtn = 0;
-        return;
-    }
-    if (modalPost == 0) {
-        document.getElementById('modal-left').style.display = 'flex';
-    } else {
-        document.getElementById('modal-left').style.display = 'none';
-    }
-    modalPost = !modalPost;
-}
-
 function changeLeftIcon(icon) {
-    // const modal = document.getElementById('modal-left');
+    document.getElementById('homeIcon').setAttribute("src", "static/img/home-empty.png");
+    document.getElementById('createIcon').setAttribute("src", "static/img/post-empty.png");
+    document.getElementById('userIcon').setAttribute("src", "static/img/user-empty.png");
+    document.getElementById('notificationIcon').setAttribute("src", "static/img/notification-empty.png");
+    document.getElementById('settingsIcon').setAttribute("src", "static/img/setting-empty.png");
 
     if (icon == 'createIcon') {
         document.getElementById('createIcon').setAttribute("src", "static/img/post-fill.png");
@@ -73,12 +60,7 @@ function changeLeftIcon(icon) {
         document.getElementById('notificationIcon').setAttribute("src", "static/img/notification-fill.png"); 
     } else if (icon == 'settingsIcon') {
         document.getElementById('settingsIcon').setAttribute("src", "static/img/setting-fill.png"); 
-    }
-    // modal.addEventListener("click", (event) => {
-    //     console.log('lol');
-    //     document.getElementById('createIcon').setAttribute("src", "static/img/post-empty.png");
-    //     document.getElementById('userIcon').setAttribute("src", "static/img/user-empty.png");
-    //     document.getElementById('notificationIcon').setAttribute("src", "static/img/notification-empty.png");
-    //     document.getElementById('settingsIcon').setAttribute("src", "static/img/setting-empty.png"); 
-    // })
+    } else if (icon == 'homeIcon') {
+        document.getElementById('homeIcon').setAttribute("src", "static/img/home-fill.png"); 
+}
 }

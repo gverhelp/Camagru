@@ -1,6 +1,6 @@
 body { 
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif, system-ui;
 }
 
 /*##########################################################################*/
@@ -41,12 +41,13 @@ body {
 }
 
 .image {
-  margin-left: 40px;
+  margin-left: 35px;
   width: auto;
   height: 100%;
   animation-name: appear;
   animation-duration: 1s;
   animation-fill-mode: forwards;
+  transition: margin-left 0.8s;
 }
 
 /*##########################################################################*/

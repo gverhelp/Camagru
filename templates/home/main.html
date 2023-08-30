@@ -5,9 +5,13 @@
 <div class="home">
     <a class="left">
         <div class="left-ctn">
-            <button class="left-btn" onclick="modalPostDisplay(); changeLeftIcon('createIcon');"> 
+            <button class="left-btn" onclick="changeLeftIcon('homeIcon')">
+                <img class="left-btn-image" id='homeIcon' src="static/img/home-empty.png">
+                 <p class="left-btn-text"> Profile </p>
+            </button>
+            <button class="left-btn" onclick="changeLeftIcon('createIcon');"> 
                 <img class="left-btn-image" id='createIcon' src="static/img/post-empty.png">
-                <p class="left-btn-text"> Create a post </p>
+                <p class="left-btn-text"> Create </p>
             </button>
             <button class="left-btn" onclick="changeLeftIcon('userIcon')">
                 <img class="left-btn-image" id='userIcon' src="static/img/user-empty.png">
