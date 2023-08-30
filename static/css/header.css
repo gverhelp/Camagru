@@ -60,6 +60,8 @@ body {
   display: flex;
   flex: 1;
   height: 70%;
+  opacity: 1;
+  transition: opacity 0.3s;
 }
 
 .searchbar {
@@ -150,7 +152,8 @@ body {
 
 @media screen and (max-width: 750px) {
   .search-box {
-    display: none;
+    /* display: none; */
+    opacity: 0;
   }
 }
 

@@ -44,6 +44,15 @@
 /*##########################################################################*/
 /*##########################################################################*/
 
+.animation-center {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    animation-name: change-page;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+
 .post {
     display: flex;
     flex-direction: column;
@@ -142,7 +151,7 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    transition: width 0.3s;
+    transition: width 0.2s;
 }
 
 .left-btn:hover {
@@ -212,3 +221,21 @@
         display: none;
     }
 }
+
+@keyframes change-page {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+  
+/* @keyframes change-page-back {
+    100% {
+        transform: translateX(-100%);
+    }
+    0% {
+        transform: translateX(0%);
+    }
+} */

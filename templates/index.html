@@ -1,4 +1,4 @@
-{% import "macros/macro.html" as macro %}
+{% import "macros/navbar.html" as navbar %}
 
 <html>
     <head>
@@ -12,7 +12,7 @@
         {% include 'auth/sign.html' %}
         <header>
             <!-- Header content goes here -->
-            {{ macro.header(current_user) }}
+            {{ navbar.macro(current_user) }}
         </header>
         <main>
             <!-- Main content of the page goes here -->

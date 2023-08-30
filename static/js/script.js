@@ -62,5 +62,64 @@ function changeLeftIcon(icon) {
         document.getElementById('settingsIcon').setAttribute("src", "static/img/setting-fill.png"); 
     } else if (icon == 'homeIcon') {
         document.getElementById('homeIcon').setAttribute("src", "static/img/home-fill.png"); 
+    }
 }
+
+function postDisplay() {
+    const anim = document.getElementById('anim');
+    var html = "";
+
+    for (let i = 0; i < 5; i++) {
+        html += '<div class="post">'
+        html += '   <div class="post-header">'
+        html += '       <div class="post-avatar">'
+        html += '           <img src="static/img/pepe.jpeg" alt="Avatar" style="width: 100%; height: auto;">'
+        html += '       </div>'
+        html += '       <p> Pepe <br/> Frog </p>'
+        html += '   </div>'
+        html += '   <div class="post-body">'
+        html += '       <img class="post-pictures" src="static/img/lol2.JPG">'
+        html += '   </div>'
+        html += '   <div class="post-footer">'
+        html += '       <button class="post-footer-btn" onclick="changeLikeButton()">'
+        html += '           <div class="post-footer-btn-ctn">'
+        html += '               <img src="static/img/heart.png" id="heart" alt="like" style="width: auto; height: 80%">'
+        html += '           1300'
+        html += '           </div>'
+        html += '       </button>'
+        html += '       <button class="post-footer-btn">'
+        html += '           <div class="post-footer-btn-ctn">'
+        html += '               <img src="static/img/comment2.png" alt="comments" style="width: auto; height: 80%">'
+        html += '           1340'
+        html += '           </div>'
+        html += '       </button>'
+        html += '   </div>'
+        html += '</div>'
+    }
+    anim.innerHTML = html;
+    anim.style.display = "flex";
+}
+
+function profileDisplay() {
+    const anim = document.getElementById('anim');
+    var html = "<p> LOL </p>";
+
+    anim.innerHTML = html;
+    anim.style.display = "flex";
+}
+
+function changePage(page) {
+    switch (page) {
+        case 'home':
+            postDisplay();
+            break;
+        case 'create':
+            // document.getElementById("anim").style.animation = "change-page-back 4s 2";
+            profileDisplay()
+            break;
+        case 'profile':
+            break;
+        case 'settings':
+            break;
+    }
 }
