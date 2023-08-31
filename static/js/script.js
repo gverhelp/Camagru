@@ -2,6 +2,9 @@ var like = 0;
 var modalSign = 0;
 var activeCtn = 0;
 
+postDisplay();
+changeLeftIcon('homeIcon');
+
 function changeFilter(hover) {
     if (hover == 1) {
         document.getElementById('google').style.filter = "invert(30%) sepia(84%) saturate(958%) hue-rotate(302deg) brightness(97%) contrast(105%)";
@@ -65,15 +68,32 @@ function changeLeftIcon(icon) {
     }
 }
 
+// function switchElem(elem) {
+//     const myElem = document.getElementById(elem);
+//     const home = document.getElementById('home-center');
+//     const create = document.getElementById('create-center');
+//     const profile = document.getElementById('profile-center');
+//     const notif = document.getElementById('notif-center');
+//     const settings = document.getElementById('settings-center');
+
+//     home.style.display = "none";
+//     create.style.display = "none";
+//     profile.style.display = "none";
+//     notif.style.display = "none";
+//     settings.style.display = "none";
+//     myElem.style.display = "flex";
+// }
+
 function postDisplay() {
-    const anim = document.getElementById('anim');
+    const elem = document.getElementById('anim-center');
     var html = "";
 
+    // switchElem('home-center');
     for (let i = 0; i < 5; i++) {
         html += '<div class="post">'
         html += '   <div class="post-header">'
         html += '       <div class="post-avatar">'
-        html += '           <img src="static/img/pepe.jpeg" alt="Avatar" style="width: 100%; height: auto;">'
+        html += '           <img src="static/img/pepe.jpeg" alt="Avatar" style="width: 100%; height: auto;">' 
         html += '       </div>'
         html += '       <p> Pepe <br/> Frog </p>'
         html += '   </div>'
@@ -96,30 +116,62 @@ function postDisplay() {
         html += '   </div>'
         html += '</div>'
     }
-    anim.innerHTML = html;
-    anim.style.display = "flex";
+    elem.innerHTML = html;
+}
+
+function createDisplay() {
+    const elem = document.getElementById('anim-center');
+
+    // switchElem('create-center');
+    var html = "<p> Create </p>";
+
+    elem.innerHTML = html;
 }
 
 function profileDisplay() {
-    const anim = document.getElementById('anim');
-    var html = "<p> LOL </p>";
+    const elem = document.getElementById('anim-center');
 
-    anim.innerHTML = html;
-    anim.style.display = "flex";
+    // switchElem('profile-center');
+    var html = "<p> Profile </p>";
+
+    elem.innerHTML = html;
+}
+
+function notifDisplay() {
+    const elem = document.getElementById('anim-center');
+
+    // switchElem('notif-center');
+    var html = "<p> Notifications </p>";
+
+    elem.innerHTML = html;
+}
+
+function settingsDisplay() {
+    const elem = document.getElementById('anim-center');
+
+    // switchElem('settings-center');
+    var html = "<p> Settings </p>";
+
+    elem.innerHTML = html;
 }
 
 function changePage(page) {
+
     switch (page) {
         case 'home':
             postDisplay();
             break;
         case 'create':
-            // document.getElementById("anim").style.animation = "change-page-back 4s 2";
-            profileDisplay()
+            createDisplay();
             break;
         case 'profile':
+            profileDisplay();
+            break;
+        case 'notification':
+            notifDisplay();
             break;
         case 'settings':
+            settingsDisplay();
             break;
     }
 }

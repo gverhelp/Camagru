@@ -5,30 +5,30 @@
 <div class="home">
     <a class="left">
         <div class="left-ctn">
-            <button class="left-btn" onclick="changeLeftIcon('homeIcon'); changePage('home')">
+            <button class="left-btn" onclick="changeLeftIcon('homeIcon'); changePage('home');">
                 <img class="left-btn-image" id='homeIcon' src="static/img/home-empty.png">
                  <p class="left-btn-text"> Home </p>
             </button>
-            <button class="left-btn" onclick="changeLeftIcon('createIcon'); changePage('create')"> 
+            <button class="left-btn" onclick="changeLeftIcon('createIcon'); changePage('create');"> 
                 <img class="left-btn-image" id='createIcon' src="static/img/post-empty.png">
                 <p class="left-btn-text"> Create </p>
             </button>
-            <button class="left-btn" onclick="changeLeftIcon('userIcon')">
+            <button class="left-btn" onclick="changeLeftIcon('userIcon'); changePage('profile');">
                 <img class="left-btn-image" id='userIcon' src="static/img/user-empty.png">
                  <p class="left-btn-text"> Profile </p>
             </button>
-            <button class="left-btn" onclick="changeLeftIcon('notificationIcon')">
+            <button class="left-btn" onclick="changeLeftIcon('notificationIcon'); changePage('notification');">
                 <img class="left-btn-image" id='notificationIcon' src="static/img/notification-empty.png">
                 <p class="left-btn-text"> Notifications </p>
             </button>
-            <button class="left-btn" onclick="changeLeftIcon('settingsIcon')">
+            <button class="left-btn" onclick="changeLeftIcon('settingsIcon'); changePage('settings');">
                 <img class="left-btn-image" id='settingsIcon' src="static/img/setting-empty.png">
                 <p class="left-btn-text"> Settings </p>
             </button>
         </div>
     </a>
     <a class="center">
-        <div class="animation-center" id="anim">
+        <div class="anim-center" id="anim-center">
         </div>
     </a>
     <a class="right">
