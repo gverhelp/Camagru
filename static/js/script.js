@@ -68,27 +68,10 @@ function changeLeftIcon(icon) {
     }
 }
 
-// function switchElem(elem) {
-//     const myElem = document.getElementById(elem);
-//     const home = document.getElementById('home-center');
-//     const create = document.getElementById('create-center');
-//     const profile = document.getElementById('profile-center');
-//     const notif = document.getElementById('notif-center');
-//     const settings = document.getElementById('settings-center');
-
-//     home.style.display = "none";
-//     create.style.display = "none";
-//     profile.style.display = "none";
-//     notif.style.display = "none";
-//     settings.style.display = "none";
-//     myElem.style.display = "flex";
-// }
-
 function postDisplay() {
     const elem = document.getElementById('anim-center');
     var html = "";
 
-    // switchElem('home-center');
     for (let i = 0; i < 5; i++) {
         html += '<div class="post">'
         html += '   <div class="post-header">'
@@ -122,7 +105,6 @@ function postDisplay() {
 function createDisplay() {
     const elem = document.getElementById('anim-center');
 
-    // switchElem('create-center');
     var html = "<p> Create </p>";
 
     elem.innerHTML = html;
@@ -131,7 +113,6 @@ function createDisplay() {
 function profileDisplay() {
     const elem = document.getElementById('anim-center');
 
-    // switchElem('profile-center');
     var html = "<p> Profile </p>";
 
     elem.innerHTML = html;
@@ -140,7 +121,6 @@ function profileDisplay() {
 function notifDisplay() {
     const elem = document.getElementById('anim-center');
 
-    // switchElem('notif-center');
     var html = "<p> Notifications </p>";
 
     elem.innerHTML = html;
@@ -149,13 +129,18 @@ function notifDisplay() {
 function settingsDisplay() {
     const elem = document.getElementById('anim-center');
 
-    // switchElem('settings-center');
     var html = "<p> Settings </p>";
 
     elem.innerHTML = html;
 }
 
 function changePage(page) {
+
+    const elem = document.querySelector('.anim-center')
+    elem.classList.add('pre-animation');
+    setTimeout(function(){
+        elem.classList.remove('pre-animation')
+    }, 200);
 
     switch (page) {
         case 'home':

@@ -48,6 +48,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.anim-center.pre-animation {
     animation-name: change-page;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
