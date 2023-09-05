@@ -10,7 +10,7 @@
     height: 100%;
 }
 
-.home a.left {
+.home-left {
     width: 350px;
 
     display: flex;
@@ -19,7 +19,7 @@
     transition: width 0.3s;
 }
 
-.home a.center {
+.home-center {
     display: flex;
     flex: 1;
     align-items: center;
@@ -30,7 +30,7 @@
     border-left: 1px solid rgb(210, 210, 210);
 }
 
-.home a.right {
+.home-right {
     width: 350px;
 
     /* min-width: 300px; */
@@ -48,9 +48,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.anim-center.pre-animation {
     animation-name: change-page;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
@@ -59,9 +56,9 @@
 .post {
     display: flex;
     flex-direction: column;
-    /* width: 700px; */
     flex: 1;
     max-width: 800px;
+    width: 100%;
     border-radius: 20px;
     border: 1px solid rgb(210, 210, 210);
     margin: 30px;
@@ -131,6 +128,60 @@
 
 /*##########################################################################*/
 /*##########################################################################*/
+/*####                             Profile                              ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
+.profile-ctn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 30px;
+    /* max-width: 93.5rem;
+    margin: 0 auto;
+    padding: 0 2rem; */
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 30px;
+}
+
+.profile-avatar {
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    margin-right: 20px;
+    margin-left: 100px;
+    overflow: hidden;
+}
+
+.gallery-ctn {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+    margin-inline: 20px;
+    padding-top: 30px;
+    border-top: 1px solid rgb(210, 210, 210);
+}
+
+.gallery-item {
+    display: flex;
+    cursor: pointer;
+    aspect-ratio: 1;
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*##########################################################################*/
+/*##########################################################################*/
 /*####                         Left container                           ####*/
 /*##########################################################################*/
 /*##########################################################################*/
@@ -142,6 +193,10 @@
     gap: 20px;
     padding-top: 50px;
 }
+
+/* .left-ctn a {
+    text-decoration: none;
+} */
 
 .left-btn {
     display: flex;
@@ -190,13 +245,13 @@
 /*##########################################################################*/
 
 @media screen and (max-width: 1570px) {
-    .home a.right {
+    .home-right {
       width: 0;
     }
 }
 
 @media screen and (max-width: 1220px) {
-    .home a.left {
+    .home-left {
         width: 120px;
     }
     .left-btn-text {
@@ -217,7 +272,7 @@
 }
 
 @media screen and (max-width: 750px) {
-    .home a.left {
+    .home-left {
         width: 0;
     }
     .left-ctn {
@@ -233,12 +288,3 @@
         transform: translateX(0%);
     }
 }
-  
-/* @keyframes change-page-back {
-    100% {
-        transform: translateX(-100%);
-    }
-    0% {
-        transform: translateX(0%);
-    }
-} */

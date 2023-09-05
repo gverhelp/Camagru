@@ -3,36 +3,64 @@
 {% block main %}
 
 <div class="home">
-    <a class="left">
+    <div class="home-left">
         <div class="left-ctn">
-            <button class="left-btn" onclick="changeLeftIcon('homeIcon'); changePage('home');">
-                <img class="left-btn-image" id='homeIcon' src="static/img/home-empty.png">
-                 <p class="left-btn-text"> Home </p>
-            </button>
-            <button class="left-btn" onclick="changeLeftIcon('createIcon'); changePage('create');"> 
-                <img class="left-btn-image" id='createIcon' src="static/img/post-empty.png">
-                <p class="left-btn-text"> Create </p>
-            </button>
-            <button class="left-btn" onclick="changeLeftIcon('userIcon'); changePage('profile');">
-                <img class="left-btn-image" id='userIcon' src="static/img/user-empty.png">
-                 <p class="left-btn-text"> Profile </p>
-            </button>
-            <button class="left-btn" onclick="changeLeftIcon('notificationIcon'); changePage('notification');">
-                <img class="left-btn-image" id='notificationIcon' src="static/img/notification-empty.png">
-                <p class="left-btn-text"> Notifications </p>
-            </button>
-            <button class="left-btn" onclick="changeLeftIcon('settingsIcon'); changePage('settings');">
-                <img class="left-btn-image" id='settingsIcon' src="static/img/setting-empty.png">
-                <p class="left-btn-text"> Settings </p>
-            </button>
+            <!-- <a href="#home"> -->
+                <button class="left-btn" onclick="changePage('home')">
+                    <img class="left-btn-image" id='homeIcon' src="static/img/home-empty.png">
+                    <p class="left-btn-text"> Home </p>
+                </button>
+            <!-- </a> -->
+            <!-- <a href="#create"> -->
+                <button class="left-btn" onclick="changePage('create')"> 
+                    <img class="left-btn-image" id='createIcon' src="static/img/post-empty.png">
+                    <p class="left-btn-text"> Create </p>
+                </button>
+            <!-- </a> -->
+            <!-- <a href="#profile"> -->
+                <button class="left-btn" onclick="changePage('profile')">
+                    <img class="left-btn-image" id='profileIcon' src="static/img/user-empty.png">
+                    <p class="left-btn-text"> Profile </p>
+                </button>
+            <!-- </a> -->
+            <!-- <a href="#notifications"> -->
+                <button class="left-btn" onclick="changePage('notifications')">
+                    <img class="left-btn-image" id='notificationsIcon' src="static/img/notification-empty.png">
+                    <p class="left-btn-text"> Notifications </p>
+                </button>
+            <!-- </a> -->
+            <!-- <a href="#settings"> -->
+                <button class="left-btn" onclick="changePage('settings')">
+                    <img class="left-btn-image" id='settingsIcon' src="static/img/setting-empty.png">
+                    <p class="left-btn-text"> Settings </p>
+                </button>
+            <!-- </a> -->
         </div>
-    </a>
-    <a class="center">
+    </div>
+    <div class="home-center">
         <div class="anim-center" id="anim-center">
+            <div class="profile-ctn">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img alt="Avatar" src="static/img/pepe.jpeg" style="width: 100%; height: auto;">
+                    </div>
+                    <p> Garreth Verhelpen </p>
+                </div>
+                <div class="gallery-ctn">
+                    {% for i in range(20) %}
+                        <div class="gallery-item">
+                            <img class="gallery-image" src="static/img/lol.JPG">
+                        </div>
+                        <div class="gallery-item">
+                            <img class="gallery-image" src="static/img/pepe.jpeg">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-    </a>
-    <a class="right">
-    </a>
+    </div>
+    <div class="home-right">
+    </div>
 </div>
 
 {% endblock %}
