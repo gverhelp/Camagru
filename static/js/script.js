@@ -72,87 +72,35 @@ function setAsFlex(elem) {
 }
 
 function homeDisplay() {
-    var html = "";
-
-    // html += '<div class="post">'
-    // html += '   <div class="post-header">'
-    // html += '       <div class="post-avatar">'
-    // html += '           <img src="static/img/pepe.jpeg" alt="Avatar" style="width: 100%; height: auto;">' 
-    // html += '       </div>'
-    // html += '       <p> Pepe <br/> Frog </p>'
-    // html += '   </div>'
-    // html += '   <div class="post-body">'
-    // html += '       <img class="post-pictures" src="static/img/pepe.jpeg">'
-    // html += '   </div>'
-    // html += '   <div class="post-footer">'
-    // html += '       <button class="post-footer-btn" onclick="changeLikeButton()">'
-    // html += '           <div class="post-footer-btn-ctn">'
-    // html += '               <img src="static/img/heart.png" id="heart" alt="like" style="width: auto; height: 80%">'
-    // html += '           1300'
-    // html += '           </div>'
-    // html += '       </button>'
-    // html += '       <button class="post-footer-btn">'
-    // html += '           <div class="post-footer-btn-ctn">'
-    // html += '               <img src="static/img/comment2.png" alt="comments" style="width: auto; height: 80%">'
-    // html += '           1340'
-    // html += '           </div>'
-    // html += '       </button>'
-    // html += '   </div>'
-    // html += '</div>'
+    var html = '';
 
     for (let i = 0; i < 5; i++) {
-        html += '<div class="post">'
-        html += '   <div class="post-header">'
-        html += '       <div class="post-avatar">'
-        html += '           <img src="static/img/pepe.jpeg" alt="Avatar" style="width: 100%; height: auto;">' 
-        html += '       </div>'
-        html += '       <p> Pepe <br/> Frog </p>'
-        html += '   </div>'
-        html += '   <div class="post-body">'
-        html += '       <img class="post-pictures" src="static/img/lol.JPG">'
-        html += '   </div>'
-        html += '   <div class="post-footer">'
-        html += '       <button class="post-footer-btn" onclick="changeLikeButton()">'
-        html += '           <div class="post-footer-btn-ctn">'
-        html += '               <img src="static/img/heart.png" id="heart" alt="like" style="width: auto; height: 80%">'
-        html += '           1300'
-        html += '           </div>'
-        html += '       </button>'
-        html += '       <button class="post-footer-btn">'
-        html += '           <div class="post-footer-btn-ctn">'
-        html += '               <img src="static/img/comment2.png" alt="comments" style="width: auto; height: 80%">'
-        html += '           1340'
-        html += '           </div>'
-        html += '       </button>'
-        html += '   </div>'
-        html += '</div>'
+        html += '<div class="post">';
+        html += '   <div class="post-header">';
+        html += '       <div class="post-avatar">';
+        html += '           <img src="static/img/pepe.jpeg" alt="Avatar" style="width: 100%; height: auto;">';
+        html += '       </div>';
+        html += '       <p> Pepe <br/> Frog </p>';
+        html += '   </div>';
+        html += '   <div class="post-body">';
+        html += '       <img class="post-pictures" src="static/img/lol.JPG">';
+        html += '   </div>';
+        html += '   <div class="post-footer">';
+        html += '       <button class="post-footer-btn" onclick="changeLikeButton()">';
+        html += '           <div class="post-footer-btn-ctn">';
+        html += '               <img src="static/img/heart.png" id="heart" alt="like" style="width: auto; height: 80%">';
+        html += '           1300';
+        html += '           </div>';
+        html += '       </button>';
+        html += '       <button class="post-footer-btn">';
+        html += '           <div class="post-footer-btn-ctn">';
+        html += '               <img src="static/img/comment2.png" alt="comments" style="width: auto; height: 80%">';
+        html += '           1340';
+        html += '           </div>';
+        html += '       </button>';
+        html += '   </div>';
+        html += '</div>';
     }
-
-    // html += '<div class="post">'
-    // html += '   <div class="post-header">'
-    // html += '       <div class="post-avatar">'
-    // html += '           <img src="static/img/pepe.jpeg" alt="Avatar" style="width: 100%; height: auto;">' 
-    // html += '       </div>'
-    // html += '       <p> Pepe <br/> Frog </p>'
-    // html += '   </div>'
-    // html += '   <div class="post-body">'
-    // html += '       <img class="post-pictures" src="static/img/pepe.jpeg">'
-    // html += '   </div>'
-    // html += '   <div class="post-footer">'
-    // html += '       <button class="post-footer-btn" onclick="changeLikeButton()">'
-    // html += '           <div class="post-footer-btn-ctn">'
-    // html += '               <img src="static/img/heart.png" id="heart" alt="like" style="width: auto; height: 80%">'
-    // html += '           1300'
-    // html += '           </div>'
-    // html += '       </button>'
-    // html += '       <button class="post-footer-btn">'
-    // html += '           <div class="post-footer-btn-ctn">'
-    // html += '               <img src="static/img/comment2.png" alt="comments" style="width: auto; height: 80%">'
-    // html += '           1340'
-    // html += '           </div>'
-    // html += '       </button>'
-    // html += '   </div>'
-    // html += '</div>'
 
     return html;
 }
@@ -164,7 +112,28 @@ function createDisplay() {
 }
 
 function profileDisplay() {
-    var html = "<p> Profile </p>";
+    var html = '';
+
+    html += '<div class="profile-ctn">';
+    html += '<div class="profile-header">';
+    html += '<div class="profile-avatar">';
+    html += '<img alt="Avatar" src="static/img/pepe.jpeg" style="width: 100%; height: auto;">';
+    html += '</div>';
+    html += '<p> Garreth Verhelpen </p>';
+    html += '</div>';
+    html += '<div class="gallery-ctn">';
+
+    for (let i = 0; i < 20; i++) {
+        html += '<div class="gallery-item">';
+        html += '<img class="gallery-image" src="static/img/lol.JPG">';
+        html += '<div class="gallery-item-infos">';
+        html += '</div>';
+        html += '</div>';
+        html += '<div class="gallery-item">';
+        html += '<img class="gallery-image" src="static/img/pepe.jpeg">';
+        html += '</div>';
+    }
+    html += '</div>';
 
     return html;
 }
