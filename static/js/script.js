@@ -77,9 +77,7 @@ function homeDisplay() {
     for (let i = 0; i < 5; i++) {
         html += '<div class="post">';
         html += '   <div class="post-header">';
-        html += '       <div class="post-avatar">';
-        html += '           <img src="static/img/pepe.jpeg" alt="Avatar" style="width: 100%; height: auto;">';
-        html += '       </div>';
+        html += '       <img class="post-avatar" src="static/img/pepe.jpeg" alt="Avatar">';
         html += '       <p> Pepe <br/> Frog </p>';
         html += '   </div>';
         html += '   <div class="post-body">';

@@ -41,22 +41,54 @@
         <div class="anim-center" id="anim-center">
             <div class="profile-ctn">
                 <div class="profile-header">
-                    <div class="profile-avatar">
-                        <img alt="Avatar" src="static/img/pepe.jpeg" style="width: 100%; height: auto;">
+                    <div class="profile-avatar-ctn">
+                        <img class="profile-avatar" alt="Avatar" src="static/img/lol2.JPG">
                     </div>
-                    <p> Garreth Verhelpen </p>
+                    <section class="profile-infos-ctn">
+                        <div class="profile-username">
+                            <a>
+                                Gverhelp
+                            </a>
+                        </div>
+                        <div class="profile-stats">
+                            <a>
+                                Stats
+                            </a>
+                        </div>
+                        <div class="profile-bio">
+                            <a>
+                                Bio
+                            </a>
+                        </div>
+                    </section>
                 </div>
                 <div class="gallery-ctn">
                     {% for i in range(20) %}
-                        <div class="gallery-item">
+                        <div class="gallery-item" tabindex="0">
                             <img class="gallery-image" src="static/img/lol.JPG">
-                            <!-- <div class="gallery-item-infos">
-                            </div> -->
+                            <div class="gallery-item-infos">
+                                <img class="gallery-like" src="static/img/white-heart.png">
+                                <a>
+                                    1500
+                                </a>
+                                <img class="gallery-comment" src="static/img/white-comment.png">
+                                <a>
+                                    200
+                                </a>
+                            </div>
                         </div>
-                        <div class="gallery-item">
-                            <!-- <div class="gallery-item-infos">
-                            </div> -->
-                            <img class="gallery-image" src="static/img/pepe.jpeg">
+                        <div class="gallery-item" tabindex="0">
+                            <img class="gallery-image" src="static/img/lol2.JPG">
+                            <div class="gallery-item-infos">
+                                <img class="gallery-like" src="static/img/white-heart.png">
+                                    <a>
+                                        1500
+                                    </a>
+                                <img class="gallery-comment" src="static/img/white-comment.png">
+                                    <a>
+                                        200
+                                    </a>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
