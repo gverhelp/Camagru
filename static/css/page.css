@@ -285,6 +285,38 @@
 
 /*##########################################################################*/
 /*##########################################################################*/
+/*####                        Individual posts                          ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
+.individual-post-ctn {
+    display: flex;
+    /* justify-content: center;
+    align-items: center; */
+    width: 80%;
+    height: 70%;
+    /* min-width: 30%; */
+    /* box-sizing: border-box; */
+    /* padding-top: 50%; */
+    background-color: rgb(255, 255, 255);
+}
+
+.individual-post-picture-ctn {
+    flex: 2;
+}
+
+.individual-post-picture {  /* Have to change this */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.individual-post-infos-ctn {
+    flex: 1;
+}
+
+/*##########################################################################*/
+/*##########################################################################*/
 /*####                         Left container                           ####*/
 /*##########################################################################*/
 /*##########################################################################*/
@@ -357,18 +389,22 @@
     .home-left {
         width: 120px;
     }
+
     .left-btn-text {
       display: none;
     }
+
     .left-ctn {
         width: 100px;
     }
+
     .left-btn {
         width: 80px;
         padding-left: 0px;
         justify-content: center;
         padding: 0px;
     }
+
     .image {
         margin-left: 30px;
     }
@@ -396,6 +432,10 @@
         margin-bottom: 3px;
         padding-bottom: 3px;
         border-bottom: 1px solid rgb(210, 210, 210);
+    }
+
+    .individual-post-ctn {
+        flex-direction: column;
     }
 }
 
