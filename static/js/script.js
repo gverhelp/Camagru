@@ -1,5 +1,6 @@
 var like = 0;
 var modalSign = 0;
+var modalProfilePost = 0;
 var activeCtn = 0;
 
 function changeFilter(hover) {
@@ -30,7 +31,7 @@ function modalSignDisplay(type) {
         return;
     }
     if (modalSign == 0) {
-        document.getElementById('modal').style.display = 'flex';
+        document.getElementById('signModal').style.display = 'flex';
         if (type == 'signin') {
             document.getElementById('signin').hidden = false;
         }
@@ -38,11 +39,24 @@ function modalSignDisplay(type) {
             document.getElementById('signup').hidden = false;
         }
     } else {
-        document.getElementById('modal').style.display = 'none';
+        document.getElementById('signModal').style.display = 'none';
         document.getElementById('signin').hidden = true;
         document.getElementById('signup').hidden = true;
     }
     modalSign = !modalSign;
+}
+
+function modalProfilePostDisplay() {
+    const elem = document.getElementById('profilePostModal');
+
+    // elem.addEventListener("click", (event) => {activeCtn = 1;})
+
+    if (modalProfilePost == 0) {
+        elem.style.display = 'flex';
+    } else {
+        elem.style.display = 'none';
+    }
+    modalProfilePost = !modalProfilePost;
 }
 
 function changeLeftIcon(icon) {
