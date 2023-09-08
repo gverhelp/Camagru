@@ -128,23 +128,73 @@ function profileDisplay() {
 
     html += '<div class="profile-ctn">';
     html += '<div class="profile-header">';
-    html += '<div class="profile-avatar">';
-    html += '<img alt="Avatar" src="static/img/pepe.jpeg" style="width: 100%; height: auto;">';
-    html += '</div>';
-    html += '<p> Garreth Verhelpen </p>';
+    html += '    <div class="profile-avatar-ctn">';
+    html += '        <img class="profile-avatar" alt="Avatar" src="static/img/lol2.JPG">';
+    html += '    </div>';
+    html += '    <section class="profile-infos-ctn">';
+    html += '        <div class="profile-username-ctn">';
+    html += '            <a>';
+    html += '                Garreth Verhelpen';
+    html += '            </a>';
+    html += '        </div>';
+    html += '        <div class="profile-stats">';
+    html += '            <li>';
+    html += '                <span class="profile-stats-text">';
+    html += '                    20';
+    html += '                </span>';
+    html += '                posts';
+    html += '            </li>';
+    html += '            <li>';
+    html += '                <span class="profile-stats-text">';
+    html += '                    2785';
+    html += '                </span>';
+    html += '                 followers';
+    html += '            </li>';
+    html += '            <li>';
+    html += '                <span class="profile-stats-text">';
+    html += '                    387';
+    html += '                </span>';
+    html += '                 following';
+    html += '            </li>';
+    html += '        </div>';
+    html += '        <div class="profile-bio-ctn">';
+    html += '            <h1 class="profile-bio-text">';
+    html += '                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+    html += '            </h1>';
+    html += '        </div>';
+    html += '    </section>';
     html += '</div>';
     html += '<div class="gallery-ctn">';
 
-    for (let i = 0; i < 20; i++) {
-        html += '<div class="gallery-item">';
-        html += '<img class="gallery-image" src="static/img/lol.JPG">';
-        html += '<div class="gallery-item-infos">';
-        html += '</div>';
-        html += '</div>';
-        html += '<div class="gallery-item">';
-        html += '<img class="gallery-image" src="static/img/pepe.jpeg">';
-        html += '</div>';
+    for (let a = 0; a < 20; a++) {
+        html += '    <div class="gallery-item" tabindex="0">';
+        html += '        <img class="gallery-image" src="static/img/lol.JPG">';
+        html += '        <div class="gallery-item-infos" onclick="modalProfilePostDisplay()">';
+        html += '            <img class="gallery-like" src="static/img/white-heart.png">';
+        html += '            <a>';
+        html += '                1500';
+        html += '            </a>';
+        html += '            <img class="gallery-comment" src="static/img/white-comment.png">';
+        html += '            <a>';
+        html += '                200';
+        html += '            </a>';
+        html += '        </div>';
+        html += '    </div>';
+        html += '    <div class="gallery-item" tabindex="0">';
+        html += '        <img class="gallery-image" src="static/img/lol2.JPG">';
+        html += '        <div class="gallery-item-infos" onclick="modalProfilePostDisplay()">';
+        html += '            <img class="gallery-like" src="static/img/white-heart.png">';
+        html += '                <a>';
+        html += '                    1500';
+        html += '                </a>';
+        html += '            <img class="gallery-comment" src="static/img/white-comment.png">';
+        html += '                <a>';
+        html += '                    200';
+        html += '                </a>';
+        html += '        </div>';
+        html += '    </div>';
     }
+    html += '</div>';
     html += '</div>';
 
     return html;
@@ -162,46 +212,46 @@ function settingsDisplay() {
     return html;
 }
 
-// function changePage(page) {
-//     const elem = document.getElementById('anim-center');
+function changePage(page) {
+    const elem = document.getElementById('anim-center');
     
-//     elem.style.display = 'none';
-//     setAsFlex(elem);
+    elem.style.display = 'none';
+    setAsFlex(elem);
 
-//     switch (page) {
-//         case 'home':
-//             elem.innerHTML = homeDisplay();
-//             changeLeftIcon(page + 'Icon');
-//             break;
+    switch (page) {
+        case 'home':
+            elem.innerHTML = homeDisplay();
+            changeLeftIcon(page + 'Icon');
+            break;
 
-//         case 'create':
-//             elem.innerHTML = createDisplay();
-//             changeLeftIcon(page + 'Icon');
-//             break;
+        case 'create':
+            elem.innerHTML = createDisplay();
+            changeLeftIcon(page + 'Icon');
+            break;
 
-//         case 'profile':
-//             elem.innerHTML = profileDisplay();
-//             changeLeftIcon(page + 'Icon');
-//             break;
+        case 'profile':
+            elem.innerHTML = profileDisplay();
+            changeLeftIcon(page + 'Icon');
+            break;
 
-//         case 'notifications':
-//             elem.innerHTML = notifDisplay();
-//             changeLeftIcon(page + 'Icon');
-//             break;
+        case 'notifications':
+            elem.innerHTML = notifDisplay();
+            changeLeftIcon(page + 'Icon');
+            break;
 
-//         case 'settings':
-//             elem.innerHTML = settingsDisplay();
-//             changeLeftIcon(page + 'Icon');
-//             break;
+        case 'settings':
+            elem.innerHTML = settingsDisplay();
+            changeLeftIcon(page + 'Icon');
+            break;
 
-//         default:
-//             elem.innerHTML = homeDisplay();
-//             changeLeftIcon('homeIcon');
-//             break;
-//     }
-// }
+        default:
+            elem.innerHTML = homeDisplay();
+            changeLeftIcon('homeIcon');
+            break;
+    }
+}
 
-// changePage();
+changePage();
 
 // function getContent(fragmentId, callback){
 //     var pages = {
