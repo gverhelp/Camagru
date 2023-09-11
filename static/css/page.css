@@ -10,7 +10,7 @@
 }
 
 .home-left {
-    width: 350px;
+    width: 300px;
     display: flex;
     justify-content: center;
     margin-top: 66px;
@@ -29,7 +29,7 @@
 }
 
 .home-right {
-    width: 350px;
+    width: 300px;
 
     /* min-width: 300px; */
     margin-top: 66px;
@@ -259,8 +259,7 @@
     aspect-ratio: 1;
 }
 
-.gallery-item:hover .gallery-item-infos,
-.gallery-item:focus .gallery-item-infos {
+.gallery-item:hover .gallery-item-infos {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -303,24 +302,24 @@
 
 .individual-post-ctn {
     display: flex;
-    /* justify-content: center;
-    align-items: center; */
     width: 80%;
-    height: 70%;
-    /* min-width: 30%; */
-    /* box-sizing: border-box; */
-    /* padding-top: 50%; */
+    max-height: 90%;
+    border-radius: 5px;
+    aspect-ratio: 1;
     background-color: rgb(255, 255, 255);
 }
 
 .individual-post-picture-ctn {
     flex: 2;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: black;
 }
 
-.individual-post-picture {  /* Have to change this */
+.individual-post-picture {
     width: 100%;
     height: 100%;
-    object-fit: hidden; /* contain ? */
+    object-fit: contain;
 }
 
 .individual-post-infos-ctn {
@@ -337,6 +336,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* justify-content: flex-end; */
     gap: 20px;
     padding-top: 50px;
 }
@@ -349,13 +349,12 @@
     display: flex;
     align-items: center;
     height: 50px;
-    width: 275px;
+    width: 15rem;
     background-color: rgb(255, 255, 255);
     transition: transform 0.3s;
     border-bottom: 1px solid rgb(210, 210, 210);
     border-top: none;
-    border-left: none;
-    border-right: none;
+    border-inline: none;
     transition: width 0.2s;
 }
 
@@ -439,10 +438,6 @@
         margin-block: 5px 2px;
     }
 
-    /* .profile-avatar-ctn {
-        align-items: center;
-    } */
-
     .profile-avatar {
         width: 125px;
         height: 125px;
@@ -458,6 +453,7 @@
 
     .individual-post-ctn {
         flex-direction: column;
+        aspect-ratio: 1;
     }
 }
 
@@ -469,3 +465,7 @@
         transform: translateX(0%);
     }
 }
+
+
+
+/* <ul> (<li> </li>)*n commentaires </ul>

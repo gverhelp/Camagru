@@ -23,6 +23,7 @@ function changeLikeButton() {
 function modalSignDisplay(type) {
     const signin = document.getElementById('signin');
     const signup = document.getElementById('signup');
+    const signModal = document.getElementById('signModal');
 
     signin.addEventListener("click", (event) => {activeCtn = 1;})
     signup.addEventListener("click", (event) => {activeCtn = 1;})
@@ -31,25 +32,30 @@ function modalSignDisplay(type) {
         return;
     }
     if (modalSign == 0) {
-        document.getElementById('signModal').style.display = 'flex';
+        signModal.style.display = 'flex';
         if (type == 'signin') {
-            document.getElementById('signin').hidden = false;
+            signin.hidden = false;
         }
         else {
-            document.getElementById('signup').hidden = false;
+            signup.hidden = false;
         }
     } else {
-        document.getElementById('signModal').style.display = 'none';
-        document.getElementById('signin').hidden = true;
-        document.getElementById('signup').hidden = true;
+        signModal.style.display = 'none';
+        signin.hidden = true;
+        signup.hidden = true;
     }
     modalSign = !modalSign;
 }
 
 function modalProfilePostDisplay() {
     const elem = document.getElementById('profilePostModal');
+    const postElem = document.getElementById('indiv-post');
 
-    // elem.addEventListener("click", (event) => {activeCtn = 1;})
+        postElem.addEventListener("click", (event) => {activeCtn = 1;})
+    if (activeCtn == 1) {
+        activeCtn = 0;
+        return;
+    }
 
     if (modalProfilePost == 0) {
         elem.style.display = 'flex';
@@ -167,7 +173,7 @@ function profileDisplay() {
     html += '<div class="gallery-ctn">';
 
     for (let a = 0; a < 20; a++) {
-        html += '    <div class="gallery-item" tabindex="0">';
+        html += '    <div class="gallery-item">';
         html += '        <img class="gallery-image" src="static/img/lol.JPG">';
         html += '        <div class="gallery-item-infos" onclick="modalProfilePostDisplay()">';
         html += '            <img class="gallery-like" src="static/img/white-heart.png">';
@@ -180,7 +186,7 @@ function profileDisplay() {
         html += '            </a>';
         html += '        </div>';
         html += '    </div>';
-        html += '    <div class="gallery-item" tabindex="0">';
+        html += '    <div class="gallery-item">';
         html += '        <img class="gallery-image" src="static/img/lol2.JPG">';
         html += '        <div class="gallery-item-infos" onclick="modalProfilePostDisplay()">';
         html += '            <img class="gallery-like" src="static/img/white-heart.png">';
