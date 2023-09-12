@@ -124,7 +124,17 @@ function homeDisplay() {
 }
 
 function createDisplay() {
-    var html = "<p> Create </p>";
+    var html = '';
+
+    html += '<div class="create-ctn">';
+    html += '<div class="create-main-ctn">';
+    html += '   <div class="create-aside-ctn">';
+    html += '        <img class="create-picture" src="static/img/lol2.JPG">';
+    html += '   </div>';
+    html += '   <div class="create-bside-ctn"></div>';
+    html += '</div>';
+    html += '<div class="create-footer-ctn"></div>';
+    html += '</div>';
 
     return html;
 }

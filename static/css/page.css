@@ -358,52 +358,59 @@
     flex-direction: column;
     width: 100%;
     flex: 1;
+    gap: 1rem;
     box-sizing: border-box;
     padding: 20px;
 
-    background-color: lightsalmon;
+    /* background-color: lightsalmon; */
 }
 
 .create-main-ctn {
     display: flex;
     flex-direction: row;
+    gap: 1rem;
     width: 100%;
     flex: 4;
+    /* aspect-ratio: 1; */
 
-    background-color: lightblue;
+    /* background-color: lightblue; */
 }
 
 .create-aside-ctn {
     display: flex;
     flex: 3;
+    border: 1px solid rgb(210, 210, 210);
+    background-color: black;
+    position: relative;
 
-    background-color: lightgoldenrodyellow;
+    /* background-color: lightgoldenrodyellow; */
 }
 
 .create-bside-ctn {
     display: flex;
     flex: 1;
+    border: 1px solid rgb(210, 210, 210);
 
-    background-color: lightsteelblue;
+
+    /* background-color: lightsteelblue; */
 }
 
 .create-footer-ctn {
     display: flex;
     width: 100%;
     flex: 1;
+    border: 1px solid rgb(210, 210, 210);
 
-    background-color: lightgreen;
+    /* background-color: lightgreen; */
 }
 
-/* .item {
-    padding: 0.5rem;
-    font-weight: 700;
-    color: white;
-    width: 150px;
-    height: 150px;
-    border: 10px solid red;
-    background-color: lightsalmon;
-} */
+.create-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+}
+
 
 /*##########################################################################*/
 /*##########################################################################*/
@@ -497,6 +504,15 @@
 
     .image {
         margin-left: 30px;
+    }
+
+    .create-main-ctn {
+        flex-direction: column;
+        flex: 5;
+    }
+
+    .create-aside-ctn {
+        flex: 4;
     }
 }
 
