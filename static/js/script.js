@@ -218,46 +218,46 @@ function settingsDisplay() {
     return html;
 }
 
-// function changePage(page) {
-//     const elem = document.getElementById('anim-center');
+function changePage(page) {
+    const elem = document.getElementById('anim-center');
     
-//     elem.style.display = 'none';
-//     setAsFlex(elem);
+    elem.style.display = 'none';
+    setAsFlex(elem);
 
-//     switch (page) {
-//         case 'home':
-//             elem.innerHTML = homeDisplay();
-//             changeLeftIcon(page + 'Icon');
-//             break;
+    switch (page) {
+        case 'home':
+            elem.innerHTML = homeDisplay();
+            changeLeftIcon(page + 'Icon');
+            break;
 
-//         case 'create':
-//             elem.innerHTML = createDisplay();
-//             changeLeftIcon(page + 'Icon');
-//             break;
+        case 'create':
+            elem.innerHTML = createDisplay();
+            changeLeftIcon(page + 'Icon');
+            break;
 
-//         case 'profile':
-//             elem.innerHTML = profileDisplay();
-//             changeLeftIcon(page + 'Icon');
-//             break;
+        case 'profile':
+            elem.innerHTML = profileDisplay();
+            changeLeftIcon(page + 'Icon');
+            break;
 
-//         case 'notifications':
-//             elem.innerHTML = notifDisplay();
-//             changeLeftIcon(page + 'Icon');
-//             break;
+        case 'notifications':
+            elem.innerHTML = notifDisplay();
+            changeLeftIcon(page + 'Icon');
+            break;
 
-//         case 'settings':
-//             elem.innerHTML = settingsDisplay();
-//             changeLeftIcon(page + 'Icon');
-//             break;
+        case 'settings':
+            elem.innerHTML = settingsDisplay();
+            changeLeftIcon(page + 'Icon');
+            break;
 
-//         default:
-//             elem.innerHTML = homeDisplay();
-//             changeLeftIcon('homeIcon');
-//             break;
-//     }
-// }
+        default:
+            elem.innerHTML = homeDisplay();
+            changeLeftIcon('homeIcon');
+            break;
+    }
+}
 
-// changePage();
+changePage();
 
 // function getContent(fragmentId, callback){
 //     var pages = {
