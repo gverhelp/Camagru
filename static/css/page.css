@@ -382,6 +382,7 @@
     border: 1px solid rgb(210, 210, 210);
     background-color: black;
     position: relative;
+    border-radius: 5px;
 
     /* background-color: lightgoldenrodyellow; */
 }
@@ -390,6 +391,7 @@
     display: flex;
     flex: 1;
     border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
 
 
     /* background-color: lightsteelblue; */
@@ -400,6 +402,7 @@
     width: 100%;
     flex: 1;
     border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
 
     /* background-color: lightgreen; */
 }

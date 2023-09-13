@@ -1,6 +1,7 @@
 var like = 0;
 var modalSign = 0;
 var modalProfilePost = 0;
+var modalHomePost = 0;
 var activeCtn = 0;
 
 function changeFilter(hover) {
@@ -48,8 +49,8 @@ function modalSignDisplay(type) {
 }
 
 function modalProfilePostDisplay() {
-    const elem = document.getElementById('profilePostModal');
-    const postElem = document.getElementById('indiv-post');
+    const elem = document.getElementById('modalProfilePost');
+    const postElem = document.getElementById('modalPost');
 
         postElem.addEventListener("click", (event) => {activeCtn = 1;})
     if (activeCtn == 1) {
@@ -63,6 +64,24 @@ function modalProfilePostDisplay() {
         elem.style.display = 'none';
     }
     modalProfilePost = !modalProfilePost;
+}
+
+function modalHomePostDisplay() {
+    const elem = document.getElementById('modalHomePost');
+    const postElem = document.getElementById('modalPost');
+
+        postElem.addEventListener("click", (event) => {activeCtn = 1;})
+    if (activeCtn == 1) {
+        activeCtn = 0;
+        return;
+    }
+
+    if (modalHomePost == 0) {
+        elem.style.display = 'flex';
+    } else {
+        elem.style.display = 'none';
+    }
+    modalHomePost = !modalHomePost;
 }
 
 function changeLeftIcon(icon) {
@@ -95,7 +114,7 @@ function homeDisplay() {
     var html = '';
 
     for (let i = 0; i < 5; i++) {
-        html += '<div class="post">';
+        html += '<div class="post" onclick="modalProfilePostDisplay()">';
         html += '   <div class="post-header">';
         html += '       <img class="post-avatar" src="static/img/pepe.jpeg" alt="Avatar">';
         html += '       <p> Pepe <br/> Frog </p>';
