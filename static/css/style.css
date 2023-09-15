@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: 'Roboto', sans-serif;
+}
+
+:root {
+    --main-color: rgb(116, 45, 228);
+    --second-main-color: rgb(216, 196, 247);
+    --bg-color: rgb(255, 255, 255);
+    --border-color: rgb(210, 210, 210);
+    --text-color: rgb(255, 255, 255);
+    --second-text-color: rgb(0, 0, 0);
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 3%;
+    border-bottom: 1px solid var(--border-color);
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    font-size: 2.5rem;
+    letter-spacing: .1rem;
+    color: var(--main-color);
+    font-weight: 600;
+}
+
+.logo img {
+    width: 60px;
+    height: 60px;
+    margin-right: 1rem;
+}
+
+.navbar a {
+    position: relative;
+    display: inline-flex;
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    border: .2rem solid var(--main-color);
+    padding: 1.5rem;
+    margin-left: 1.5rem;
+    border-radius: 2.5rem;
+    color: var(--main-color);
+    background-color: var(--bg-color);
+    z-index: 1;
+    overflow: hidden;
+}
+
+.navbar a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--second-main-color);
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    transition: .5s;
+}
+
+.navbar a:hover::before {
+    width: 100%;
+}

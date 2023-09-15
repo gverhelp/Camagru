@@ -1,38 +1,31 @@
-{% import "macros/navbar.html" as navbar %}
+<!DOCTYPE html>
+<html lang="en">
 
-<html>
-    <head>
-        <title>Instgram</title>
-        <link rel="icon" type="image/png" href="static/img/instgram.png">
-        <link rel="stylesheet" href="static/css/header.css"/>
-        <link rel="stylesheet" href="static/css/page.css"/>
-        <link rel="stylesheet" href="static/css/modal.css"/>
-    </head>
-    <body>
-        <div id="modalProfilePost" class="modal" onclick="modalProfilePostDisplay()">
-            <div id="modalPost" class="individual-post-ctn">
-                <div class="individual-post-picture-ctn">
-                    <img class="individual-post-picture" src="static/img/lol2.JPG">
-                </div>
-                <div class="individual-post-infos-ctn">
-                    <!-- Add comments here -->
-                </div>
-            </div>
-        </div>
-        {% include 'auth/sign.html' %}
-        <header>
-            <!-- Header content goes here -->
-            {{ navbar.macro(current_user) }}
-        </header>
-        <main>
-            <!-- Main content of the page goes here -->
-            {% block main %} {% endblock %}
-        </main>
-        <footer>
-            <!-- Footer content goes here -->
-            {% block footer %} {% endblock %}
-        </footer>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="static/js/script.js"></script>
+    <title>Instgram</title>
+
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="icon" type="image/x-icon" href="static/img/favicon.ico">
+</head>
+
+<body>
+   <!-- header design  -->
+  <header class="header">
+    <a href="#home" class="logo">
+        <img src="static/img/instgram.png" alt="logo">
+        Instgram
+    </a>
+
+    <div class="searchbar"></div>
+
+    <nav class="navbar">
+        <a href="#signup">Sign Up</a>
+        <a href="#signin">Sign In</a>
+    </nav>
+  </header> 
+</body>
+
 </html>

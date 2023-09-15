@@ -16,19 +16,21 @@ env = Environment(loader=PackageLoader(__name__, 'templates'))
 
 db = SQLAlchemy(app)
 
+
+
 """ 
 Blueprints
 https://flask.palletsprojects.com/en/2.3.x/blueprints/
 it’s a set of operations which can be registered on an application
 """ 
-from views.auth import auth_blueprint
 from views.home import home_blueprint
 
-app.register_blueprint(auth_blueprint)
 app.register_blueprint(home_blueprint)
 
+
+
 """
-Creation of the Databse if it's doesn´t exist
+Creation of the Database if it's doesn´t exist
 """ 
 try:
     os.makedirs(basedir + '/db')
@@ -37,6 +39,8 @@ except OSError:
 
 with app.app_context():
     db.create_all()
+
+
 
 """
 Configuration of LoginManager
