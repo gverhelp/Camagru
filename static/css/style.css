@@ -38,7 +38,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 3%;
+    padding: 0.7rem 3%;
     border-bottom: 1px solid var(--main-color);
     background-color: var(--bg-color);
     z-index: 100;
@@ -102,13 +102,20 @@ body {
     filter: invert(55%) sepia(9%) saturate(2%) hue-rotate(314deg) brightness(91%) contrast(92%);
 }
 
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+}
+
 .navbar-btn {
     position: relative;
     display: inline-flex;
     justify-content: center;
     align-items: center;
     width: 11rem;
-    height: 5rem;
+    height: 100%;
     font-size: 1.8rem;
     font-weight: 500;
     padding-inline: 1.5rem;
@@ -134,11 +141,28 @@ body {
     transition: width .5s;
 }
 
+.switchTheme-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1.5rem;
+    height: 100%;
+    width: 5rem;
+    cursor: pointer;
+    border: 1px solid var(--main-color);
+    border-radius: 50%;
+    background-color: var(--bg-color);
+}
+
+.switchTheme-btn:hover {
+    background-color: var(--main-color);
+}
+
 .navbar-btn:hover::before {
     width: 100%;
 }
 
-@media (max-width: 920px) {
+@media (max-width: 1000px) {
     .searchbar {
         display: none;
     }
