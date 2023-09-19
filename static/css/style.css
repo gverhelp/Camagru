@@ -56,8 +56,8 @@ body {
 }
 
 .logo img {
-    width: 6rem;
-    height: 6rem;
+    width: 5rem;
+    height: 5rem;
     margin-right: 1rem;
 }
 
@@ -72,6 +72,7 @@ body {
     background-color: var(--main-color);
     overflow: hidden;
     border: 1px solid transparent;
+    transition: min-width .3s;
 }
 
 .searchbar:hover {
@@ -169,16 +170,122 @@ body {
 }
 
 .main-ctn {
-    
+    display: flex;
+    padding-top: 6.5rem;
+    height: 100vh;
 }
 
-@media (max-width: 1000px) {
+.main-left {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 300px;
+    transition: width .3s;
+}
+
+.main-center {
+    flex: 1;
+    border-left: 1px solid var(--main-color);
+    border-right: 1px solid var(--main-color);
+}
+
+.main-right {
+    width: 300px;
+    transition: width .3s;
+}
+
+.main-left-ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2.5rem;
+    width: 25rem;
+}
+
+.left-btn {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    width: 100%;
+    height: 5rem;
+    cursor: pointer;
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--main-color);
+    color: var(--text-color);
+    transition: transform .3s;
+    /* transition: transform 0.2s; */
+}
+
+.left-btn:hover {
+    transform: translateY(-2px);
+}
+
+.left-btn:focus {
+    border-bottom: 1px solid var(--text-color);
+    font-weight: 800;
+}
+
+.left-btn img {
+    height: 3rem;
+    width: 3rem;
+    margin-right: 1rem;
+}
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                       Page / Keyframes                           ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
+@media (max-width: 1570px) {
+    .main-right {
+        width: 0;
+    }
+}
+
+@media (max-width: 1220px) {
+    .main-left {
+        width: 120px;
+    }
+
+    .main-left-ctn {
+        width: 9rem;
+    }
+
+    .left-btn {
+        justify-content: center;
+    }
+
+    .left-btn img {
+        margin-right: 0;
+    }
+
+    .left-btn span {
+        display: none;
+    }
+
+    .searchbar {
+        min-width: 25rem;
+    }
+
     .header span {
         display: none;
     }
 }
 
-@media (max-width: 800px) {
+@media screen and (max-width: 750px) {
+    .main-left {
+        width: 0;
+    }
+
+    .main-left-ctn {
+        display: none;
+    }
+
     .searchbar {
         display: none;
     }

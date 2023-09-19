@@ -2,44 +2,70 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Instgram</title>
+	<title>Instgram</title>
 
-  <link rel="stylesheet" href="static/css/style.css">
-  <link rel="icon" type="image/x-icon" href="static/img/favicon.ico">
+	<link rel="stylesheet" href="static/css/style.css">
+	<link rel="icon" type="image/x-icon" href="static/img/favicon.ico">
 </head>
 
 <body>
-  <!-- header design  -->
-  <header class="header">
-    <a href="#home" class="logo">
-      <img src="static/img/instgram.png" alt="logo">
-      <span>Instgram</span>
-    </a>
+	<!-- header design  -->
+	<header class="header">
+		<a href="#home" class="logo">
+			<img id="headerIcon" src="static/img/instgram-black.png" alt="logo">
+			<span>Instgram</span>
+		</a>
 
-    <div class="searchbar">
-      <input type="text" placeholder="Search">
-        <button>
-          <img src="static/img/searchIcon.svg">
-        </button>
-      </input>
-    </div>
+		<div class="searchbar">
+			<input type="text" placeholder="Search">
+			<button>
+				<img src="static/img/searchIcon.svg">
+			</button>
+		</div>
 
-    <nav class="navbar">
-      <button class="switchTheme-btn" onclick="switchTheme()">
-        <img id="switchTheme-icon" src="static/img/moon-empty.svg">
-      </button>
-      <button class="navbar-btn">Sign Up</button>
-      <button class="navbar-btn">Sign In</button>
-    </nav>
-  </header> 
+		<nav class="navbar">
+			<button class="switchTheme-btn" onclick="switchTheme()">
+				<img id="switchTheme-icon" src="static/img/moon-empty.svg">
+			</button>
+			<button class="navbar-btn">Sign Up</button>
+			<button class="navbar-btn">Sign In</button>
+		</nav>
+	</header> 
 
-  <!-- main design -->
-  <div class="main-ctn">
-    
-  </div>
+	<!-- main design -->
+	<div class="main-ctn">
+
+		<div class="main-left">
+			<div class="main-left-ctn">
+				<button class="left-btn">
+					<img id='homeIcon' src="static/img/home-outlined-black.svg">
+					<span> Home </span>
+				</button>
+				<button class="left-btn">
+					<img id='createIcon' src="static/img/create-outlined-black.svg">
+					<span> Create </span>
+				</button>
+				<button class="left-btn">
+					<img id='profileIcon' src="static/img/profile-outlined-black.svg">
+					<span> Profile </span>
+				</button>
+				<button class="left-btn">
+					<img id='settingsIcon' src="static/img/settings-outlined-black.svg">
+					<span> Settings </span>
+				</button>
+			</div>
+		</div>
+
+    	<div class="main-center">
+		</div>
+
+		<div class="main-right">
+		</div>
+
+	</div>
 </body>
-  <script src="static/js/script.js"></script>
+	<script src="static/js/script.js"></script>
 </html>
