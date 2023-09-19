@@ -10,7 +10,6 @@ function switchTheme() {
 
         btn.setAttribute("src", "static/img/sun-empty.svg");
         btn.style.filter = "invert(100%) sepia(95%) saturate(20%) hue-rotate(275deg) brightness(104%) contrast(105%)";
-        // btn.style.background = "transparent";
     } else {
         document.documentElement.style.setProperty('--bg-color', 'rgb(255, 255, 255)');
         document.documentElement.style.setProperty('--text-color', 'rgb(0, 0, 0)');

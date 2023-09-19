@@ -46,6 +46,7 @@ body {
 
 .logo {
     display: flex;
+    flex: 1;
     align-items: center;
     height: 5rem;
     font-size: 2.5rem;
@@ -66,8 +67,11 @@ body {
     align-items: center;
     border-radius: 3rem;
     height: 5rem;
+    max-width: 35rem;
+    min-width: 35rem;
     background-color: var(--main-color);
     overflow: hidden;
+    border: 1px solid transparent;
 }
 
 .searchbar:hover {
@@ -75,9 +79,10 @@ body {
 }
 
 .searchbar input {
+    display: flex;
+    flex: 1;
     margin-left: 2rem;
     font-size: 1.5rem;
-    width: 30rem;
     height: 60%;
     background: transparent;
     border-right: .5px solid var(--second-color);
@@ -104,7 +109,8 @@ body {
 
 .navbar {
     display: flex;
-    justify-content: center;
+    flex: 1;
+    justify-content: flex-end;
     align-items: center;
     height: 5rem;
 }
@@ -114,7 +120,7 @@ body {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 11rem;
+    width: 10rem;
     height: 100%;
     font-size: 1.8rem;
     font-weight: 500;
@@ -145,9 +151,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 1.5rem;
     height: 100%;
     width: 5rem;
+    margin-left: 1.5rem;
     cursor: pointer;
     border: 1px solid var(--main-color);
     border-radius: 50%;
@@ -162,14 +168,18 @@ body {
     width: 100%;
 }
 
+.main-ctn {
+    
+}
+
 @media (max-width: 1000px) {
-    .searchbar {
+    .header span {
         display: none;
     }
 }
 
-@media (max-width: 600px) {
-    .header span {
+@media (max-width: 800px) {
+    .searchbar {
         display: none;
     }
 }
