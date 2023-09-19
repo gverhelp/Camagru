@@ -19,6 +19,14 @@
     --second-text-color: rgb(255, 255, 255);
 }
 
+.dark-mode {
+    --main-color: rgb(55, 68, 77);
+    --second-color: rgb(200, 200, 200);
+    --bg-color: rgb(21, 32, 43);
+    --text-color: rgb(255, 255, 255);
+    --second-text-color: rgb(255, 255, 255);
+}
+
 html {
     font-size: 62.5%;
     overflow-x: hidden;
