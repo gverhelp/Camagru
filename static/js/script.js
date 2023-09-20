@@ -20,6 +20,8 @@ var iconsDict = {
     'settingsIcon' : 'static/img/settings-outlined.svg',
 }
 
+const contentDiv = document.querySelector('.main-ctn');
+
 function changeIcon(iconType) {
 
     let a = 0;
@@ -53,44 +55,34 @@ themeBtn.addEventListener('click', function() {
     }
 })
 
-homeBtn.addEventListener('click', function() {
-    changeIcon('homeIcon');
-})
+// homeBtn.addEventListener('click', function() {
+//     changeIcon('homeIcon');
 
-createBtn.addEventListener('click', function() {
-    changeIcon('createIcon');
-})
+//     html = '<p> Home </p>';
 
-profileBtn.addEventListener('click', function() {
-    changeIcon('profileIcon');
-})
+//     contentDiv.innerHTML = html;
+// })
 
-settingsBtn.addEventListener('click', function() {
-    changeIcon('settingsIcon');
-})
+// createBtn.addEventListener('click', function() {
+//     changeIcon('createIcon');
 
+//     html = '<p> Create </p>';
 
+//     contentDiv.innerHTML = html;
+// })
 
+// profileBtn.addEventListener('click', function() {
+//     changeIcon('profileIcon');
 
-const contentDiv = document.querySelector('.content-main-ctn');
+//     html = '<p> Profile </p>';
 
-const routes = {
-    '/': '<p>This is the home page.</p>',
-    '/about': '<p>This is the about page.</p>',
-    '/contact': '<p>This is the contact page.</p>',
-};
+//     contentDiv.innerHTML = html;
+// })
 
-function renderContent(path) {
-    const content = routes[path] || '<p>Page not found.</p>';
-    contentDiv.innerHTML = content;
-}
+// settingsBtn.addEventListener('click', function() {
+//     changeIcon('settingsIcon');
 
-// Handle initial page load
-window.addEventListener('DOMContentLoaded', () => {
-    renderContent(window.location.pathname);
-});
+//     html = '<p> Settings </p>';
 
-// Handle navigation when user clicks on links
-window.addEventListener('popstate', () => {
-    renderContent(window.location.pathname);
-});
+//     contentDiv.innerHTML = html;
+// })
