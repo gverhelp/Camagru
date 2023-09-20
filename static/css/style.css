@@ -30,12 +30,14 @@
 html {
     font-size: 62.5%;
     overflow-x: hidden;
+    /* height: 100%; */
 }
 
 body {
     font-size: 1.6rem;
     background-color: var(--bg-color);
     color: var(--text-color);
+    /* height: 100%; */
 }
 
 .header {
@@ -177,24 +179,12 @@ body {
     width: 100%;
 }
 
-.main-ctn {
-    display: flex;
-    padding-top: 6.5rem;
-    height: 100%;
-}
-
 .main-left {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     width: 300px;
     transition: width .3s;
-}
-
-.main-center {
-    flex: 1;
-    border-left: 1px solid var(--main-color);
-    border-right: 1px solid var(--main-color);
 }
 
 .main-right {
@@ -243,13 +233,28 @@ body {
     margin-right: 1rem;
 }
 
+.main-ctn {
+    display: flex;
+    padding-top: 6.5rem;
+    height: 100vh;
+    /* background-color: lightblue; */
+}
+
+.main-center {
+    flex: 1;
+    border-left: 1px solid var(--main-color);
+    border-right: 1px solid var(--main-color);
+    /* background-color: blueviolet; */
+}
+
 .main-center-ctn {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex: 1;
     width: 100%;
-    height: 100%;
-    background-color: lightcoral;
+    /* background-color: lightcoral; */
 }
 
 .profile-content {
@@ -257,15 +262,15 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* width: 100%; */
+    /* flex: 1; */
     /* height: 100%; */
+    max-width: 800px;
     background-color: lightblue;
 }
 
 .profile-header {
     display: flex;
     /* height: 200px; */
-    width: 100%;
     flex-direction: row;
     background-color: lightgreen;
 }
