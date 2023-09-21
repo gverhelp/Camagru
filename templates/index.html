@@ -89,7 +89,17 @@
 						</div>
 					</header>
 					<div class="profile-gallery">
-
+						{% for i in range(20) %}
+						<div class="gallery-item">
+							<img alt="picture" src="static/img/lol2.JPG" class="gallery-image">
+							<div class="gallery-item-infos">
+								<img src="static/img/white-heart.png" alt="like">
+								<span> 1376 </span>
+								<img src="static/img/white-comment.png" alt="comment">
+								<span> 202 </span>
+							</div>
+						</div>
+						{% endfor %}
 					</div>
 				</div>
 			</div>

@@ -20,7 +20,7 @@ var iconsDict = {
     'settingsIcon' : 'static/img/settings-outlined.svg',
 }
 
-const contentDiv = document.querySelector('.main-ctn');
+const contentDiv = document.querySelector('.main-center-ctn');
 
 function changeIcon(iconType) {
 
