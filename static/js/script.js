@@ -1,17 +1,33 @@
-var themeBtn = document.querySelector("#switchThemeBtn");
-var homeBtns = document.querySelectorAll("#homeBtn");
-var createBtns = document.querySelectorAll("#createBtn");
-var profileBtns = document.querySelectorAll("#profileBtn");
-var settingsBtns = document.querySelectorAll("#settingsBtn");
+const themeBtn = document.querySelector("#switchThemeBtn");
+const homeBtns = document.querySelectorAll("#homeBtn");
+const createBtns = document.querySelectorAll("#createBtn");
+const profileBtns = document.querySelectorAll("#profileBtn");
+const settingsBtns = document.querySelectorAll("#settingsBtn");
 
-var logoIcon = document.querySelector('#logoIcon');
-var themeIcon = document.querySelector('#themeIcon');
-var homeIcons = document.querySelectorAll('#homeIcon');
-var createIcons = document.querySelectorAll('#createIcon');
-var profileIcons = document.querySelectorAll('#profileIcon');
-var settingsIcons = document.querySelectorAll('#settingsIcon');
+const logoIcon = document.querySelector('#logoIcon');
+const themeIcon = document.querySelector('#themeIcon');
+const homeIcons = document.querySelectorAll('#homeIcon');
+const createIcons = document.querySelectorAll('#createIcon');
+const profileIcons = document.querySelectorAll('#profileIcon');
+const settingsIcons = document.querySelectorAll('#settingsIcon');
+
+const galleryItemInfo = document.querySelectorAll('.gallery-item-infos');
+const modal = document.querySelector('.modal');
 
 const contentDiv = document.querySelector('.main-center-ctn');
+
+
+galleryItemInfo.forEach(item => {
+    item.addEventListener('click', function() {
+        modal.style.display = 'block';
+    });
+});
+
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.style.display = 'none';
+    }
+});
 
 function changeIcon(iconType) {
 
@@ -119,4 +135,24 @@ settingsBtns.forEach(settingsBtn => {
 
         contentDiv.innerHTML = html;
     });
+});
+
+
+
+
+
+
+// Récupération des éléments du DOM
+const openModalBtn = document.getElementById('openModalBtn');
+const closeModalBtn = document.getElementById('closeModalBtn');
+// const modal = document.getElementById('myModal');
+
+// Ajout d'un écouteur d'événement pour ouvrir le modal
+openModalBtn.addEventListener('click', () => {
+    modal.style.display = 'block';
+});
+
+// Ajout d'un écouteur d'événement pour fermer le modal
+closeModalBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
 });
