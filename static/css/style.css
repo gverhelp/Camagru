@@ -19,6 +19,16 @@
     --second-text-color: rgb(255, 255, 255);
 }
 
+image,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+    user-select: none;
+}
+
 .dark-mode {
     --main-color: rgb(55, 68, 77);
     --second-color: rgb(200, 200, 200);
@@ -39,7 +49,14 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     height: 100%;
+    transition: .1s ease-out;
 }
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                              Header                              ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
 .header {
     position: fixed;
@@ -77,14 +94,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex: 1;
     border-radius: 3rem;
     height: 5rem;
-    max-width: 35rem;
-    min-width: 35rem;
+    /* max-width: 45rem; */
+    min-width: 25rem;
     background-color: var(--main-color);
     overflow: hidden;
     border: 1px solid transparent;
-    transition: min-width .3s;
 }
 
 .searchbar:hover {
@@ -125,7 +142,7 @@ body {
     flex: 1;
     justify-content: flex-end;
     align-items: center;
-    height: 5rem;
+    gap: 15px;
 }
 
 .navbar-btn {
@@ -134,11 +151,10 @@ body {
     justify-content: center;
     align-items: center;
     width: 10rem;
-    height: 100%;
+    height: 5rem;
     font-size: 1.8rem;
     font-weight: 500;
     padding-inline: 1.5rem;
-    margin-left: 1.5rem;
     border-radius: 2.5rem;
     color: var(--text-color);
     background-color: var(--bg-color);
@@ -157,7 +173,7 @@ body {
     height: 100%;
     background: var(--main-color);
     z-index: -1;
-    transition: width .5s;
+    transition: width .3s;
 }
 
 .switchTheme-btn {
@@ -166,6 +182,7 @@ body {
     align-items: center;
     height: 100%;
     width: 5rem;
+    height: 5rem;
     margin-left: 1.5rem;
     cursor: pointer;
     border: 1px solid var(--main-color);
@@ -179,6 +196,35 @@ body {
 
 .navbar-btn:hover::before {
     width: 100%;
+}
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                               Main                               ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
+.main-ctn {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: 6.5rem;
+    height: 100%;
+}
+
+.main-center {
+    flex: 1;
+    height: 100%;
+    overflow-y: scroll;
+    border-left: 1px solid var(--main-color);
+    border-right: 1px solid var(--main-color);
+}
+
+.main-center-ctn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: change-page .3s forwards;
 }
 
 .main-left {
@@ -202,6 +248,12 @@ body {
     margin-top: 2.5rem;
     width: 25rem;
 }
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                           Main left                              ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
 .left-btn {
     display: flex;
@@ -235,46 +287,19 @@ body {
     margin-right: 1rem;
 }
 
-.main-ctn {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding-top: 6.5rem;
-    height: 100%;
-
-    /* background-color: lightblue; */
-}
-
-.main-center {
-    flex: 1;
-    height: 100%;
-    overflow-y: scroll;
-    border-left: 1px solid var(--main-color);
-    border-right: 1px solid var(--main-color);
-
-    /* background-color: blueviolet; */
-}
-
-.main-center-ctn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-    /* height: 100%; */
-
-    /* background-color: lightcoral; */
-}
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                             Profile                              ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
 .profile-content {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100%;
     max-width: 800px;
     margin-inline: 1rem;
-
-    /* background-color: lightblue; */
 }
 
 .profile-header {
@@ -282,8 +307,6 @@ body {
     width: 90%;
     margin-top: 2rem;
     margin-bottom: 2rem;
-
-    /* background-color: lightgreen; */
 }
 
 .profile-avatar-ctn {
@@ -291,8 +314,6 @@ body {
     justify-content: center;
     align-items: center;
     margin-right: 2rem;
-
-    /* background-color: lightpink; */
 }
 
 .profile-avatar-ctn img {
@@ -306,8 +327,6 @@ body {
     display: grid;
     flex: 1;
     grid-template-rows: repeat(3, 1fr);
-
-    /* background-color: lightgoldenrodyellow; */
 }
 
 .profile-infos-username {
@@ -315,16 +334,12 @@ body {
     align-items: center;
     font-weight: 500;
     font-size: 1.8rem;
-
-    /* background-color: lightseagreen; */
 }
 
 .profile-infos-stats {
     display: flex;
     align-items: center;
     gap: 10%;
-
-    /* background-color: lightskyblue; */
 }
 
 .profile-infos-stats li {
@@ -342,8 +357,6 @@ body {
     display: flex;
     align-items: center;
     font-size: 1.4rem;
-
-    /* background-color: lightslategray; */
 }
 
 .profile-gallery {
@@ -352,8 +365,6 @@ body {
     grid-gap: .5rem;
     padding-block: 2rem;
     border-top: 1px solid var(--main-color);
-
-    /* background-color: blueviolet; */
 }
 
 .gallery-item {
@@ -363,8 +374,6 @@ body {
     aspect-ratio: 1;
     border-radius: 5px;
     overflow: hidden;
-
-    /* background-color: red; */
 }
 
 .gallery-item:hover .gallery-item-infos {
@@ -400,8 +409,6 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-
-    /* background-color: blue; */
 }
 
 .bottom-navbar {
@@ -435,45 +442,267 @@ body {
 
 .modal {
     display: none;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
     z-index: 101;
 }
 
-.modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                              Modal                               ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
-.close {
+.modal svg {
     position: absolute;
-    top: 10px;
+    top: 1em;
+    right: 1em;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+}
+
+.modal svg:active {
+    color: rgb(150, 150, 150);
+}
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                        Sign containers                           ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
+.sign {
+    display: flex;
+    height: 640px;
+    width: 400px;
+    background: linear-gradient(60deg, #f79533, #E94A3A, #f37055, #ef4e7b, #a166ab, #97187C, #821C7B);
+    animation: animate-zoom 0.3s, animate-gradient 3s ease alternate infinite;
+    padding: 5px;
+    border-radius: 13px;
+    background-size: 300% 300%;
+}
+
+.sign-ctn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    border-radius: 10px;
+}
+
+.auth-input {
+    height: 4rem;
+    width: 25rem;
+    border-radius: 20px;
+    background-color: var(--main-color);
+    margin-top: 20px;
+    padding-left: 20px;
+}
+
+.auth-input:last-of-type {
+    margin-bottom: 20px;
+}
+
+.auth-input:focus {
+    outline: 1px solid rgb(213, 51, 105);
+}
+
+.auth-btn {
+    margin-top: 30px;
+    font-size: 1.8rem;
+    font-weight: 600;
+    padding: 1rem;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    border: 1px solid var(--main-color);
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.auth-btn:hover {
+    border-color: var(--second-color);
+}
+
+@keyframes animate-zoom {
+    from {transform: scale(0)}
+    to {transform: scale(1)}
+}
+
+@keyframes animate-gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                         Dropdown menu                            ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
+.dropdown-btn-ctn {
+    display: none;
+    flex: 1;
+}
+
+.dropdown-btn {
+    float: right;
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.dropdown__menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    top: 75px;
     right: 10px;
-    font-size: 20px;
+    z-index: 101;
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    border: 1px solid var(--main-color);
+}
+
+.dropdown__menu.open {
+    display: flex;
+}
+
+.dropdown-menu-btn {
+    background-color: var(--bg-color);
+    font-size: 1.8rem;
+    padding: 1rem;
+    cursor: pointer;
+    width: 100%;
+    color: var(--text-color);
+}
+
+.dropdown-menu-btn:hover {
+    background-color: var(--second-color);
+}
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                             Home                                 ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
+.home-ctn {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-ctn {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 2rem;
+    border: 1px solid var(--main-color);
+    border-radius: 10px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     cursor: pointer;
 }
 
-/* Styles pour le bouton d'ouverture du modal */
-#openModalBtn {
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+.post-ctn:hover {
+    background-color: var(--main-color);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    margin: 20px;
+}
+
+.post-header-infos {
+    margin-left: 2rem;
+}
+
+.post-header-infos h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.post-header-infos p {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.post-main {
+    display: flex;
+    margin-inline: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.post-main img {
+    width: 100%;
+    height: 100%;
+}
+
+.post-footer {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 55px;
+    margin: 10px 20px;
+}
+
+.post-avatar {
+    height: 6rem;
+    width: 6rem;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.post-footer-btn {
+    display: flex;
+    height: 4.5rem;
+    width: 10rem;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-color);
+    border: 1px solid var(--main-color);
+    color: var(--text-color);
+    border-radius: 20px;
     cursor: pointer;
 }
 
-#openModalBtn:hover {
-    background-color: #0056b3;
+.post-footer-btn:hover {
+    background-color: var(--second-color);
+}
+
+.post-footer-btn svg {
+    height: 3rem;
+    width: 3rem;
+}
+
+.post-footer-btn span {
+    margin-left: 1rem;
 }
 
 /*##########################################################################*/
@@ -513,10 +742,6 @@ body {
         display: none;
     }
 
-    .searchbar {
-        min-width: 25rem;
-    }
-
     .header span {
         display: none;
     }
@@ -535,15 +760,32 @@ body {
         display: none;
     }
 
-    .searchbar {
-        display: none;
-    }
-
     .bottom-navbar {
         display: flex;
     }
 
-    .profile-gallery {
-        padding-bottom: 6rem
+    .profile-content {
+        padding-bottom: 4rem;
+    }
+
+    .home-ctn {
+        margin-bottom: 6rem;
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    .dropdown-btn-ctn {
+        display: block;
+    }
+}
+
+@keyframes change-page {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0%);
     }
 }

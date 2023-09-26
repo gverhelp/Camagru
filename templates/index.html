@@ -30,15 +30,24 @@
 			<button id="switchThemeBtn" class="switchTheme-btn">
 				<img id="themeIcon" src="static/img/moon-outlined.svg">
 			</button>
-			<button class="navbar-btn">Sign Up</button>
-			<button class="navbar-btn">Sign In</button>
+			<button id="sign-up" class="navbar-btn">Sign Up</button>
+			<button id="sign-in" class="navbar-btn">Sign In</button>
 		</nav>
+
+		<div class="dropdown-btn-ctn">
+			<button class="dropdown-btn">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+					<path fill-rule="evenodd" d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+				</svg>
+			</button>
+		</div>
+
 	</header> 
 
 	<!-- main design -->
 	<div class="main-ctn">
 
-		<div class="main-left">
+		<section class="main-left">
 			<div class="main-left-ctn">
 				<button id="homeBtn" class="left-btn">
 					<img id='homeIcon' src="static/img/home-outlined.svg">
@@ -57,91 +66,50 @@
 					<span> Settings </span>
 				</button>
 			</div>
-		</div>
+		</section>
 
-    	<div class="main-center">
+    	<section class="main-center">
 			<div class="main-center-ctn">
-				<div class="profile-content">
-					<header class="profile-header">
-						<div class="profile-avatar-ctn">
-							<img src="static/img/lol2.JPG" alt="profile-picture">
-						</div>
-						<div class="profile-infos">
-							<div class="profile-infos-username">
-								<span> Garreth Verhelpen </span>
-							</div>
-							<div class="profile-infos-stats">
-								<li>
-									<span>72</span>posts
-								</li>
-								<li>
-									<span>359</span>followers
-								</li>
-								<li>
-									<span>406</span>following
-								</li>
-							</div>
-							<div class="profile-infos-bio">
-								<span>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-								</span>
-							</div>
-						</div>
-					</header>
-					<div class="profile-gallery">
-						{% for i in range(20) %}
-						<div class="gallery-item">
-							<img alt="picture" src="static/img/lol.JPG" class="gallery-image">
-							<div class="gallery-item-infos">
-								<img src="static/img/white-heart.png" alt="like">
-								<span> 1376 </span>
-								<img src="static/img/white-comment.png" alt="comment">
-								<span> 202 </span>
-							</div>
-						</div>
-
-						<div class="gallery-item">
-							<img alt="picture" src="static/img/lol2.JPG" class="gallery-image">
-							<div class="gallery-item-infos">
-								<img src="static/img/white-heart.png" alt="like">
-								<span> 1376 </span>
-								<img src="static/img/white-comment.png" alt="comment">
-								<span> 202 </span>
-							</div>
-						</div>
-						{% endfor %}
-					</div>
-				</div>
 			</div>
+		</section>
+
+		<section class="main-right">
+		</section>
+	</div>
+
+	<footer class="bottom-navbar">
+		<button id="homeBtn" class="bottom-navbar-btn">
+			<img id="homeIcon" src="static/img/home-outlined.svg" alt="">
+		</button>
+		<button id="createBtn" class="bottom-navbar-btn">
+			<img id="createIcon" src="static/img/create-outlined.svg" alt="">
+		</button>
+		<button id="profileBtn" class="bottom-navbar-btn">
+			<img id="profileIcon" src="static/img/profile-outlined.svg" alt="">
+		</button>
+		<button id="settingsBtn" class="bottom-navbar-btn">
+			<img id="settingsIcon" src="static/img/settings-outlined.svg" alt="">
+		</button>
+	</footer>
+
+	<div class="modal">
+		<svg id="closeModalBtn" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+			<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+		</svg>
+		<div class="modal-content">
 		</div>
+	</div>
 
-		<div class="main-right">
-		</div>
-
-		<footer class="bottom-navbar">
-			<button id="homeBtn" class="bottom-navbar-btn">
-				<img id="homeIcon" src="static/img/home-outlined.svg" alt="">
-			</button>
-			<button id="createBtn" class="bottom-navbar-btn">
-				<img id="createIcon" src="static/img/create-outlined.svg" alt="">
-			</button>
-			<button id="profileBtn" class="bottom-navbar-btn">
-				<img id="profileIcon" src="static/img/profile-outlined.svg" alt="">
-			</button>
-			<button id="settingsBtn" class="bottom-navbar-btn">
-				<img id="settingsIcon" src="static/img/settings-outlined.svg" alt="">
-			</button>
-		</footer>
-
-		<!-- <button id="openModalBtn">Ouvrir le Modal</button> -->
-		<div class="modal">
-			<div class="modal-content">
-				<span id="closeModalBtn" class="close">&times;</span>
-				<h2>Mon Modal</h2>
-				<p>Ceci est un exemple de modal en CSS.</p>
-			</div>
-		</div>
-
+	<div class="dropdown__menu">
+		<button id="sign-up" class="dropdown-menu-btn">
+			Sign Up
+		</button>
+		<button id="sign-in" class="dropdown-menu-btn">
+			Sign In
+		</button>
+		<button id="switchThemeBtn" class="dropdown-menu-btn">
+			Switch theme
+		</button>
 	</div>
 </body>
 	<script src="static/js/script.js"></script>
