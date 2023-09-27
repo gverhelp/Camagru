@@ -4,25 +4,6 @@
 @import url("./profile.css");
 @import url("./sign.css");
 @import url("./home.css");
-@import url("./keyframes.css");
-
-
-/*##########################################################################*/
-/*##########################################################################*/
-/*####                              Modal                               ####*/
-/*##########################################################################*/
-/*##########################################################################*/
-
-.modal svg {
-    position: absolute;
-    top: 1em;
-    right: 1em;
-    width: 2em;
-    height: 2em;
-    cursor: pointer;
-    color: rgb(255, 255, 255);
-}
-
-.modal svg:active {
-    color: rgb(150, 150, 150);
-}
+@import url("./utils.css");
+@import url("./create.css");
+@import url("./media-queries.css");

@@ -32,6 +32,10 @@
     .header span {
         display: none;
     }
+
+    .create-wrapper {
+        flex-direction: column;
+    }
 }
 
 @media screen and (max-width: 750px) {
