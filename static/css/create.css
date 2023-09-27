@@ -3,6 +3,7 @@
     flex-direction: column;
     margin: 20px;
     width: 100%;
+    max-width: 900px;
     height: 800px;
     gap: 10px;
 }
@@ -17,6 +18,8 @@
     flex: 4;
 
     border: 1px solid var(--main-color);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .create-canva {
@@ -29,11 +32,13 @@
 .create-side {
     flex: 1;
 
+    border-radius: 10px;
     border: 1px solid var(--main-color);
 }
 
 .create-footer {
     flex: 1;
     
+    border-radius: 10px;
     border: 1px solid var(--main-color);
 }
