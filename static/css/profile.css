@@ -16,8 +16,7 @@
 
 .profile-avatar-ctn {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-block: auto;
     margin-right: 2rem;
 }
 

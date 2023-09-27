@@ -236,14 +236,14 @@ var homeContent = () => {
 
         html += '<div class="post-ctn">';
         html += '    <header class="post-header">';
-        html += '        <img class="post-avatar" src="static/img/lol.JPG" alt="avatar">';
+        html += '        <img class="post-avatar" src="static/img/lol4.JPG" alt="avatar">';
         html += '        <div class="post-header-infos">';
         html += '            <h3> Garreth Verhelpen </h3>';
         html += '            <p> Rome, Italy </p>';
         html += '        </div>';
         html += '    </header>';
         html += '    <main class="post-main">';
-        html += '            <img src="static/img/pepe.jpeg" alt="post">';
+        html += '            <img src="static/img/lol3.jpg" alt="post">';
         html += '    </main>';
         html += '    <footer class="post-footer">';
         html += '        <button class="post-footer-btn">';
@@ -329,7 +329,7 @@ profileBtns.forEach(profileBtn => {
         html += '        </header>';
         html += '        <div class="profile-gallery">';
 
-        for (let a = 0; a < 20; a++) {
+        for (let a = 0; a < 10; a++) {
             html += '            <div class="gallery-item">';
             html += '                <img alt="picture" src="static/img/lol.JPG" class="gallery-image">';
             html += '                <div class="gallery-item-infos" data-target="individual-picture">';
@@ -342,6 +342,26 @@ profileBtns.forEach(profileBtn => {
 
             html += '            <div class="gallery-item">';
             html += '                <img alt="picture" src="static/img/lol2.JPG" class="gallery-image">';
+            html += '                <div class="gallery-item-infos">';
+            html += '                    <img src="static/img/white-heart.png" alt="like">';
+            html += '                    <span> 1376 </span>';
+            html += '                    <img src="static/img/white-comment.png" alt="comment">';
+            html += '                    <span> 202 </span>';
+            html += '                </div>';
+            html += '            </div>';
+
+            html += '            <div class="gallery-item">';
+            html += '                <img alt="picture" src="static/img/lol3.jpg" class="gallery-image">';
+            html += '                <div class="gallery-item-infos">';
+            html += '                    <img src="static/img/white-heart.png" alt="like">';
+            html += '                    <span> 1376 </span>';
+            html += '                    <img src="static/img/white-comment.png" alt="comment">';
+            html += '                    <span> 202 </span>';
+            html += '                </div>';
+            html += '            </div>';
+
+            html += '            <div class="gallery-item">';
+            html += '                <img alt="picture" src="static/img/lol4.JPG" class="gallery-image">';
             html += '                <div class="gallery-item-infos">';
             html += '                    <img src="static/img/white-heart.png" alt="like">';
             html += '                    <span> 1376 </span>';
