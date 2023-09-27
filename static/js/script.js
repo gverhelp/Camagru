@@ -14,6 +14,7 @@ const homeIcons = document.querySelectorAll('#homeIcon');
 const createIcons = document.querySelectorAll('#createIcon');
 const profileIcons = document.querySelectorAll('#profileIcon');
 const settingsIcons = document.querySelectorAll('#settingsIcon');
+const menuIcon = document.querySelector('#menuIcon');
 
 // Modal's variables
 const modal = document.querySelector('.modal');
@@ -71,12 +72,17 @@ window.addEventListener('click', (e) => {
 });
 
 dropdownBtn.addEventListener('click', () => {
-    dropdownMenu.classList.toggle('open');
+    if (dropdownMenu.classList.toggle('open')) {
+        menuIcon.src = "static/img/x-mark.svg";
+    } else {
+        menuIcon.src = "static/img/menu-bar.svg";
+    }
 });
 
 dropdownMenuBtns.forEach(dropdownMenuBtn => {
     dropdownMenuBtn.addEventListener('click', () => {
-        dropdownMenu.classList.toggle('open');
+        dropdownMenu.classList.remove('open');
+        menuIcon.src = "static/img/menu-bar.svg";
     });
 });
 
@@ -113,6 +119,7 @@ themeBtns.forEach(themeBtn => {
     
             logoIcon.src = "static/img/instgram-white.png";
             themeIcon.src = "static/img/sun-outlined.svg";
+            menuIcon.style.filter = "invert(100%) sepia(95%) saturate(20%) hue-rotate(275deg) brightness(104%) contrast(105%)";
             themeIcon.style.filter = "invert(100%) sepia(95%) saturate(20%) hue-rotate(275deg) brightness(104%) contrast(105%)";
         } else {
             homeIcons.forEach(homeIcon => {
@@ -133,6 +140,7 @@ themeBtns.forEach(themeBtn => {
     
             logoIcon.src = "static/img/instgram-black.png";
             themeIcon.src = "static/img/moon-outlined.svg";
+            menuIcon.removeAttribute('style');
             themeIcon.removeAttribute('style');
         }
     });
@@ -182,7 +190,7 @@ signInBtns.forEach(signInBtn => {
         html += '        </input>';
         html += '        <input class="auth-input" placeholder="Password" type="password">';
         html += '        </input>';
-        html += '        <button class="auth-btn"> Submit </button>';
+        html += '        <button class="navbar-btn"> Submit </button>';
         html += '    </form>';
         html += '</div>';
     
@@ -190,47 +198,49 @@ signInBtns.forEach(signInBtn => {
     });
 });
 
+var homeContent = () => {
+    let html = '';
+
+    contentDiv.style.display = 'none';
+    changeIcon('homeIcon');
+    setAsFlex(contentDiv);
+
+    html += '<div class="home-ctn">';
+    for (let a = 0; a < 20; a++) {
+    html += '<div class="post-ctn">';
+    html += '    <header class="post-header">';
+    html += '        <img class="post-avatar" src="static/img/lol2.JPG" alt="avatar">';
+    html += '        <div class="post-header-infos">';
+    html += '            <h3> Garreth Verhelpen </h3>';
+    html += '            <p> Rome, Italy </p>';
+    html += '        </div>';
+    html += '    </header>';
+    html += '    <main class="post-main">';
+    html += '            <img src="static/img/lol2.JPG" alt="post">';
+    html += '    </main>';
+    html += '    <footer class="post-footer">';
+    html += '        <button class="post-footer-btn">';
+    html += '            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">';
+    html += '                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />';
+    html += '            </svg>';
+    html += '            <span> 1340 </span>';
+    html += '        </button>';
+    html += '        <button class="post-footer-btn">';
+    html += '            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">';
+    html += '                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />';
+    html += '            </svg>';
+    html += '            <span> 322 </span>';
+    html += '        </button>';
+    html += '    </footer>';
+    html += '</div>';
+    }
+    html += '</div>';
+
+    contentDiv.innerHTML = html;
+};
+
 homeBtns.forEach(homeBtn => {
-    homeBtn.addEventListener('click', function() {
-        let html = '';
-
-        contentDiv.style.display = 'none';
-        changeIcon('homeIcon');
-        setAsFlex(contentDiv);
-
-        html += '				<div class="home-ctn">';
-        for (let a = 0; a < 20; a++) {
-        html += '<div class="post-ctn">';
-        html += '    <header class="post-header">';
-        html += '        <img class="post-avatar" src="static/img/lol2.JPG" alt="avatar">';
-        html += '        <div class="post-header-infos">';
-        html += '            <h3> Garreth Verhelpen </h3>';
-        html += '            <p> Rome, Italy </p>';
-        html += '        </div>';
-        html += '    </header>';
-        html += '    <main class="post-main">';
-        html += '            <img src="static/img/lol2.JPG" alt="post">';
-        html += '    </main>';
-        html += '    <footer class="post-footer">';
-        html += '        <button class="post-footer-btn">';
-        html += '            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">';
-        html += '                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />';
-        html += '            </svg>';
-        html += '            <span> 1340 </span>';
-        html += '        </button>';
-        html += '        <button class="post-footer-btn">';
-        html += '            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">';
-        html += '                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />';
-        html += '            </svg>';
-        html += '            <span> 322 </span>';
-        html += '        </button>';
-        html += '    </footer>';
-        html += '</div>';
-        }
-        html += '</div>';
-
-        contentDiv.innerHTML = html;
-    });
+    homeBtn.addEventListener('click', homeContent);
 });
 
 createBtns.forEach(createBtn => {
@@ -325,3 +335,5 @@ settingsBtns.forEach(settingsBtn => {
         contentDiv.innerHTML = html;
     });
 });
+
+homeContent();
