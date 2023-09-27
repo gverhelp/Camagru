@@ -4,7 +4,7 @@
     justify-content: flex-start;
     align-items: center;
     max-width: 800px;
-    margin-inline: 1rem;
+    margin: 0 1rem;
 }
 
 .profile-header {
@@ -101,7 +101,7 @@
 .gallery-item-infos img {
     width: 2rem;
     height: auto;
-    margin-inline: 1rem .5rem;
+    margin: 0 1rem 0 .5rem;
 }
 
 .gallery-item-infos span {
