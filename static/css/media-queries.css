@@ -10,12 +10,12 @@
 
 @media (max-width: 1220px) {
     .main-left {
-        width: 120px;
+        width: 90px;
     }
 
-    .main-left-ctn {
+    /* .main-left-ctn {
         width: 9rem;
-    }
+    } */
 
     .left-btn {
         justify-content: center;
@@ -41,6 +41,10 @@
 @media screen and (max-width: 750px) {
     .main-left {
         width: 0;
+    }
+
+    .left-btn img {
+        display: none;
     }
 
     .main-center {
