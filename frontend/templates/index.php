@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Instgram</title>
+
+	<link rel="stylesheet" href="../static/css/style.css">
+	<link rel="icon" type="image/x-icon" href="../static/img/favicon.ico">
+</head>
+
+<body>
+	<!-- header design  -->
+	<header class="header">
+		<a class="logo">
+			<img id="logoIcon" src="../static/img/instgram-black.png" alt="logo">
+			<span>Instgram</span>
+		</a>
+
+		<div class="searchbar">
+			<input type="text" placeholder="Search">
+			<button>
+				<img src="../static/img/searchIcon.svg">
+			</button>
+		</div>
+
+		<nav class="navbar">
+			<button id="switchThemeBtn" class="switchTheme-btn">
+				<img id="themeIcon" src="../static/img/moon-outlined.svg">
+			</button>
+			<button id="sign-up" class="button">Sign Up</button>
+			<button id="sign-in" class="button">Sign In</button>
+		</nav>
+
+		<div class="dropdown-btn-ctn">
+			<button class="dropdown-btn">
+				<img id="menuIcon" src="../static/img/menu-bar.svg" alt="menu">
+			</button>
+		</div>
+
+	</header> 
+
+	<!-- main design -->
+	<div class="main-ctn">
+
+		<section class="main-left">
+			<div class="main-left-ctn">
+				<button id="homeBtn" class="left-btn">
+					<img id='homeIcon' src="../static/img/home-outlined.svg">
+					<span> Home </span>
+				</button>
+				<button id="createBtn" class="left-btn">
+					<img id='createIcon' src="../static/img/create-outlined.svg">
+					<span> Create </span>
+				</button>
+				<button id="profileBtn" class="left-btn">
+					<img id='profileIcon' src="../static/img/profile-outlined.svg">
+					<span> Profile </span>
+				</button>
+				<button id="settingsBtn" class="left-btn">
+					<img id='settingsIcon' src="../static/img/settings-outlined.svg">
+					<span> Settings </span>
+				</button>
+			</div>
+		</section>
+
+    	<section class="main-center">
+			<div class="main-center-ctn">
+			</div>
+		</section>
+
+		<section class="main-right">
+
+			<?php
+				session_start();
+				if (isset($_SESSION['username'])) {
+					echo "Bonjour, " . $_SESSION['username'] . " !";
+				} else {
+					echo "Connectez-vous pour voir votre nom d'utilisateur.";
+				}
+
+				if (isset($_SESSION['email'])) {
+					echo "Votre adresse email est :" . $_SESSION['email'] . "!";
+				}
+			?>
+
+			<form action="logout.php" method="post">
+				<button class="button"> Log out </button>
+			</form>
+			
+		</section>
+	</div>
+
+	<footer class="bottom-navbar">
+		<button id="homeBtn" class="bottom-navbar-btn">
+			<img id="homeIcon" src="../static/img/home-outlined.svg" alt="home">
+		</button>
+		<button id="createBtn" class="bottom-navbar-btn">
+			<img id="createIcon" src="../static/img/create-outlined.svg" alt="create">
+		</button>
+		<button id="profileBtn" class="bottom-navbar-btn">
+			<img id="profileIcon" src="../static/img/profile-outlined.svg" alt="profile">
+		</button>
+		<button id="settingsBtn" class="bottom-navbar-btn">
+			<img id="settingsIcon" src="../static/img/settings-outlined.svg" alt="settings">
+		</button>
+	</footer>
+
+	<div class="modal">
+		<svg id="closeModalBtn" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+			<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+		</svg>
+		<div class="modal-content">
+		</div>
+	</div>
+
+	<div class="dropdown__menu">
+		<button id="sign-up" class="dropdown-menu-btn">
+			Sign Up
+		</button>
+		<button id="sign-in" class="dropdown-menu-btn">
+			Sign In
+		</button>
+		<button id="switchThemeBtn" class="dropdown-menu-btn">
+			Switch theme
+		</button>
+	</div>
+</body>
+	<script src="../static/js/script.js"></script>
+</html>
