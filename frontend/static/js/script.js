@@ -1,77 +1,104 @@
-// Button's variables
-const themeBtns = document.querySelectorAll("#switchThemeBtn");
-const homeBtns = document.querySelectorAll("#homeBtn");
-const createBtns = document.querySelectorAll("#createBtn");
-const profileBtns = document.querySelectorAll("#profileBtn");
-const settingsBtns = document.querySelectorAll("#settingsBtn");
-const signUpBtns = document.querySelectorAll('#sign-up');
-const signInBtns = document.querySelectorAll('#sign-in');
+// import { getPost } from './request.js';
 
-// Logo's variables
-const logoIcon = document.querySelector('#logoIcon');
-const themeIcon = document.querySelector('#themeIcon');
-const homeIcons = document.querySelectorAll('#homeIcon');
-const createIcons = document.querySelectorAll('#createIcon');
-const profileIcons = document.querySelectorAll('#profileIcon');
-const settingsIcons = document.querySelectorAll('#settingsIcon');
-const menuIcon = document.querySelector('#menuIcon');
+// Button's variables
+const leftBtns = document.getElementById('leftBtns');
+const bottomBtns = document.getElementById('bottomBtns');
+const navbarBtns = document.getElementById('navbar');
+const dropdownBtn = document.querySelector('.dropdown-btn');
+const dropdownMenu = document.getElementById('dropdownMenu');
 
 // Modal's variables
 const modal = document.querySelector('.modal');
 const closeModalBtn = document.querySelector('#closeModalBtn');
 const modalContent = document.querySelector('.modal-content');
 
-// Gallery's variables
-const galleryItemInfo = document.querySelectorAll('.gallery-item-infos');
-
-// Main content div's variables
-const contentDiv = document.querySelector('.main-center-ctn');
-
-// Dropdown menu
-const dropdownBtn = document.querySelector('.dropdown-btn');
-const dropdownMenu = document.querySelector('.dropdown__menu');
-const dropdownMenuBtns = document.querySelectorAll('.dropdown-menu-btn');
-
 // Theme's variable
 var actualTheme = 0;
 
+//Active page variable
+var activePage = {'home': 0, 'profile': 0, 'create': 0, 'settings': 0};
 
-function changeIcon(iconType) {
+navbarBtns.addEventListener('click', (event) => {
+    let elem = event.target;
 
-    homeIcons.forEach(homeIcon => {
-        homeIcon.src = '../static/img/home-outlined.svg';
-    });
+    if (elem.nodeName != 'BUTTON') {
+        elem = elem.parentNode;
+    }
 
-    createIcons.forEach(createIcon => {
-        createIcon.src = '../static/img/create-outlined.svg';
-    });
+    let name = elem.getAttribute('name');
+    if (name == 'theme') {
+        changeTheme();
+    }
+    if (name == 'signUp') {
+        signUp();
+    }
+    if (name == 'signIn') {
+        signIn();
+    }
+});
 
-    profileIcons.forEach(profileIcon => {
-        profileIcon.src = '../static/img/profile-outlined.svg';
-    });
+leftBtns.addEventListener('click', (event) => {
+    let elem = event.target;
 
-    settingsIcons.forEach(settingsIcon => {
-        settingsIcon.src = '../static/img/settings-outlined.svg';
-    });
+    if (elem.nodeName != 'BUTTON') {
+        elem = elem.parentNode;
+    }
 
-    document.querySelectorAll('#' + iconType).forEach(icon => {
-        icon.src = '../static/img/' + iconType.substring(0, iconType.length - 4) + '-filled.svg';
-    });
-}
+    let name = elem.getAttribute('name');
+    changeIcon(name);
+    changePage(name);
+});
 
-function setAsFlex(elem) {
-    setTimeout(function() {
-        elem.style.display = "flex";
-    });
-}
+bottomBtns.addEventListener('click', (event) => {
+    let elem = event.target;
+
+    if (elem.nodeName != 'BUTTON') {
+        elem = elem.parentNode;
+    }
+
+    let name = elem.getAttribute('name');
+    changeIcon(name);
+    changePage(name);
+});
+
+dropdownMenu.addEventListener('click', (event) => {
+    let elem = event.target;
+    const menuIcon = document.querySelector('.menuIcon');
+
+    dropdownMenu.classList.remove('open');
+    menuIcon.src = "../static/img/menu-bar.svg";
+
+    elemName = elem.getAttribute('name');
+    if (elemName == 'sign-up') {
+        signUp();
+    }
+    else if (elemName == 'sign-in') {
+        signIn();
+    }
+    else if (elemName == 'theme') {
+        changeTheme();
+    }
+});
 
 window.addEventListener('click', (e) => {
     if (e.target === modal) {
         modal.style.display = 'none';
+        document.querySelectorAll('.sign').forEach(e => {
+            e.classList.add('hidden');
+        });
     }
 });
 
+closeModalBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+    document.querySelectorAll('.sign').forEach(e => {
+        e.classList.add('hidden');
+    });
+});
+
 dropdownBtn.addEventListener('click', () => {
+    const menuIcon = document.querySelector('.menuIcon');
+    
     if (dropdownMenu.classList.toggle('open')) {
         menuIcon.src = "../static/img/x-mark.svg";
     } else {
@@ -79,316 +106,278 @@ dropdownBtn.addEventListener('click', () => {
     }
 });
 
-dropdownMenuBtns.forEach(dropdownMenuBtn => {
-    dropdownMenuBtn.addEventListener('click', () => {
-        dropdownMenu.classList.remove('open');
-        menuIcon.src = "../static/img/menu-bar.svg";
+function changeIcon(nameIcon) {
+    const names = ['home', 'create', 'profile', 'settings'];
+
+    names.forEach(name => {
+        const imgs = document.querySelectorAll("." + name + "Img");
+
+        imgs.forEach(img => {
+            if (name == nameIcon) {
+                img.src = '../static/img/' + name + '-filled.svg';
+            }
+            else {
+                img.src = '../static/img/' + name + '-outlined.svg';
+            }
+
+            if (actualTheme == 1) {
+                img.style.filter = "invert(100%) sepia(95%) saturate(20%) hue-rotate(275deg) brightness(104%) contrast(105%)";
+            }
+            else {
+                img.removeAttribute('style');
+            }
+        });
     });
-});
+}
 
-closeModalBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-});
+function changeTheme() {
+    const logoIcon = document.querySelector('.logoIcon');
+    const themeIcon = document.querySelector('.themeIcon');
+    const menuIcon = document.querySelector('.menuIcon');
+    const signInLogo = document.getElementById('signInLogo');
+    const signUpLogo = document.getElementById('signUpLogo');
 
-galleryItemInfo.forEach(item => {
-    item.addEventListener('click', function() {
-        modal.style.display = 'flex';
-        modalContent.innerHTML = 'Indiv';
-    });
-});
 
-themeBtns.forEach(themeBtn => {
-    themeBtn.addEventListener('click', function() {
-
-        if ((actualTheme = document.body.classList.toggle('dark-mode'))) {
-            homeIcons.forEach(homeIcon => {
-                homeIcon.style.filter = "invert(100%) sepia(95%) saturate(20%) hue-rotate(275deg) brightness(104%) contrast(105%)";
-            });
-        
-            createIcons.forEach(createIcon => {
-                createIcon.style.filter = "invert(100%) sepia(95%) saturate(20%) hue-rotate(275deg) brightness(104%) contrast(105%)";
-            });
-        
-            profileIcons.forEach(profileIcon => {
-                profileIcon.style.filter = "invert(100%) sepia(95%) saturate(20%) hue-rotate(275deg) brightness(104%) contrast(105%)";
-            });
-        
-            settingsIcons.forEach(settingsIcon => {
-                settingsIcon.style.filter = "invert(100%) sepia(95%) saturate(20%) hue-rotate(275deg) brightness(104%) contrast(105%)";
-            });
-    
-            logoIcon.src = "../static/img/instgram-white.png";
-            themeIcon.src = "../static/img/sun-outlined.svg";
-            menuIcon.style.filter = "invert(100%) sepia(95%) saturate(20%) hue-rotate(275deg) brightness(104%) contrast(105%)";
-            themeIcon.style.filter = "invert(100%) sepia(95%) saturate(20%) hue-rotate(275deg) brightness(104%) contrast(105%)";
-        } else {
-            homeIcons.forEach(homeIcon => {
-                homeIcon.removeAttribute('style');
-            });
-        
-            createIcons.forEach(createIcon => {
-                createIcon.removeAttribute('style');
-            });
-        
-            profileIcons.forEach(profileIcon => {
-                profileIcon.removeAttribute('style');
-            });
-        
-            settingsIcons.forEach(settingsIcon => {
-                settingsIcon.removeAttribute('style');
-            });
-    
-            logoIcon.src = "../static/img/instgram-black.png";
-            themeIcon.src = "../static/img/moon-outlined.svg";
-            menuIcon.removeAttribute('style');
-            themeIcon.removeAttribute('style');
-        }
-    });
-});
-
-signUpBtns.forEach(signUpBtn => {
-    signUpBtn.addEventListener('click', () => {
-        let html = '';
-        let themeLogo = 'src="../static/img/instgram-black.png"';
-        modal.style.display = 'flex';
-    
-        if (actualTheme == 1) {
-            themeLogo = 'src="../static/img/instgram-white.png"';
-        }
-    
-        html += '<div class="sign" id="signup" hidden>';
-        html += '    <form class="sign-ctn" action="signup.php" method="post">';
-        html += '        <img id="logoIcon" ' + themeLogo + ' alt="logo" style="margin-bottom: 40px; width: 135px; height: auto;">';
-        html += '        <input class="auth-input" placeholder="Username" type="text" name="username" required>';
-        html += '        </input>';
-        html += '        <input class="auth-input" placeholder="Email" type="email" name="email" required>';
-        html += '        </input>';
-        html += '        <input class="auth-input" placeholder="Password" type="password" name="password" required>';
-        html += '        </input>';
-        html += '        <button class="button"> Submit </button>';
-        html += '    </form>';
-        html += '</div>';
-    
-        modalContent.innerHTML = html;
-    });
-});
-
-signInBtns.forEach(signInBtn => {
-    signInBtn.addEventListener('click', () => {
-        let html = '';
-        let themeLogo = 'src="../static/img/instgram-black.png"';
-        modal.style.display = 'flex';
-    
-        if (actualTheme == 1) {
-            themeLogo = 'src="../static/img/instgram-white.png"';
-        }
-    
-        html += '<div class="sign" id="signin" hidden>';
-        html += '    <form class="sign-ctn" action="signin.php" method="post">';
-        html += '        <img id="logoIcon" ' + themeLogo + ' alt="logo" style="margin-bottom: 40px; width: 135px; height: auto;">';
-        html += '        <input class="auth-input" placeholder="Username" type="text" name="username" required>';
-        html += '        </input>';
-        html += '        <input class="auth-input" placeholder="Password" type="password" name="password" required>';
-        html += '        </input>';
-        html += '        <button class="button"> Submit </button>';
-        html += '    </form>';
-        html += '</div>';
-    
-        modalContent.innerHTML = html;
-    });
-});
-
-var homeContent = () => {
-    let html = '';
-
-    contentDiv.style.display = 'none';
-    changeIcon('homeIcon');
-    setAsFlex(contentDiv);
-
-    html += '<div class="home-ctn">';
-    for (let a = 0; a < 20; a++) {
-        html += '<div class="post-ctn">';
-        html += '    <header class="post-header">';
-        html += '        <img class="post-avatar" src="../static/img/lol2.JPG" alt="avatar">';
-        html += '        <div class="post-header-infos">';
-        html += '            <h3> Garreth Verhelpen </h3>';
-        html += '            <p> Rome, Italy </p>';
-        html += '        </div>';
-        html += '    </header>';
-        html += '    <main class="post-main">';
-        html += '            <img src="../static/img/lol2.JPG" alt="post">';
-        html += '    </main>';
-        html += '    <footer class="post-footer">';
-        html += '        <button class="post-footer-btn">';
-        html += '            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">';
-        html += '                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />';
-        html += '            </svg>';
-        html += '            <span> 1340 </span>';
-        html += '        </button>';
-        html += '        <button class="post-footer-btn">';
-        html += '            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">';
-        html += '                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />';
-        html += '            </svg>';
-        html += '            <span> 322 </span>';
-        html += '        </button>';
-        html += '    </footer>';
-        html += '</div>';
-
-        html += '<div class="post-ctn">';
-        html += '    <header class="post-header">';
-        html += '        <img class="post-avatar" src="../static/img/lol4.JPG" alt="avatar">';
-        html += '        <div class="post-header-infos">';
-        html += '            <h3> Garreth Verhelpen </h3>';
-        html += '            <p> Rome, Italy </p>';
-        html += '        </div>';
-        html += '    </header>';
-        html += '    <main class="post-main">';
-        html += '            <img src="../static/img/lol3.jpg" alt="post">';
-        html += '    </main>';
-        html += '    <footer class="post-footer">';
-        html += '        <button class="post-footer-btn">';
-        html += '            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">';
-        html += '                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />';
-        html += '            </svg>';
-        html += '            <span> 1340 </span>';
-        html += '        </button>';
-        html += '        <button class="post-footer-btn">';
-        html += '            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">';
-        html += '                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />';
-        html += '            </svg>';
-        html += '            <span> 322 </span>';
-        html += '        </button>';
-        html += '    </footer>';
-        html += '</div>';
+    actualTheme = document.body.classList.toggle('dark-mode');
+    if (actualTheme == 1) {
+        logoIcon.src = "../static/img/instgram-white.png";
+        themeIcon.src = "../static/img/sun-outlined.svg";
+        menuIcon.style.filter = "invert(100%) sepia(95%) saturate(20%) hue-rotate(275deg) brightness(104%) contrast(105%)";
+        themeIcon.style.filter = "invert(100%) sepia(95%) saturate(20%) hue-rotate(275deg) brightness(104%) contrast(105%)";
+        signInLogo.src = "../static/img/instgram-white.png";
+        signUpLogo.src = "../static/img/instgram-white.png";
     }
-    html += '</div>';
+    else {
+        logoIcon.src = "../static/img/instgram-black.png";
+        themeIcon.src = "../static/img/moon-outlined.svg";
+        signInLogo.src = "../static/img/instgram-black.png";
+        signUpLogo.src = "../static/img/instgram-black.png";
+        menuIcon.removeAttribute('style');
+        themeIcon.removeAttribute('style');
+    }
+    changeIcon('');
+}
 
-    contentDiv.innerHTML = html;
-};
+function changePage(name) {
+    hiddenPage(name);
 
-homeBtns.forEach(homeBtn => {
-    homeBtn.addEventListener('click', homeContent);
-});
+    switch (name) {
+        case 'home':
+            // if (!activePage['home']) {
+                // active(name);
+                home();
+            // }
+            break;
+        case 'create':
+            // if (!activePage['create']) {
+                // active(name);
+                create();
+            // }
+            break;
+        case 'profile':
+            // if (!activePage['profile']) {
+                // active(name);
+                profile();
+            // }
+            break;
+        case 'settings':
+            // if (!activePage['settings']) {
+                // active(name);
+                settings();
+            // }
+            break;
+    }
+}
 
-createBtns.forEach(createBtn => {
-    createBtn.addEventListener('click', function() {
-        let html = '';
+// function active(name) {
+//     for (key in activePage) {
+//         activePage[key] = 0;
+//         if (key == name) {
+//             activePage[key] = 1;
+//         }
+//     }
+// }
 
-        contentDiv.style.display = 'none';
-        changeIcon('createIcon');
-        setAsFlex(contentDiv);
-
-        html += '<div class="create-ctn">';
-        html += '   <div class="create-wrapper">';
-        html += '       <div class="create-main">';
-        html += '           <div class="create-canva"></div>';
-        html += '           </div>';
-        html += '           <div class="create-side"></div>';
-        html += '       </div>';
-        html += '   <div class="create-footer"></div>';
-        html += '</div>';
-
-        contentDiv.innerHTML = html;
-    });
-});
-
-profileBtns.forEach(profileBtn => {
-    profileBtn.addEventListener('click', function() {
-        let html = '';
-
-        contentDiv.style.display = 'none';
-        changeIcon('profileIcon');
-        setAsFlex(contentDiv);
-
-        html += '   <div class="profile-content">';
-        html += '        <header class="profile-header">';
-        html += '            <div class="profile-avatar-ctn">';
-        html += '                <img src="../static/img/lol2.JPG" alt="profile-picture">';
-        html += '            </div>';
-        html += '            <div class="profile-infos">';
-        html += '                <div class="profile-infos-username">';
-        html += '                    <span> Garreth Verhelpen </span>';
-        html += '                </div>';
-        html += '                <div class="profile-infos-stats">';
-        html += '                    <li>';
-        html += '                        <span>72</span>posts';
-        html += '                    </li>';
-        html += '                    <li>';
-        html += '                        <span>359</span>followers';
-        html += '                    </li>';
-        html += '                    <li>';
-        html += '                        <span>406</span>following';
-        html += '                    </li>';
-        html += '                </div>';
-        html += '                <div class="profile-infos-bio">';
-        html += '                    <span>';
-        html += '                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-        html += '                    </span>';
-        html += '                </div>';
-        html += '            </div>';
-        html += '        </header>';
-        html += '        <div class="profile-gallery">';
-
-        for (let a = 0; a < 10; a++) {
-            html += '            <div class="gallery-item">';
-            html += '                <img alt="picture" src="../static/img/lol.JPG" class="gallery-image">';
-            html += '                <div class="gallery-item-infos" data-target="individual-picture">';
-            html += '                    <img src="../static/img/white-heart.png" alt="like">';
-            html += '                    <span> 1376 </span>';
-            html += '                    <img src="../static/img/white-comment.png" alt="comment">';
-            html += '                    <span> 202 </span>';
-            html += '                </div>';
-            html += '            </div>';
-
-            html += '            <div class="gallery-item">';
-            html += '                <img alt="picture" src="../static/img/lol2.JPG" class="gallery-image">';
-            html += '                <div class="gallery-item-infos">';
-            html += '                    <img src="../static/img/white-heart.png" alt="like">';
-            html += '                    <span> 1376 </span>';
-            html += '                    <img src="../static/img/white-comment.png" alt="comment">';
-            html += '                    <span> 202 </span>';
-            html += '                </div>';
-            html += '            </div>';
-
-            html += '            <div class="gallery-item">';
-            html += '                <img alt="picture" src="../static/img/lol3.jpg" class="gallery-image">';
-            html += '                <div class="gallery-item-infos">';
-            html += '                    <img src="../static/img/white-heart.png" alt="like">';
-            html += '                    <span> 1376 </span>';
-            html += '                    <img src="../static/img/white-comment.png" alt="comment">';
-            html += '                    <span> 202 </span>';
-            html += '                </div>';
-            html += '            </div>';
-
-            html += '            <div class="gallery-item">';
-            html += '                <img alt="picture" src="../static/img/lol4.JPG" class="gallery-image">';
-            html += '                <div class="gallery-item-infos">';
-            html += '                    <img src="../static/img/white-heart.png" alt="like">';
-            html += '                    <span> 1376 </span>';
-            html += '                    <img src="../static/img/white-comment.png" alt="comment">';
-            html += '                    <span> 202 </span>';
-            html += '                </div>';
-            html += '            </div>';
+function hiddenPage(name) {
+    for (key in activePage) {
+        document.querySelector('.' + key + '-ctn').classList.add('hidden');
+        if (key == name) {
+            document.querySelector('.' + key + '-ctn').classList.remove('hidden');
         }
+    }
+}
 
-        html += '        </div>';
-        html += '    </div>';
+// function setAsFlex(elem) {
+//     setTimeout(function() {
+//         elem.style.display = "flex";
+//     });
+// }
 
-        contentDiv.innerHTML = html;
+async function home() {
+
+    const postsData = [
+        {
+            avatarURL: '../static/img/lol2.JPG',
+            username: 'Garreth Verhelpen',
+            localisation: 'Altitude 100, Forest',
+            pictureURL: '../static/img/lol2.JPG',
+            like: '1345',
+            comment: '378'
+        },
+        {
+            avatarURL: '../static/img/lol2.JPG',
+            username: 'Garreth Verhelpen',
+            localisation: 'Rome, Italy',
+            pictureURL: '../static/img/lol4.JPG',
+            like: '2456',
+            comment: '506'
+        },
+        {
+            avatarURL: '../static/img/lol3.JPG',
+            username: 'Camille Arcoulin',
+            localisation: 'Lolo',
+            pictureURL: '../static/img/lol3.JPG',
+            like: '456',
+            comment: '45'
+        },
+        {
+            avatarURL: '../static/img/lol2.JPG',
+            username: 'Garreth Verhelpen',
+            localisation: 'Rome, Italy',
+            pictureURL: '../static/img/lol.JPG',
+            like: '1345',
+            comment: '378'
+        }
+    ]
+
+    // const postsData = await getPost(userID);
+    // console.log(postsData);
+    // console.log(userID);
+
+    const template = document.getElementById('post-ctn');
+    const homeCtn = document.querySelector('.home-ctn');
+
+    postsData.forEach(post => {
+        const postCtn = document.importNode(template.content, true);
+      
+        const postName = postCtn.querySelector('#post-name');
+        const postLocalisation = postCtn.querySelector('#post-localisation');
+        const postAvatar = postCtn.querySelector('#post-avatar');
+        const postPicture = postCtn.querySelector('#post-picture');
+        const postLike = postCtn.querySelector('#post-like');
+        const postComment = postCtn.querySelector('#post-comment');
+      
+        postName.textContent = post.username;
+        postLocalisation.textContent = post.localisation;
+        postAvatar.src = post.avatarURL;
+        postPicture.src = post.pictureURL;
+        postLike.textContent = post.like;
+        postComment.textContent = post.comment;
+      
+        homeCtn.appendChild(postCtn);
     });
-});
+}
 
-settingsBtns.forEach(settingsBtn => {
-    settingsBtn.addEventListener('click', function() {
-        let html = '';
+function profile() {
 
-        contentDiv.style.display = 'none';
-        changeIcon('settingsIcon');
-        setAsFlex(contentDiv);
-        html = '<p> Settings </p>';
+    const userData = {
+        username: 'Garreth Verhelpen',
+        avatarURL: '../static/img/lol2.JPG',
+        postNbr: 72,
+        followers: 359,
+        following: 406,
+        bio: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat ad reiciendis quo repellendus recusandae quas odit similique',
+        gallery: [
+            {
+                imageURL: '../static/img/lol.JPG',
+                likes: 1376,
+                comments: 202
+            },
+            {
+                imageURL: '../static/img/lol2.JPG',
+                likes: 1376,
+                comments: 202
+            },
+            {
+                imageURL: '../static/img/lol3.JPG',
+                likes: 1376,
+                comments: 202
+            },
+            {
+                imageURL: '../static/img/lol4.JPG',
+                likes: 1376,
+                comments: 202
+            },
+            {
+                imageURL: '../static/img/lol.JPG',
+                likes: 1376,
+                comments: 202
+            },
+            {
+                imageURL: '../static/img/lol2.JPG',
+                likes: 1376,
+                comments: 202
+            },
+            {
+                imageURL: '../static/img/lol3.JPG',
+                likes: 1376,
+                comments: 202
+            },
+            {
+                imageURL: '../static/img/lol4.JPG',
+                likes: 1376,
+                comments: 202
+            },
+        ]
+    };
 
-        contentDiv.innerHTML = html;
+    const template = document.getElementById('gallery-ctn');
+    const profileGallery = document.querySelector('.profile-gallery');
+
+    document.getElementById('profile-picture').src = userData.avatarURL;
+    document.getElementById('profile-name').textContent = userData.username;
+    document.getElementById('profile-posts').textContent = userData.postNbr;
+    document.getElementById('profile-followers').textContent = userData.followers;
+    document.getElementById('profile-following').textContent = userData.following;
+    document.getElementById('profile-bio').textContent = userData.bio;
+
+    userData.gallery.forEach(item => {
+        const itemCtn = document.importNode(template.content, true);
+
+        const itemIMG = itemCtn.querySelector('.gallery-image');
+        const itemLikes = itemCtn.querySelector('#gallery-like');
+        const itemComments = itemCtn.querySelector('#gallery-comment');
+
+        itemIMG.src = item.imageURL;
+        itemLikes.textContent = item.likes;
+        itemComments.textContent = item.comments;
+
+        profileGallery.appendChild(itemCtn);
     });
-});
+}
 
-homeContent();
+function create() {
+}
+
+function settings() {
+}
+
+function signUp() {
+    const signup = document.getElementById('signup');
+
+    signup.classList.remove('hidden');
+    modalContent.appendChild(signup);
+    modal.style.display = 'flex';
+}
+
+function signIn() {
+    const signin = document.getElementById('signin');
+
+    signin.classList.remove('hidden');
+    modalContent.appendChild(signin);
+    modal.style.display = 'flex';
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    changePage('home');
+});

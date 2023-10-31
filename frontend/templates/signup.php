@@ -1,27 +1,39 @@
 <?php
 
+$usernameErr = $emailErr = $passwordErr = "";
+
 session_start();
 
-// Vérifier si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Valider et récupérer les données du formulaire
-    if (filter_has_var(INPUT_POST, 'username')) {
-        $username = htmlentities($_POST['username']);
+    if (filter_has_var(INPUT_POST, 'username') == FALSE || filter_has_var(INPUT_POST, 'email') == FALSE || filter_has_var(INPUT_POST, 'password') == FALSE) {
+        echo "Method not supported.";
+        exit();
     }
 
-    if (filter_has_var(INPUT_POST, 'email')) {
+    if (!empty($_POST['username'])) {
+        $username = verify_input($_POST['username']);
+    } else {
+        $usernameErr =  "Username is required.";
+        exit();
+    }
+
+    if (!empty($_POST['email'])) {
+        $email = verify_input($_POST["email"]);
         if (filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL) == FALSE) {
-            echo 'Email not valid.';
+            $emailErr = "Email format not valid.";
             exit();
         }
-        else {
-            $email = htmlentities($_POST["email"]);
-        }
+    } else {
+        $emailErr =  "Email is required.";
+        exit();
     }
 
-    if (filter_has_var(INPUT_POST, 'password')) {
+    if (!empty($_POST['password'])) {
         $password = password_hash($_POST["password"], PASSWORD_DEFAULT); // Hasher le mot de passe
+    } else {
+        $passwordErr =  "Password is required.";
+        exit();
     }
 
     // Connexion à la base de données
@@ -59,8 +71,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Exécuter la requête
         if ($stmt->execute()) {
-            $_SESSION['username'] = $username;
-            $_SESSION['email'] = $email;
+            $get_user = "SELECT * FROM users WHERE username = ?";
+            $get_user_prep = $mysqli->prepare($get_user);
+            $get_user_prep->bind_param("s", $username);
+            $get_user_prep->execute();
+            $result = $get_user_prep->get_result();
+
+            $row = $result->fetch_assoc();
+            $_SESSION['userid'] = $row['idusers'];
+
             header("Location: index.php");
             $stmt->close();
             $mysqli->close();
@@ -73,6 +92,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
         $mysqli->close();
     }
+}
+
+function verify_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }
 
 ?>
