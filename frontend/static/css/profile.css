@@ -93,6 +93,12 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .gallery-item-infos {
     display: none;
     z-index: 1;
@@ -101,17 +107,11 @@
 .gallery-item-infos img {
     width: 2rem;
     height: auto;
-    margin: 0 1rem 0 .5rem;
+    margin: 0 5px 0 10px;
 }
 
 .gallery-item-infos span {
     font-size: 1.6rem;
-    font-size: 600;
+    font-weight: 600;
     color: rgb(255, 255, 255);
-}
-
-.gallery-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }

@@ -1,5 +1,5 @@
 .sign {
-    display: flex;
+    display: none;
     height: 640px;
     width: 400px;
     background: linear-gradient(60deg, #f79533, #E94A3A, #f37055, #ef4e7b, #a166ab, #97187C, #821C7B);
@@ -7,6 +7,11 @@
     padding: 5px;
     border-radius: 13px;
     background-size: 300% 300%;
+    box-shadow: 0px 0px 300px rgba(255, 255, 255, 0.2);
+}
+
+.sign.open {
+    display: flex;
 }
 
 .sign-ctn {

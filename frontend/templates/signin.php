@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (!empty($_POST['password'])) {
-        // $password = password_hash($_POST["password"], PASSWORD_DEFAULT); // Hasher le mot de passe ?
         $password = $_POST['password'];
     } else {
         $passwordErr =  "Password is required.";
@@ -51,9 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['id'] = $row['idusers'];
             
             header("Location: index.php");
-            $stmt->close();
-            $mysqli->close();
-            exit();
         } else {
             echo "Invalid password. Please try again.";
         }

@@ -1,8 +1,13 @@
-export async function getPost(id) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onload = function() {
-        return this.responseText;
+export async function getUserData(id) {
+  try {
+    const response = await fetch(`get_user_data.php?userId=${id}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    xmlhttp.open("GET","getuser.php?id=" + id, true);
-    xmlhttp.send();
+    const userData = await response.json();
+    return userData;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    return null; // Handle the error or return a default value as needed
+  }
 }

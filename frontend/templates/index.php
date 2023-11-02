@@ -13,6 +13,7 @@
 
 	<link rel="stylesheet" href="../static/css/style.css">
 	<link rel="icon" type="image/x-icon" href="../static/img/favicon.ico">
+
 </head>
 
 <body>
@@ -171,14 +172,10 @@
 		<section class="main-right">
 
 			<?php
-				if (isset($_SESSION['username'])) {
-					echo "Bonjour, " . $_SESSION['username'] . " !";
+				if (isset($_SESSION['id'])) {
+					echo "Bonjour, " . $_SESSION['id'] . " !";
 				} else {
 					echo "Connectez-vous pour voir votre nom d'utilisateur.";
-				}
-
-				if (isset($_SESSION['email'])) {
-					echo "Votre adresse email est :" . $_SESSION['email'] . "!";
 				}
 			?>
 
@@ -215,7 +212,7 @@
 	</div>
 
 	<!-- dropdown menu -->
-	<div class="dropdown-menu" id="dropdownMenu">
+	<div class="dropdown-menu">
 		<button name="sign-up" class="dropdown-menu-btn">
 			Sign Up
 		</button>
@@ -228,7 +225,7 @@
 	</div>
 
 	<!-- Sign Up  -->
-	<div class="sign hidden" id="signup">
+	<div class="sign" id="signup">
 		<form class="sign-ctn" method="post" action="signup.php">
 			<img id="signUpLogo" src="../static/img/instgram-black.png" alt="logo" style="margin-bottom: 40px; width: 135px; height: auto;">
 			<input class="auth-input" placeholder="Username" type="text" name="username">
@@ -239,19 +236,26 @@
 	</div>
 
 	<!-- Sign In -->
-	<div class="sign hidden" id="signin">
+	<div class="sign" id="signin">
 		<form class="sign-ctn" action="signin.php" method="post">
 			<img id="signInLogo" src="../static/img/instgram-black.png" alt="logo" style="margin-bottom: 40px; width: 135px; height: auto;">
 			<input class="auth-input" placeholder="Username" type="text" name="username">
-			</input>
 			<input class="auth-input" placeholder="Password" type="password" name="password">
-			</input>
 			<button class="button"> Submit </button>
 		</form>
 	</div>
 
 </body>
-	<script src="../static/js/script.js">
-		var userID = $_SESSION['id'];
+
+	<script>
+		var userId = <?php	if (isset($_SESSION['id'])) {
+								echo json_encode($_SESSION['id']);
+							} else {
+								echo -1;
+							} ?>;
 	</script>
+
+	<script type="module" src="../static/js/script.js">
+	</script>
+	
 </html>

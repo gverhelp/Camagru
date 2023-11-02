@@ -1,11 +1,11 @@
-// import { getPost } from './request.js';
+import { getUserData } from './requests.js';
 
 // Button's variables
 const leftBtns = document.getElementById('leftBtns');
 const bottomBtns = document.getElementById('bottomBtns');
 const navbarBtns = document.getElementById('navbar');
 const dropdownBtn = document.querySelector('.dropdown-btn');
-const dropdownMenu = document.getElementById('dropdownMenu');
+const dropdownMenu = document.querySelector('.dropdown-menu');
 
 // Modal's variables
 const modal = document.querySelector('.modal');
@@ -16,7 +16,7 @@ const modalContent = document.querySelector('.modal-content');
 var actualTheme = 0;
 
 //Active page variable
-var activePage = {'home': 0, 'profile': 0, 'create': 0, 'settings': 0};
+var pages = {'home': 0, 'profile': 0, 'create': 0, 'settings': 0};
 
 navbarBtns.addEventListener('click', (event) => {
     let elem = event.target;
@@ -56,7 +56,7 @@ bottomBtns.addEventListener('click', (event) => {
         elem = elem.parentNode;
     }
 
-    let name = elem.getAttribute('name');
+    let name = elem.getAttribute('name');6
     changeIcon(name);
     changePage(name);
 });
@@ -68,7 +68,7 @@ dropdownMenu.addEventListener('click', (event) => {
     dropdownMenu.classList.remove('open');
     menuIcon.src = "../static/img/menu-bar.svg";
 
-    elemName = elem.getAttribute('name');
+    let elemName = elem.getAttribute('name');
     if (elemName == 'sign-up') {
         signUp();
     }
@@ -78,22 +78,6 @@ dropdownMenu.addEventListener('click', (event) => {
     else if (elemName == 'theme') {
         changeTheme();
     }
-});
-
-window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.style.display = 'none';
-        document.querySelectorAll('.sign').forEach(e => {
-            e.classList.add('hidden');
-        });
-    }
-});
-
-closeModalBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-    document.querySelectorAll('.sign').forEach(e => {
-        e.classList.add('hidden');
-    });
 });
 
 dropdownBtn.addEventListener('click', () => {
@@ -106,6 +90,23 @@ dropdownBtn.addEventListener('click', () => {
     }
 });
 
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.classList.remove('open');
+        document.querySelectorAll('.sign').forEach(s => {
+            s.classList.remove('open');
+        });
+    }
+});
+
+closeModalBtn.addEventListener('click', () => {
+    modal.classList.remove('open');
+    document.querySelectorAll('.sign').forEach(s => {
+        s.classList.remove('open');
+    });
+});
+
+
 function changeIcon(nameIcon) {
     const names = ['home', 'create', 'profile', 'settings'];
 
@@ -117,7 +118,8 @@ function changeIcon(nameIcon) {
                 img.src = '../static/img/' + name + '-filled.svg';
             }
             else {
-                img.src = '../static/img/' + name + '-outlined.svg';
+                if (nameIcon != '')
+                    img.src = '../static/img/' + name + '-outlined.svg';
             }
 
             if (actualTheme == 1) {
@@ -163,43 +165,34 @@ function changePage(name) {
 
     switch (name) {
         case 'home':
-            // if (!activePage['home']) {
-                // active(name);
+            if (!pages['home']) {
                 home();
-            // }
+                pages['home'] = 1;
+            }
             break;
         case 'create':
-            // if (!activePage['create']) {
-                // active(name);
+            if (!pages['create']) {
                 create();
-            // }
+                pages['create'] = 1;
+            }
             break;
         case 'profile':
-            // if (!activePage['profile']) {
-                // active(name);
+            if (!pages['profile']) {
                 profile();
-            // }
+                pages['profile'] = 1;
+            }
             break;
         case 'settings':
-            // if (!activePage['settings']) {
-                // active(name);
+            if (!pages['settings']) {
                 settings();
-            // }
+                pages['settings'] = 1;
+            }
             break;
     }
 }
 
-// function active(name) {
-//     for (key in activePage) {
-//         activePage[key] = 0;
-//         if (key == name) {
-//             activePage[key] = 1;
-//         }
-//     }
-// }
-
 function hiddenPage(name) {
-    for (key in activePage) {
+    for (let key in pages) {
         document.querySelector('.' + key + '-ctn').classList.add('hidden');
         if (key == name) {
             document.querySelector('.' + key + '-ctn').classList.remove('hidden');
@@ -213,21 +206,21 @@ function hiddenPage(name) {
 //     });
 // }
 
-async function home() {
+function home() {
 
     const postsData = [
         {
             avatarURL: '../static/img/lol2.JPG',
-            username: 'Garreth Verhelpen',
+            username: 'Carla Sanchez Boudart',
             localisation: 'Altitude 100, Forest',
             pictureURL: '../static/img/lol2.JPG',
             like: '1345',
             comment: '378'
         },
         {
-            avatarURL: '../static/img/lol2.JPG',
-            username: 'Garreth Verhelpen',
-            localisation: 'Rome, Italy',
+            avatarURL: '../static/img/lol4.JPG',
+            username: 'Célia Glore',
+            localisation: 'Aywaille, Belgium',
             pictureURL: '../static/img/lol4.JPG',
             like: '2456',
             comment: '506'
@@ -249,10 +242,6 @@ async function home() {
             comment: '378'
         }
     ]
-
-    // const postsData = await getPost(userID);
-    // console.log(postsData);
-    // console.log(userID);
 
     const template = document.getElementById('post-ctn');
     const homeCtn = document.querySelector('.home-ctn');
@@ -280,80 +269,119 @@ async function home() {
 
 function profile() {
 
-    const userData = {
-        username: 'Garreth Verhelpen',
-        avatarURL: '../static/img/lol2.JPG',
-        postNbr: 72,
-        followers: 359,
-        following: 406,
-        bio: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat ad reiciendis quo repellendus recusandae quas odit similique',
-        gallery: [
-            {
-                imageURL: '../static/img/lol.JPG',
-                likes: 1376,
-                comments: 202
-            },
-            {
-                imageURL: '../static/img/lol2.JPG',
-                likes: 1376,
-                comments: 202
-            },
-            {
-                imageURL: '../static/img/lol3.JPG',
-                likes: 1376,
-                comments: 202
-            },
-            {
-                imageURL: '../static/img/lol4.JPG',
-                likes: 1376,
-                comments: 202
-            },
-            {
-                imageURL: '../static/img/lol.JPG',
-                likes: 1376,
-                comments: 202
-            },
-            {
-                imageURL: '../static/img/lol2.JPG',
-                likes: 1376,
-                comments: 202
-            },
-            {
-                imageURL: '../static/img/lol3.JPG',
-                likes: 1376,
-                comments: 202
-            },
-            {
-                imageURL: '../static/img/lol4.JPG',
-                likes: 1376,
-                comments: 202
-            },
-        ]
-    };
+    // const userData = {
+    //     username: 'Garreth Verhelpen',
+    //     avatarURL: '../static/img/lol2.JPG',
+    //     postNbr: 72,
+    //     followers: 359,
+    //     following: 406,
+    //     bio: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat ad reiciendis quo repellendus recusandae quas odit similique',
+    //     gallery: [
+    //         {
+    //             imageURL: '../static/img/lol.JPG',
+    //             likes: 1376,
+    //             comments: 202
+    //         },
+    //         {
+    //             imageURL: '../static/img/lol2.JPG',
+    //             likes: 504,
+    //             comments: 103
+    //         },
+    //         {
+    //             imageURL: '../static/img/lol3.JPG',
+    //             likes: 2054,
+    //             comments: 1304
+    //         },
+    //         {
+    //             imageURL: '../static/img/lol4.JPG',
+    //             likes: 7860,
+    //             comments: 4320
+    //         },
+    //         {
+    //             imageURL: '../static/img/lol.JPG',
+    //             likes: 4504,
+    //             comments: 716
+    //         },
+    //         {
+    //             imageURL: '../static/img/lol2.JPG',
+    //             likes: 3679,
+    //             comments: 405
+    //         },
+    //         {
+    //             imageURL: '../static/img/lol3.JPG',
+    //             likes: 2340,
+    //             comments: 309
+    //         },
+    //         {
+    //             imageURL: '../static/img/lol4.JPG',
+    //             likes: 3654,
+    //             comments: 967
+    //         },
+    //         {
+    //             imageURL: '../static/img/lol.JPG',
+    //             likes: 4504,
+    //             comments: 716
+    //         },
+    //         {
+    //             imageURL: '../static/img/lol2.JPG',
+    //             likes: 3679,
+    //             comments: 405
+    //         },
+    //         {
+    //             imageURL: '../static/img/lol3.JPG',
+    //             likes: 2340,
+    //             comments: 309
+    //         },
+    //         {
+    //             imageURL: '../static/img/lol4.JPG',
+    //             likes: 3654,
+    //             comments: 967
+    //         },
+    //     ]
+    // };
 
-    const template = document.getElementById('gallery-ctn');
-    const profileGallery = document.querySelector('.profile-gallery');
+    console.log(userId);
 
-    document.getElementById('profile-picture').src = userData.avatarURL;
-    document.getElementById('profile-name').textContent = userData.username;
-    document.getElementById('profile-posts').textContent = userData.postNbr;
-    document.getElementById('profile-followers').textContent = userData.followers;
-    document.getElementById('profile-following').textContent = userData.following;
-    document.getElementById('profile-bio').textContent = userData.bio;
-
-    userData.gallery.forEach(item => {
-        const itemCtn = document.importNode(template.content, true);
-
-        const itemIMG = itemCtn.querySelector('.gallery-image');
-        const itemLikes = itemCtn.querySelector('#gallery-like');
-        const itemComments = itemCtn.querySelector('#gallery-comment');
-
-        itemIMG.src = item.imageURL;
-        itemLikes.textContent = item.likes;
-        itemComments.textContent = item.comments;
-
-        profileGallery.appendChild(itemCtn);
+    getUserData(userId)
+    .then((userData) => {
+        if (userData) {
+            // Handle userData here
+            console.log(userData);
+            if (userData.avatarURL == null)
+                userData.avatarURL = "../static/img/profile-outlined.svg";
+            document.getElementById('profile-picture').src = userData.avatarURL;
+            document.getElementById('profile-name').textContent = userData.username;
+        }
+    })
+    .catch((error) => {
+        console.error('Error in getUserData:', error);
     });
+
+
+
+    // const template = document.getElementById('gallery-ctn');
+    // const profileGallery = document.querySelector('.profile-gallery');
+
+    // document.getElementById('profile-picture').src = userData.avatarURL;
+    // document.getElementById('profile-name').textContent = userData.username;
+    // document.getElementById('profile-posts').textContent = userData.postNbr;
+    // document.getElementById('profile-followers').textContent = userData.followers;
+    // document.getElementById('profile-following').textContent = userData.following;
+    // document.getElementById('profile-bio').textContent = userData.bio;
+
+    // userData.gallery.forEach(item => {
+    //     const itemCtn = document.importNode(template.content, true);
+
+    //     const itemIMG = itemCtn.querySelector('.gallery-image');
+    //     const itemLikes = itemCtn.querySelector('#gallery-like');
+    //     const itemComments = itemCtn.querySelector('#gallery-comment');
+
+    //     itemIMG.src = item.imageURL;
+    //     itemLikes.textContent = item.likes;
+    //     itemComments.textContent = item.comments;
+
+    //     profileGallery.appendChild(itemCtn);
+    // });
 }
 
 function create() {
@@ -365,17 +393,17 @@ function settings() {
 function signUp() {
     const signup = document.getElementById('signup');
 
-    signup.classList.remove('hidden');
+    signup.classList.add('open');
     modalContent.appendChild(signup);
-    modal.style.display = 'flex';
+    modal.classList.add('open');
 }
 
 function signIn() {
     const signin = document.getElementById('signin');
 
-    signin.classList.remove('hidden');
+    signin.classList.add('open');
     modalContent.appendChild(signin);
-    modal.style.display = 'flex';
+    modal.classList.add('open');
 }
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -38,7 +38,7 @@
     }
 }
 
-@media screen and (max-width: 750px) {
+@media (max-width: 750px) {
     .main-left {
         width: 0;
     }
@@ -59,8 +59,8 @@
         display: flex;
     }
 
-    .profile-content {
-        padding-bottom: 4rem;
+    .profile-ctn {
+        padding-bottom: 3.5rem;
     }
 
     .home-ctn {

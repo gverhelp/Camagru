@@ -78,12 +78,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $result = $get_user_prep->get_result();
 
             $row = $result->fetch_assoc();
-            $_SESSION['userid'] = $row['idusers'];
+            $_SESSION['id'] = $row['idusers'];
 
             header("Location: index.php");
-            $stmt->close();
-            $mysqli->close();
-            exit();
         } else {
             echo "Error while signin up. Try again." . $stmt->error;
         }

@@ -37,7 +37,7 @@
     align-items: center;
     flex: 1;
     border-radius: 3rem;
-    height: 5rem;
+    height: 4.5rem;
     max-width: 45rem;
     min-width: 25rem;
     background-color: var(--main-color);
@@ -74,7 +74,7 @@
 
 .searchbar img {
     width: 5rem;
-    height: 3rem;
+    height: 2.7rem;
     filter: invert(55%) sepia(9%) saturate(2%) hue-rotate(314deg) brightness(91%) contrast(92%);
 }
 
@@ -91,9 +91,8 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 5rem;
-    height: 5rem;
-    margin-left: 1.5rem;
+    width: 4.5rem;
+    height: 4.5rem;
     cursor: pointer;
     border: 1px solid var(--main-color);
     border-radius: 50%;
@@ -140,7 +139,7 @@
     border: 1px solid var(--main-color);
 }
 
-.dropdown__menu.open {
+.dropdown-menu.open {
     display: flex;
 }
 
