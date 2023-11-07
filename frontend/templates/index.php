@@ -163,7 +163,9 @@
 				</div>
 
 				<!-- settings -->
-				<p class="settings-ctn hidden"> Settings </p>
+				<div class="settings-ctn hidden"> Settings 
+					
+				</div>
 
 			</div>
 		</section>
@@ -226,22 +228,24 @@
 
 	<!-- Sign Up  -->
 	<div class="sign" id="signup">
-		<form class="sign-ctn" method="post" action="signup.php">
+		<form class="sign-ctn" id="signUp-form">
 			<img id="signUpLogo" src="../static/img/instgram-black.png" alt="logo" style="margin-bottom: 40px; width: 135px; height: auto;">
-			<input class="auth-input" placeholder="Username" type="text" name="username">
-			<input class="auth-input" placeholder="Email" name="email" required>
-			<input class="auth-input" placeholder="Password" type="password" name="password" required>
+			<input id="username-signup" class="auth-input" placeholder="Username" type="text" name="username">
+			<input id="email-signup" class="auth-input" placeholder="Email" name="email" required>
+			<input id= "password-signup" class="auth-input" placeholder="Password" type="password" name="password" required>
 			<button class="button"> Submit </button>
+			</br><div id="error-message"></div>
 		</form>
 	</div>
 
 	<!-- Sign In -->
 	<div class="sign" id="signin">
-		<form class="sign-ctn" action="signin.php" method="post">
+		<form class="sign-ctn" id="signIn-form">
 			<img id="signInLogo" src="../static/img/instgram-black.png" alt="logo" style="margin-bottom: 40px; width: 135px; height: auto;">
-			<input class="auth-input" placeholder="Username" type="text" name="username">
-			<input class="auth-input" placeholder="Password" type="password" name="password">
+			<input id="username-signin" class="auth-input" placeholder="Username" type="text" name="username">
+			<input id="password-signin" class="auth-input" placeholder="Password" type="password" name="password">
 			<button class="button"> Submit </button>
+			</br><div id="error-message"></div>
 		</form>
 	</div>
 
@@ -252,7 +256,7 @@
 								echo json_encode($_SESSION['id']);
 							} else {
 								echo -1;
-							} ?>;
+							}?>;
 	</script>
 
 	<script type="module" src="../static/js/script.js">

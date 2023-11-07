@@ -2,15 +2,17 @@
 
 require 'connect_db.php';
 
-// Get the user ID from the request
 $userId = $_GET['userId'];
+$avatarURL = $_GET['avatarURL'];
 
 if (!isset($userId)) {
     die("User ID not provided.");
 }
 
-// Query the database to fetch user data based on $userId
-// Prepare a SQL query to retrieve the user's data by idusers
+if (!isset($avatarURL)) {
+    die("AvatarURL not provided.");
+}
+
 $sql = "SELECT * FROM users WHERE idusers = ?";
 $stmt = $mysqli->prepare($sql);
 
@@ -28,9 +30,11 @@ $result = $stmt->get_result();
 
 // Check if a user with the provided id was found
 if ($result->num_rows === 1) {
-    $row = $result->fetch_assoc();
+    $query = "UPDATE `camagru_db`.`users` SET `avatarURL` = '$avatarURL' WHERE (`idusers` = '$userId')";
+    $stmt = $mysqli->prepare($query);
+    $stmt->execute();
 
-    $userData = array("username" => $row['username'], "email" => $row['email'], "avatarURL" => $row['avatarURL']);
+    $userData = array("avatarURL" => $avatarURL);
     echo json_encode($userData);
 } else {
     echo "User not found.";

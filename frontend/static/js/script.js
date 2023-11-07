@@ -1,4 +1,4 @@
-import { getUserData } from './requests.js';
+import { getUserData, changeAvatar, signUp, signIn } from './requests.js';
 
 // Button's variables
 const leftBtns = document.getElementById('leftBtns');
@@ -30,10 +30,10 @@ navbarBtns.addEventListener('click', (event) => {
         changeTheme();
     }
     if (name == 'signUp') {
-        signUp();
+        signUpPage();
     }
     if (name == 'signIn') {
-        signIn();
+        signInPage();
     }
 });
 
@@ -167,25 +167,25 @@ function changePage(name) {
         case 'home':
             if (!pages['home']) {
                 home();
-                pages['home'] = 1;
+                // pages['home'] = 1;
             }
             break;
         case 'create':
             if (!pages['create']) {
                 create();
-                pages['create'] = 1;
+                // pages['create'] = 1;
             }
             break;
         case 'profile':
             if (!pages['profile']) {
                 profile();
-                pages['profile'] = 1;
+                // pages['profile'] = 1;
             }
             break;
         case 'settings':
             if (!pages['settings']) {
                 settings();
-                pages['settings'] = 1;
+                // pages['settings'] = 1;
             }
             break;
     }
@@ -236,7 +236,7 @@ function home() {
         {
             avatarURL: '../static/img/lol2.JPG',
             username: 'Garreth Verhelpen',
-            localisation: 'Rome, Italy',
+            localisation: 'Sainte-Ode',
             pictureURL: '../static/img/lol.JPG',
             like: '1345',
             comment: '378'
@@ -346,11 +346,16 @@ function profile() {
     .then((userData) => {
         if (userData) {
             // Handle userData here
+            // if (userData.avatarURL == '' || userData.avatarURL == null) {
+            //     changeAvatar(userId, "../static/img/profile-outlined.svg")
+            //     .then((avatar) => {
+            //         document.getElementById('profile-picture').src = avatar['avatarURL'];
+            //     });
+            // } else {
+                document.getElementById('profile-picture').src = userData.avatarURL;
+                document.getElementById('profile-name').textContent = userData.username;
+            // }
             console.log(userData);
-            if (userData.avatarURL == null)
-                userData.avatarURL = "../static/img/profile-outlined.svg";
-            document.getElementById('profile-picture').src = userData.avatarURL;
-            document.getElementById('profile-name').textContent = userData.username;
         }
     })
     .catch((error) => {
@@ -390,20 +395,73 @@ function create() {
 function settings() {
 }
 
-function signUp() {
+function signUpPage() {
     const signup = document.getElementById('signup');
 
     signup.classList.add('open');
     modalContent.appendChild(signup);
     modal.classList.add('open');
+
+    document.getElementById("signUp-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username-signup").value;
+        const email = document.getElementById("email-signup").value;
+        const password = document.getElementById("password-signup").value;
+
+        signUp(username, email, password)
+        .then(data => {
+            if (data.success) {
+                // Redirect to a success page or perform other actions.
+                navbarBtns.classList.add('hidden');
+                document.getElementById('signUp-form').textContent = "Your account has been created successfuly!";
+            } else {
+                // Display the error message on the current page.
+                console.log('sign up error');
+                console.log(data['message']);
+                document.getElementById("error-message").textContent = data.message;
+            }
+        })
+        .catch((error) => {
+            console.error("Error in signUp():", error);
+        });
+
+        console.log('Submit Sign Up');
+    });
 }
 
-function signIn() {
+function signInPage() {
     const signin = document.getElementById('signin');
 
     signin.classList.add('open');
     modalContent.appendChild(signin);
     modal.classList.add('open');
+
+    document.getElementById("signIn-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username-signin").value;
+        const password = document.getElementById("password-signin").value;
+
+        signIn(username, password)
+        .then(data => {
+            if (data.success) {
+                // Redirect to a success page or perform other actions.
+                navbarBtns.classList.add('hidden');
+                document.getElementById('signIn-form').textContent = "You're connected, well done!";
+            } else {
+                // Display the error message on the current page.
+                console.log('sign in error');
+                console.log(data['message']);
+                document.getElementById("error-message").textContent = data.message;
+            }
+        })
+        .catch((error) => {
+            console.error("Error in signUp():", error);
+        });
+
+        console.log('Submit Sign In');
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
