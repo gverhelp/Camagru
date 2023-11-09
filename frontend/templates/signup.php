@@ -4,6 +4,7 @@ require 'connect_db.php';
 
 $response = [];
 $avatarURL = "../static/img/profile-outlined.svg";
+$theme = 0;
 
 session_start();
 
@@ -57,9 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 "message" => "Email address already taken."
             ];
         } else {
-            $query = "INSERT INTO users (username, email, password, avatarURL) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO users (username, email, password, avatarURL, theme) VALUES (?, ?, ?, ?, ?)";
             $stmt = $mysqli->prepare($query);
-            $stmt->bind_param("ssss", $username, $email, $password, $avatarURL);
+            $stmt->bind_param("ssssi", $username, $email, $password, $avatarURL, $theme);
 
             if ($stmt->execute()) {
                 $get_user = "SELECT * FROM users WHERE username = ?";
@@ -78,8 +79,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     "message" => "Error while signing up." . $stmt->error,
                 ];
             }
-
             $stmt->close();
+            $mysqli->close();
         }
     }
 } else {
@@ -89,6 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ];
 }
 
+http_response_code(200); // Set the HTTP status code
 header("Content-Type: application/json");
 echo json_encode($response);
 

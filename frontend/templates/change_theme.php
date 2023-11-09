@@ -1,9 +1,10 @@
 <?php
 
-require 'db.php';
+require 'connect_db.php';
 
+$response = [];
 $userId = $_GET['userId'];
-$avatarURL = $_GET['avatarURL'];
+$theme = $_GET['theme'];
 
 if (!isset($userId)) {
     $response = [
@@ -12,13 +13,12 @@ if (!isset($userId)) {
     ];
 }
 
-elseif (!isset($avatarURL)) {
+elseif (!isset($theme)) {
     $response = [
         "success" => false,
-        "message" => "AvatarURL not provided."
+        "message" => "Theme not provided."
     ];
 }
-
 else {
     $sql = "SELECT * FROM users WHERE idusers = ?";
     $stmt = $mysqli->prepare($sql);
@@ -29,7 +29,6 @@ else {
             "message" => "Error in SQL query preparation: " . $mysqli->error
         ];
     }
-
     else {
         $stmt->bind_param("s", $userId);
 
@@ -49,13 +48,13 @@ else {
                     "message" => "User not found."
                 ];
             } else {
-                $query = "UPDATE `camagru_db`.`users` SET `avatarURL` = '$avatarURL' WHERE (`idusers` = '$userId')";
+                $query = "UPDATE `camagru_db`.`users` SET `theme` = '$theme' WHERE (`idusers` = '$userId')";
                 $stmt = $mysqli->prepare($query);
                 $stmt->execute();
 
                 $response = [
                     "success" => true,
-                    "avatarURL" => $avatarURL
+                    "theme" => $theme
                 ];
             }
         }

@@ -40,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if (password_verify($password, $row['password'])) {
                 $_SESSION['id'] = $row['idusers'];
+                
                 $response = [
                     "success" => true,
                 ];
@@ -50,8 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ];
             } 
         }
-
         $stmt->close();
+        $mysqli->close();
     }
 }
 else {
@@ -61,6 +62,7 @@ else {
     ];
 }
 
+http_response_code(200); // Set the HTTP status code
 header("Content-Type: application/json");
 echo json_encode($response);
 

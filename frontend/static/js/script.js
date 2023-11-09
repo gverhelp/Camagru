@@ -1,4 +1,4 @@
-import { getUserData, changeAvatar, signUp, signIn } from './requests.js';
+import * as requests from './requests.js';
 
 // Button's variables
 const leftBtns = document.getElementById('leftBtns');
@@ -14,9 +14,6 @@ const modalContent = document.querySelector('.modal-content');
 
 // Theme's variable
 var actualTheme = 0;
-
-//Active page variable
-var pages = {'home': 0, 'profile': 0, 'create': 0, 'settings': 0};
 
 navbarBtns.addEventListener('click', (event) => {
     let elem = event.target;
@@ -70,10 +67,10 @@ dropdownMenu.addEventListener('click', (event) => {
 
     let elemName = elem.getAttribute('name');
     if (elemName == 'sign-up') {
-        signUp();
+        signUpPage();
     }
     else if (elemName == 'sign-in') {
-        signIn();
+        signInPage();
     }
     else if (elemName == 'theme') {
         changeTheme();
@@ -139,8 +136,16 @@ function changeTheme() {
     const signInLogo = document.getElementById('signInLogo');
     const signUpLogo = document.getElementById('signUpLogo');
 
-
     actualTheme = document.body.classList.toggle('dark-mode');
+
+    let sendTheme = 0;
+    actualTheme ? sendTheme = 1 : sendTheme = 0;
+
+    requests.updateThemeData(userId, sendTheme)
+    .catch((error) => {
+        console.error('Error in changeThemeData:', error);
+    });
+
     if (actualTheme == 1) {
         logoIcon.src = "../static/img/instgram-white.png";
         themeIcon.src = "../static/img/sun-outlined.svg";
@@ -165,39 +170,29 @@ function changePage(name) {
 
     switch (name) {
         case 'home':
-            if (!pages['home']) {
-                home();
-                // pages['home'] = 1;
-            }
+            home();
             break;
         case 'create':
-            if (!pages['create']) {
-                create();
-                // pages['create'] = 1;
-            }
+            create();
             break;
         case 'profile':
-            if (!pages['profile']) {
-                profile();
-                // pages['profile'] = 1;
-            }
+            profile();
             break;
         case 'settings':
-            if (!pages['settings']) {
-                settings();
-                // pages['settings'] = 1;
-            }
+            settings();
             break;
     }
 }
 
 function hiddenPage(name) {
-    for (let key in pages) {
-        document.querySelector('.' + key + '-ctn').classList.add('hidden');
-        if (key == name) {
-            document.querySelector('.' + key + '-ctn').classList.remove('hidden');
+    const pages = ['home', 'profile', 'create', 'settings'];
+
+    pages.forEach(elem => {
+        document.querySelector('.' + elem + '-ctn').classList.add('hidden');
+        if (elem == name) {
+            document.querySelector('.' + elem + '-ctn').classList.remove('hidden');
         }
-    }
+    });
 }
 
 // function setAsFlex(elem) {
@@ -245,6 +240,10 @@ function home() {
 
     const template = document.getElementById('post-ctn');
     const homeCtn = document.querySelector('.home-ctn');
+
+    while (homeCtn.children.length != 1) {
+        homeCtn.lastChild.remove();
+    }
 
     postsData.forEach(post => {
         const postCtn = document.importNode(template.content, true);
@@ -342,24 +341,18 @@ function profile() {
 
     console.log(userId);
 
-    getUserData(userId)
+    requests.getUserData(userId)
     .then((userData) => {
         if (userData) {
             // Handle userData here
-            // if (userData.avatarURL == '' || userData.avatarURL == null) {
-            //     changeAvatar(userId, "../static/img/profile-outlined.svg")
-            //     .then((avatar) => {
-            //         document.getElementById('profile-picture').src = avatar['avatarURL'];
-            //     });
-            // } else {
-                document.getElementById('profile-picture').src = userData.avatarURL;
-                document.getElementById('profile-name').textContent = userData.username;
+            document.getElementById('profile-picture').src = userData.avatarURL;
+            document.getElementById('profile-name').textContent = userData.username;
             // }
             console.log(userData);
         }
     })
     .catch((error) => {
-        console.error('Error in getUserData:', error);
+        console.error('Error in getProfileData:', error);
     });
 
 
@@ -413,13 +406,13 @@ function signUpPage() {
         .then(data => {
             if (data.success) {
                 // Redirect to a success page or perform other actions.
-                navbarBtns.classList.add('hidden');
                 document.getElementById('signUp-form').textContent = "Your account has been created successfuly!";
+                location.reload();
             } else {
                 // Display the error message on the current page.
                 console.log('sign up error');
                 console.log(data['message']);
-                document.getElementById("error-message").textContent = data.message;
+                document.getElementById('error-message-signup').textContent = data.message;
             }
         })
         .catch((error) => {
@@ -447,17 +440,17 @@ function signInPage() {
         .then(data => {
             if (data.success) {
                 // Redirect to a success page or perform other actions.
-                navbarBtns.classList.add('hidden');
                 document.getElementById('signIn-form').textContent = "You're connected, well done!";
+                location.reload();
             } else {
                 // Display the error message on the current page.
                 console.log('sign in error');
                 console.log(data['message']);
-                document.getElementById("error-message").textContent = data.message;
+                document.getElementById('error-message-signin').textContent = data.message;
             }
         })
         .catch((error) => {
-            console.error("Error in signUp():", error);
+            console.error("Error in signIn():", error);
         });
 
         console.log('Submit Sign In');
@@ -465,5 +458,14 @@ function signInPage() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    requests.getTheme(userId)
+    .then((theme) => {
+        if (theme == 1)
+            changeTheme();
+    })
+    .catch((error) => {
+        console.error('Error in getTheme:', error);
+    });
+
     changePage('home');
 });

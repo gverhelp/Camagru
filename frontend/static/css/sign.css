@@ -42,6 +42,12 @@
     outline: 1px solid rgb(213, 51, 105);
 }
 
+.error-message {
+    margin-top: 15px;
+    color: red;
+    font-weight: 600;
+}
+
 @keyframes animate-zoom {
     from {transform: scale(0)}
     to {transform: scale(1)}

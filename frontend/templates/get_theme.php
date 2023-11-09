@@ -1,9 +1,11 @@
 <?php
 
-require 'db.php';
+require 'connect_db.php';
 
+$response = [];
+
+// Get the user ID from the request
 $userId = $_GET['userId'];
-$avatarURL = $_GET['avatarURL'];
 
 if (!isset($userId)) {
     $response = [
@@ -11,15 +13,9 @@ if (!isset($userId)) {
         "message" => "User ID not provided."
     ];
 }
-
-elseif (!isset($avatarURL)) {
-    $response = [
-        "success" => false,
-        "message" => "AvatarURL not provided."
-    ];
-}
-
 else {
+    // Query the database to fetch user data based on $userId
+    // Prepare a SQL query to retrieve the user's data by idusers
     $sql = "SELECT * FROM users WHERE idusers = ?";
     $stmt = $mysqli->prepare($sql);
 
@@ -29,7 +25,6 @@ else {
             "message" => "Error in SQL query preparation: " . $mysqli->error
         ];
     }
-
     else {
         $stmt->bind_param("s", $userId);
 
@@ -49,13 +44,10 @@ else {
                     "message" => "User not found."
                 ];
             } else {
-                $query = "UPDATE `camagru_db`.`users` SET `avatarURL` = '$avatarURL' WHERE (`idusers` = '$userId')";
-                $stmt = $mysqli->prepare($query);
-                $stmt->execute();
-
+                $row = $result->fetch_assoc();
                 $response = [
                     "success" => true,
-                    "avatarURL" => $avatarURL
+                    "theme" =>  $row['theme']
                 ];
             }
         }
