@@ -341,45 +341,55 @@ function profile() {
 
     console.log(userId);
 
-    requests.getUserData(userId)
-    .then((userData) => {
-        if (userData) {
-            // Handle userData here
-            document.getElementById('profile-picture').src = userData.avatarURL;
-            document.getElementById('profile-name').textContent = userData.username;
-            // }
-            console.log(userData);
+    requests.getProfileData(userId)
+    .then((profileData) => {
+        if (profileData) {
+            console.log(profileData);
+
+            // Handle profileData here
+            const template = document.getElementById('gallery-ctn');
+            const profileGallery = document.querySelector('.profile-gallery');
+
+            document.getElementById('profile-picture').src = profileData['userData']['avatarURL'];
+            document.getElementById('profile-name').textContent = profileData['userData']['username'];
+            // document.getElementById('profile-name').textContent = "Garreth Verhelpen";
+            // document.getElementById('profile-posts').textContent = 403;
+            // document.getElementById('profile-followers').textContent = 405;
+            // document.getElementById('profile-following').textContent = 376;
+            document.getElementById('profile-bio').textContent = profileData['userData']['bio'];
+
+            const postsData = profileData['userData']['userPostsData'];
+
+            if (postsData) {
+
+                while (profileGallery.children.length != 1) {
+                    profileGallery.lastChild.remove();
+                }
+
+                postsData.forEach(item => {
+                    const itemCtn = document.importNode(template.content, true);
+
+                    const itemIMG = itemCtn.querySelector('.gallery-image');
+                    // const itemLikes = itemCtn.querySelector('#gallery-like');
+                    // const itemComments = itemCtn.querySelector('#gallery-comment');
+
+                    itemIMG.src = item.URL;
+                    // itemLikes.textContent = item.likes;
+                    // itemComments.textContent = item.comments;
+
+                    profileGallery.appendChild(itemCtn);
+                });
+            } else {
+                profileGallery.style.display = "flex";
+                profileGallery.style.fontSize = "2rem";
+                profileGallery.style.fontWeight = 600;
+                profileGallery.textContent = "You don't have any post.";
+            }
         }
     })
     .catch((error) => {
         console.error('Error in getProfileData:', error);
     });
-
-
-
-    // const template = document.getElementById('gallery-ctn');
-    // const profileGallery = document.querySelector('.profile-gallery');
-
-    // document.getElementById('profile-picture').src = userData.avatarURL;
-    // document.getElementById('profile-name').textContent = userData.username;
-    // document.getElementById('profile-posts').textContent = userData.postNbr;
-    // document.getElementById('profile-followers').textContent = userData.followers;
-    // document.getElementById('profile-following').textContent = userData.following;
-    // document.getElementById('profile-bio').textContent = userData.bio;
-
-    // userData.gallery.forEach(item => {
-    //     const itemCtn = document.importNode(template.content, true);
-
-    //     const itemIMG = itemCtn.querySelector('.gallery-image');
-    //     const itemLikes = itemCtn.querySelector('#gallery-like');
-    //     const itemComments = itemCtn.querySelector('#gallery-comment');
-
-    //     itemIMG.src = item.imageURL;
-    //     itemLikes.textContent = item.likes;
-    //     itemComments.textContent = item.comments;
-
-    //     profileGallery.appendChild(itemCtn);
-    // });
 }
 
 function create() {
@@ -402,7 +412,7 @@ function signUpPage() {
         const email = document.getElementById("email-signup").value;
         const password = document.getElementById("password-signup").value;
 
-        signUp(username, email, password)
+        requests.signUp(username, email, password)
         .then(data => {
             if (data.success) {
                 // Redirect to a success page or perform other actions.
@@ -410,16 +420,12 @@ function signUpPage() {
                 location.reload();
             } else {
                 // Display the error message on the current page.
-                console.log('sign up error');
-                console.log(data['message']);
                 document.getElementById('error-message-signup').textContent = data.message;
             }
         })
         .catch((error) => {
             console.error("Error in signUp():", error);
         });
-
-        console.log('Submit Sign Up');
     });
 }
 
@@ -436,7 +442,7 @@ function signInPage() {
         const username = document.getElementById("username-signin").value;
         const password = document.getElementById("password-signin").value;
 
-        signIn(username, password)
+        requests.signIn(username, password)
         .then(data => {
             if (data.success) {
                 // Redirect to a success page or perform other actions.
@@ -444,8 +450,6 @@ function signInPage() {
                 location.reload();
             } else {
                 // Display the error message on the current page.
-                console.log('sign in error');
-                console.log(data['message']);
                 document.getElementById('error-message-signin').textContent = data.message;
             }
         })
@@ -453,19 +457,20 @@ function signInPage() {
             console.error("Error in signIn():", error);
         });
 
-        console.log('Submit Sign In');
     });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    requests.getTheme(userId)
-    .then((theme) => {
-        if (theme == 1)
-            changeTheme();
-    })
-    .catch((error) => {
-        console.error('Error in getTheme:', error);
-    });
+    if (userId != -1) {
+        requests.getTheme(userId)
+        .then((theme) => {
+            if (theme == 1)
+                changeTheme();
+        })
+        .catch((error) => {
+            console.error('Error in getTheme:', error);
+        });
+    }
 
     changePage('home');
 });

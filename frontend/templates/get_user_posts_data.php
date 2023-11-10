@@ -16,8 +16,8 @@ if (!isset($userId)) {
 else {
     // Query the database to fetch user data based on $userId
     // Prepare a SQL query to retrieve the user's data by idusers
-    $sql = "SELECT * FROM users WHERE idusers = ?";
-    $stmt = $mysqli->prepare($sql);
+    $query = "SELECT * FROM posts WHERE userID = ?";
+    $stmt = $mysqli->prepare($query);
 
     if ($stmt === false) {
         $response = [
@@ -37,22 +37,20 @@ else {
             $result = $stmt->get_result();
 
             // Check if a user with the provided id was found
-            if ($result->num_rows != 1) {
+            if ($result->num_rows < 1) {
                 $response = [
                     "success" => false,
                     "message" => "User not found."
                 ];
             } else {
-                $row = $result->fetch_assoc();
+                $ret = [];
+                while ($row = $result->fetch_assoc()) {
+                    $ret[] = $row;
+                }
+
                 $response = [
                     "success" => true,
-                    "userData" =>   array(
-                                        "username" => $row['username'],
-                                        "email" => $row['email'],
-                                        "avatarURL" => $row['avatarURL'],
-                                        "theme" => $row['theme'],
-                                        "bio" => $row['bio']
-                                    )
+                    "userPostsData" => $ret
                 ];
             }
         }

@@ -32,6 +32,7 @@
     background-color: var(--main-color);
     margin-top: 20px;
     padding-left: 20px;
+    color: var(--text-color);
 }
 
 .auth-input:last-of-type {

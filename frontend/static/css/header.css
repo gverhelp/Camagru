@@ -57,6 +57,7 @@
     height: 60%;
     background: transparent;
     border-right: .5px solid var(--second-color);
+    color: var(--text-color);
 }
 
 .searchbar button {
