@@ -10,13 +10,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST['username'])) {
         $response = [
             "success" => false,
-            "message" => "Username is required."
+            "message" => "Username is required.",
+            "response_code" => 200 // Success
         ];
     }
     elseif (empty($_POST['password'])) {
         $response = [
             "success" => false,
-            "message" => "Password is required."
+            "message" => "Password is required.",
+            "response_code" => 200 // Success
         ];
     }
     else {
@@ -32,7 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result->num_rows != 1) {
             $response = [
                 "success" => false,
-                "message" => "User not found. Please check your username."
+                "message" => "User not found. Please check your username.",
+                "response_code" => 200 // Success
             ];
         }
         else {
@@ -43,11 +46,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 $response = [
                     "success" => true,
+                    "response_code" => 200 // Success
                 ];
             } else {
                 $response = [
                     "success" => false,
-                    "message" => "Invalid password. Please try again."
+                    "message" => "Invalid password. Please try again.",
+                    "response_code" => 200 // Success
                 ];
             } 
         }
@@ -58,11 +63,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 else {
     $response = [
         "success" => false,
-        "message" => "Method not supported."
+        "message" => "Method not supported.",
+        "response_code" => 405 // Method Not Allowed
     ];
 }
 
-http_response_code(200); // Set the HTTP status code
+http_response_code($response["response_code"]); // Set the HTTP status code
 header("Content-Type: application/json");
 echo json_encode($response);
 
@@ -72,5 +78,5 @@ function verify_input($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
-?>
 
+?>

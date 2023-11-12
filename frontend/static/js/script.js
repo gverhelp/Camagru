@@ -1,4 +1,4 @@
-import * as requests from './requests.js';
+import * as requests from '../../../backend/requests/requests.js';
 
 // Button's variables
 const leftBtns = document.getElementById('leftBtns');
@@ -11,6 +11,8 @@ const dropdownMenu = document.querySelector('.dropdown-menu');
 const modal = document.querySelector('.modal');
 const closeModalBtn = document.querySelector('#closeModalBtn');
 const modalContent = document.querySelector('.modal-content');
+
+
 
 // Theme's variable
 var actualTheme = 0;
@@ -42,8 +44,10 @@ leftBtns.addEventListener('click', (event) => {
     }
 
     let name = elem.getAttribute('name');
-    changeIcon(name);
-    changePage(name);
+    if (name) {
+        changeIcon(name);
+        changePage(name);
+    }
 });
 
 bottomBtns.addEventListener('click', (event) => {
@@ -53,9 +57,11 @@ bottomBtns.addEventListener('click', (event) => {
         elem = elem.parentNode;
     }
 
-    let name = elem.getAttribute('name');6
-    changeIcon(name);
-    changePage(name);
+    let name = elem.getAttribute('name');
+    if (name) {
+        changeIcon(name);
+        changePage(name);
+    }
 });
 
 dropdownMenu.addEventListener('click', (event) => {
@@ -203,149 +209,44 @@ function hiddenPage(name) {
 
 function home() {
 
-    const postsData = [
-        {
-            avatarURL: '../static/img/lol2.JPG',
-            username: 'Carla Sanchez Boudart',
-            localisation: 'Altitude 100, Forest',
-            pictureURL: '../static/img/lol2.JPG',
-            like: '1345',
-            comment: '378'
-        },
-        {
-            avatarURL: '../static/img/lol4.JPG',
-            username: 'Célia Glore',
-            localisation: 'Aywaille, Belgium',
-            pictureURL: '../static/img/lol4.JPG',
-            like: '2456',
-            comment: '506'
-        },
-        {
-            avatarURL: '../static/img/lol3.JPG',
-            username: 'Camille Arcoulin',
-            localisation: 'Lolo',
-            pictureURL: '../static/img/lol3.JPG',
-            like: '456',
-            comment: '45'
-        },
-        {
-            avatarURL: '../static/img/lol2.JPG',
-            username: 'Garreth Verhelpen',
-            localisation: 'Sainte-Ode',
-            pictureURL: '../static/img/lol.JPG',
-            like: '1345',
-            comment: '378'
+    requests.getHomeData()
+    .then((postsData) => {
+        const template = document.getElementById('post-ctn');
+        const homeCtn = document.querySelector('.home-ctn');
+    
+        while (homeCtn.children.length != 1) {
+            homeCtn.lastChild.remove();
         }
-    ]
-
-    const template = document.getElementById('post-ctn');
-    const homeCtn = document.querySelector('.home-ctn');
-
-    while (homeCtn.children.length != 1) {
-        homeCtn.lastChild.remove();
-    }
-
-    postsData.forEach(post => {
-        const postCtn = document.importNode(template.content, true);
-      
-        const postName = postCtn.querySelector('#post-name');
-        const postLocalisation = postCtn.querySelector('#post-localisation');
-        const postAvatar = postCtn.querySelector('#post-avatar');
-        const postPicture = postCtn.querySelector('#post-picture');
-        const postLike = postCtn.querySelector('#post-like');
-        const postComment = postCtn.querySelector('#post-comment');
-      
-        postName.textContent = post.username;
-        postLocalisation.textContent = post.localisation;
-        postAvatar.src = post.avatarURL;
-        postPicture.src = post.pictureURL;
-        postLike.textContent = post.like;
-        postComment.textContent = post.comment;
-      
-        homeCtn.appendChild(postCtn);
+    
+        postsData.forEach(post => {
+            const postCtn = document.importNode(template.content, true);
+          
+            const postName = postCtn.querySelector('#post-username');
+            const postTitle = postCtn.querySelector('#post-title');
+            const postAvatar = postCtn.querySelector('#post-avatar');
+            const postPicture = postCtn.querySelector('#post-picture');
+            const postLike = postCtn.querySelector('#post-like');
+            const postComment = postCtn.querySelector('#post-comment');
+          
+            postName.textContent = post.userUsername;
+            postTitle.textContent = post.title;
+            postAvatar.src = post.userAvatarURL;
+            postPicture.src = post.URL;
+            postLike.textContent = post.likes;
+            postComment.textContent = post.comments;
+          
+            homeCtn.appendChild(postCtn);
+        });
+    })
+    .catch((error) => {
+        console.error('Error in getHomeData:', error);
     });
 }
 
 function profile() {
-
-    // const userData = {
-    //     username: 'Garreth Verhelpen',
-    //     avatarURL: '../static/img/lol2.JPG',
-    //     postNbr: 72,
-    //     followers: 359,
-    //     following: 406,
-    //     bio: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat ad reiciendis quo repellendus recusandae quas odit similique',
-    //     gallery: [
-    //         {
-    //             imageURL: '../static/img/lol.JPG',
-    //             likes: 1376,
-    //             comments: 202
-    //         },
-    //         {
-    //             imageURL: '../static/img/lol2.JPG',
-    //             likes: 504,
-    //             comments: 103
-    //         },
-    //         {
-    //             imageURL: '../static/img/lol3.JPG',
-    //             likes: 2054,
-    //             comments: 1304
-    //         },
-    //         {
-    //             imageURL: '../static/img/lol4.JPG',
-    //             likes: 7860,
-    //             comments: 4320
-    //         },
-    //         {
-    //             imageURL: '../static/img/lol.JPG',
-    //             likes: 4504,
-    //             comments: 716
-    //         },
-    //         {
-    //             imageURL: '../static/img/lol2.JPG',
-    //             likes: 3679,
-    //             comments: 405
-    //         },
-    //         {
-    //             imageURL: '../static/img/lol3.JPG',
-    //             likes: 2340,
-    //             comments: 309
-    //         },
-    //         {
-    //             imageURL: '../static/img/lol4.JPG',
-    //             likes: 3654,
-    //             comments: 967
-    //         },
-    //         {
-    //             imageURL: '../static/img/lol.JPG',
-    //             likes: 4504,
-    //             comments: 716
-    //         },
-    //         {
-    //             imageURL: '../static/img/lol2.JPG',
-    //             likes: 3679,
-    //             comments: 405
-    //         },
-    //         {
-    //             imageURL: '../static/img/lol3.JPG',
-    //             likes: 2340,
-    //             comments: 309
-    //         },
-    //         {
-    //             imageURL: '../static/img/lol4.JPG',
-    //             likes: 3654,
-    //             comments: 967
-    //         },
-    //     ]
-    // };
-
-    console.log(userId);
-
     requests.getProfileData(userId)
     .then((profileData) => {
         if (profileData) {
-            console.log(profileData);
-
             // Handle profileData here
             const template = document.getElementById('gallery-ctn');
             const profileGallery = document.querySelector('.profile-gallery');
@@ -353,9 +254,10 @@ function profile() {
             document.getElementById('profile-picture').src = profileData['userData']['avatarURL'];
             document.getElementById('profile-name').textContent = profileData['userData']['username'];
             // document.getElementById('profile-name').textContent = "Garreth Verhelpen";
-            // document.getElementById('profile-posts').textContent = 403;
+            // document.getElementById('profile-posts').textContent = 78;
             // document.getElementById('profile-followers').textContent = 405;
             // document.getElementById('profile-following').textContent = 376;
+            // document.getElementById('profile-bio').textContent = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt debitis porro ut doloribus";
             document.getElementById('profile-bio').textContent = profileData['userData']['bio'];
 
             const postsData = profileData['userData']['userPostsData'];
@@ -366,20 +268,23 @@ function profile() {
                     profileGallery.lastChild.remove();
                 }
 
+                document.getElementById('profile-posts').textContent = postsData.length;
+
                 postsData.forEach(item => {
                     const itemCtn = document.importNode(template.content, true);
 
                     const itemIMG = itemCtn.querySelector('.gallery-image');
-                    // const itemLikes = itemCtn.querySelector('#gallery-like');
-                    // const itemComments = itemCtn.querySelector('#gallery-comment');
+                    const itemLikes = itemCtn.querySelector('#gallery-like');
+                    const itemComments = itemCtn.querySelector('#gallery-comment');
 
                     itemIMG.src = item.URL;
-                    // itemLikes.textContent = item.likes;
-                    // itemComments.textContent = item.comments;
+                    itemLikes.textContent = item.likes;
+                    itemComments.textContent = item.comments;
 
                     profileGallery.appendChild(itemCtn);
                 });
             } else {
+                document.getElementById('profile-posts').textContent = 0;
                 profileGallery.style.display = "flex";
                 profileGallery.style.fontSize = "2rem";
                 profileGallery.style.fontWeight = 600;

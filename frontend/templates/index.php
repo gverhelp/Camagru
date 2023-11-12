@@ -40,7 +40,7 @@ session_start();
 					echo '<button name="signUp" class="button">Sign Up</button>';
 					echo '<button name="signIn" class="button">Sign In</button>';
 				} else {
-					echo '<form action="logout.php" method="post">';
+					echo '<form action="../../backend/APICalls/logout.php" method="post">';
 					echo '	<button class="button"> Log out </button>';
 					echo '</form>';
 				}
@@ -64,9 +64,9 @@ session_start();
 					<button name="home" class="left-btn">
 						<img class="homeImg" src="../static/img/home-filled.svg" alt="home">
 						<span> Home </span>
+					</button>
 					<?php
 					if (isset($_SESSION['id']) > 0) {
-						echo '</button>';
 						echo '<button name="create" class="left-btn">';
 						echo '	<img class="createImg" src="../static/img/create-outlined.svg" alt="create">';
 						echo '	<span> Create </span>';
@@ -95,8 +95,8 @@ session_start();
 								<header class="post-header">
 									<img id="post-avatar" class="post-avatar" alt="avatar">
 									<div class="post-header-infos">
-										<h3 id="post-name"></h3>
-										<p id="post-localisation"></p>
+										<h3 id="post-username"></h3>
+										<p id="post-title"></p>
 									</div>
 								</header>
 								<main class="post-main">
@@ -192,15 +192,20 @@ session_start();
 			<button name="home" class="bottom-navbar-btn">
 				<img class="homeImg" src="../static/img/home-filled.svg" alt="home">
 			</button>
-			<button name="create" class="bottom-navbar-btn">
-				<img class="createImg" src="../static/img/create-outlined.svg" alt="create">
-			</button>
-			<button name="profile" class="bottom-navbar-btn">
-				<img class="profileImg" src="../static/img/profile-outlined.svg" alt="profile">
-			</button>
-			<button name="settings" class="bottom-navbar-btn">
-				<img class="settingsImg" src="../static/img/settings-outlined.svg" alt="settings">
-			</button>
+			<?php
+			if (isset($_SESSION['id']) > 0) {
+				// User is not authenticated, display the "Sign Up" and "Sign In" buttons
+				echo '<button name="create" class="bottom-navbar-btn">';
+				echo '	<img class="createImg" src="../static/img/create-outlined.svg" alt="create">';
+				echo '</button>';
+				echo '<button name="profile" class="bottom-navbar-btn">';
+				echo '	<img class="profileImg" src="../static/img/profile-outlined.svg" alt="profile">';
+				echo '</button>';
+				echo '<button name="settings" class="bottom-navbar-btn">';
+				echo '	<img class="settingsImg" src="../static/img/settings-outlined.svg" alt="settings">';
+				echo '</button>';
+			}
+			?>
 		</footer>
 
 		<!-- modal -->
@@ -220,7 +225,7 @@ session_start();
 					echo '<button name="sign-up" class="dropdown-menu-btn">Sign Up</button>';
 					echo '<button name="sign-in" class="dropdown-menu-btn">Sign In</button>';
 				} else {
-					echo '<form action="logout.php" method="post">';
+					echo '<form action="../../backend/APICalls/logout.php" method="post">';
 					echo '	<button class="dropdown-menu-btn"> Log out </button>';
 					echo '</form>';
 				}

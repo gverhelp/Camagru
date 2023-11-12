@@ -12,22 +12,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST['username'])) {
         $response = [
             "success" => false,
-            "message" => "Username is required."
+            "message" => "Username is required.",
+            "response_code" => 200 // Success
         ];
     } elseif (empty($_POST['email'])) {
         $response = [
             "success" => false,
-            "message" => "Email is required."
+            "message" => "Email is required.",
+            "response_code" => 200 // Success
         ];
     } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
         $response = [
             "success" => false,
-            "message" => "Email format not valid."
+            "message" => "Email format not valid.",
+            "response_code" => 200 // Success
         ];
     } elseif (empty($_POST['password'])) {
         $response = [
             "success" => false,
-            "message" => "Password is required."
+            "message" => "Password is required.",
+            "response_code" => 200 // Success
         ];
     } else {
         $username = verify_input($_POST['username']);
@@ -50,12 +54,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt_username_check->num_rows > 0) {
             $response = [
                 "success" => false,
-                "message" => "Username already taken."
+                "message" => "Username already taken.",
+                "response_code" => 200 // Success
             ];
         } elseif ($stmt_email_check->num_rows > 0) {
             $response = [
                 "success" => false,
-                "message" => "Email address already taken."
+                "message" => "Email address already taken.",
+                "response_code" => 200 // Success
             ];
         } else {
             $query = "INSERT INTO users (username, email, password, avatarURL, theme) VALUES (?, ?, ?, ?, ?)";
@@ -72,11 +78,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $row = $result->fetch_assoc();
                 $_SESSION['id'] = $row['idusers'];
 
-                $response = ["success" => true];
+                $response = [
+                    "success" => true,
+                    "response_code" => 200 // Success
+                ];
             } else {
                 $response = [
                     "success" => false,
                     "message" => "Error while signing up." . $stmt->error,
+                    "response_code" => 500 // Internal Server Error
                 ];
             }
             $stmt->close();
@@ -86,11 +96,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     $response = [
         "success" => false,
-        "message" => "Method not supported."
+        "message" => "Method not supported.",
+        "response_code" => 405 // Method Not Allowed
     ];
 }
 
-http_response_code(200); // Set the HTTP status code
+http_response_code($response["response_code"]); // Set the HTTP status code
 header("Content-Type: application/json");
 echo json_encode($response);
 
@@ -100,5 +111,4 @@ function verify_input($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
-
 ?>

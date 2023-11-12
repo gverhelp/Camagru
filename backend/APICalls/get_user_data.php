@@ -10,7 +10,8 @@ $userId = $_GET['userId'];
 if (!isset($userId)) {
     $response = [
         "success" => false,
-        "message" => "User ID not provided."
+        "message" => "User ID not provided.",
+        "response_code" => 400 // Bad Request
     ];
 }
 else {
@@ -22,7 +23,8 @@ else {
     if ($stmt === false) {
         $response = [
             "success" => false,
-            "message" => "Error in SQL query preparation: " . $mysqli->error
+            "message" => "Error in SQL query preparation: " . $mysqli->error,
+            "response_code" => 500 // Internal Server Error
         ];
     }
     else {
@@ -31,7 +33,8 @@ else {
         if (!$stmt->execute()) {
             $response = [
                 "success" => false,
-                "message" => "Error executing the query: " . $stmt->error
+                "message" => "Error executing the query: " . $stmt->error,
+                "response_code" => 500 // Internal Server Error
             ];
         } else {
             $result = $stmt->get_result();
@@ -40,7 +43,8 @@ else {
             if ($result->num_rows != 1) {
                 $response = [
                     "success" => false,
-                    "message" => "User not found."
+                    "message" => "User not found.",
+                    "response_code" => 404 // Not Found
                 ];
             } else {
                 $row = $result->fetch_assoc();
@@ -52,14 +56,16 @@ else {
                                         "avatarURL" => $row['avatarURL'],
                                         "theme" => $row['theme'],
                                         "bio" => $row['bio']
-                                    )
+                                    ),
+                    "response_code" => 200 // OK
                 ];
             }
         }
     }
 }
 
-http_response_code(200); // Set the HTTP status code
+// Set the HTTP status code
+http_response_code($response["response_code"]);
 header("Content-Type: application/json");
 echo json_encode($response);
 
