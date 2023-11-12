@@ -50,15 +50,38 @@ else {
                 $row = $result->fetch_assoc();
                 $response = [
                     "success" => true,
-                    "userData" =>   array(
-                                        "username" => $row['username'],
-                                        "email" => $row['email'],
-                                        "avatarURL" => $row['avatarURL'],
-                                        "theme" => $row['theme'],
-                                        "bio" => $row['bio']
-                                    ),
+                    "userData" => [
+                        "idusers" => $row['idusers'],
+                        "username" => $row['username'],
+                        "email" => $row['email'],
+                        "avatarURL" => $row['avatarURL'],
+                        "theme" => $row['theme'],
+                        "bio" => $row['bio']
+                    ],
                     "response_code" => 200 // OK
                 ];
+
+                $getFollowersQuery = 'SELECT * FROM followers WHERE userID = ' . $row['idusers'];
+                $getFollowersQueryResult = $mysqli->query($getFollowersQuery);
+
+                if ($getFollowersQueryResult->num_rows > 0) {
+                    while ($followerRow = $getFollowersQueryResult->fetch_assoc()) {
+                        $response['userData']['followers'] = [$followerRow];
+                    }
+                } else {
+                    $response['userData']['followers'] = [];
+                }
+
+                $getFollowingsQuery = 'SELECT * FROM followers WHERE followersID = ' . $row['idusers'];
+                $getFollowingsQueryResult = $mysqli->query($getFollowingsQuery);
+
+                if ($getFollowingsQueryResult->num_rows > 0) {
+                    while ($followingRow = $getFollowingsQueryResult->fetch_assoc()) {
+                        $response['userData']['following'] = [$followingRow];
+                    }
+                } else {
+                    $response['userData']['following'] = [];
+                }
             }
         }
     }

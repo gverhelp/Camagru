@@ -228,12 +228,12 @@ function home() {
             const postLike = postCtn.querySelector('#post-like');
             const postComment = postCtn.querySelector('#post-comment');
           
-            postName.textContent = post.userUsername;
-            postTitle.textContent = post.title;
-            postAvatar.src = post.userAvatarURL;
-            postPicture.src = post.URL;
-            postLike.textContent = post.likes;
-            postComment.textContent = post.comments;
+            postName.textContent = post['userUsername'];
+            postTitle.textContent = post['title'];
+            postAvatar.src = post['userAvatarURL'];
+            postPicture.src = post['URL'];
+            postLike.textContent = post['likes'].length;
+            postComment.textContent = post['comments'].length;
           
             homeCtn.appendChild(postCtn);
         });
@@ -253,11 +253,8 @@ function profile() {
 
             document.getElementById('profile-picture').src = profileData['userData']['avatarURL'];
             document.getElementById('profile-name').textContent = profileData['userData']['username'];
-            // document.getElementById('profile-name').textContent = "Garreth Verhelpen";
-            // document.getElementById('profile-posts').textContent = 78;
-            // document.getElementById('profile-followers').textContent = 405;
-            // document.getElementById('profile-following').textContent = 376;
-            // document.getElementById('profile-bio').textContent = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt debitis porro ut doloribus";
+            document.getElementById('profile-followers').textContent = profileData['userData']['followers'].length;
+            document.getElementById('profile-following').textContent = profileData['userData']['following'].length;
             document.getElementById('profile-bio').textContent = profileData['userData']['bio'];
 
             const postsData = profileData['userData']['userPostsData'];
@@ -277,9 +274,9 @@ function profile() {
                     const itemLikes = itemCtn.querySelector('#gallery-like');
                     const itemComments = itemCtn.querySelector('#gallery-comment');
 
-                    itemIMG.src = item.URL;
-                    itemLikes.textContent = item.likes;
-                    itemComments.textContent = item.comments;
+                    itemIMG.src = item['URL'];
+                    itemLikes.textContent = item['likes'].length;
+                    itemComments.textContent = item['comments'].length;
 
                     profileGallery.appendChild(itemCtn);
                 });

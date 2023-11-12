@@ -23,7 +23,6 @@ export async function getProfileData(id) {
         }
 
         const userPostsDataJSON = await userPostsResponse.json();
-        console.log(userPostsDataJSON.userPostsData);
 
         returnData['userData']['userPostsData'] = userPostsDataJSON.userPostsData;
         return returnData;
@@ -85,7 +84,6 @@ export async function getHomeData() {
             returnData['postsData'][i]['userUsername'] = userDataJSON['userData']['username'];
         }
 
-        console.log(returnData);
         return returnData['postsData'];
 
     } catch (error) {

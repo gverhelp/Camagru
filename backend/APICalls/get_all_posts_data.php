@@ -36,24 +36,26 @@ else {
             $getLikeQuery = 'SELECT * FROM likes WHERE postID = ' . $value['idposts'];
             $getLikeQueryResult = $mysqli->query($getLikeQuery);
         
-            $likesCount = 0;
-        
             if ($getLikeQueryResult->num_rows > 0) {
-                $likesCount = $getLikeQueryResult->num_rows;
+                while ($row = $getLikeQueryResult->fetch_assoc()) {
+                    $postsData[$key]['likes'] = [$row];
+                }
+            } else {
+                $postsData[$key]['likes'] = [];
             }
-            $postsData[$key]['likes'] = $likesCount;
         }
 
         foreach ($postsData as $key => $value) {
             $getCommentQuery = 'SELECT * FROM comments WHERE postID = ' . $value['idposts'];
             $getCommentQueryResult = $mysqli->query($getCommentQuery);
         
-            $commentsCount = 0;
-        
             if ($getCommentQueryResult->num_rows > 0) {
-                $commentsCount = $getCommentQueryResult->num_rows;
+                while ($row = $getCommentQueryResult->fetch_assoc()) {
+                    $postsData[$key]['comments'] = [$row];
+                }
+            } else {
+                $postsData[$key]['comments'] = [];
             }
-            $postsData[$key]['comments'] = $commentsCount;
         }
 
         $response = [
