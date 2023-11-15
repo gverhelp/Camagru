@@ -32,9 +32,9 @@ export async function getProfileData(id) {
     }
 }
 
-export async function getUserData(id) {
+export async function getUserData(userID) {
     try {
-        const response = await fetch(`${baseUrl}get_user_data.php?userId=${id}`);
+        const response = await fetch(`${baseUrl}get_user_data.php?userId=${userID}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -47,9 +47,9 @@ export async function getUserData(id) {
     }
 }
 
-export async function getTheme(id) {
+export async function getTheme(userID) {
     try {
-        const response = await fetch(`${baseUrl}get_user_data.php?userId=${id}`);
+        const response = await fetch(`${baseUrl}get_user_data.php?userId=${userID}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -80,8 +80,8 @@ export async function getHomeData() {
             }
     
             const userDataJSON = await userDataResponse.json();
-            returnData['postsData'][i]['userAvatarURL'] = userDataJSON['userData']['avatarURL'];
-            returnData['postsData'][i]['userUsername'] = userDataJSON['userData']['username'];
+            returnData['postsData'][i]['avatarURL'] = userDataJSON['userData']['avatarURL'];
+            returnData['postsData'][i]['username'] = userDataJSON['userData']['username'];
         }
 
         return returnData['postsData'];
@@ -97,9 +97,9 @@ export async function getHomeData() {
 /*##########################################################################*/
 /*##########################################################################*/
 
-export async function updateAvatar(id, avatarURL) {
+export async function updateAvatar(userID, avatarURL) {
     try {
-        const response = await fetch(`${baseUrl}update_avatar.php?userId=${id}&avatarURL=${avatarURL}`);
+        const response = await fetch(`${baseUrl}update_avatar.php?userId=${userID}&avatarURL=${avatarURL}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -109,12 +109,27 @@ export async function updateAvatar(id, avatarURL) {
     }
 }
 
-export async function updateThemeData(id, theme) {
+export async function updateThemeData(userID, theme) {
     try {
-        const response = await fetch(`${baseUrl}update_theme.php?userId=${id}&theme=${theme}`);
+        const response = await fetch(`${baseUrl}update_theme.php?userId=${userID}&theme=${theme}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
+
+    } catch (error) {
+        throw new Error(`Error fetching data: ${error}`);
+    }
+}
+
+export async function updatePostLike(userID, postID) {
+    try {
+        const response = await fetch(`${baseUrl}update_post_like.php?userId=${userID}&postId=${postID}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
 
     } catch (error) {
         throw new Error(`Error fetching data: ${error}`);

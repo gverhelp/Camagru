@@ -64,23 +64,25 @@ else {
                 $getFollowersQuery = 'SELECT * FROM followers WHERE userID = ' . $row['idusers'];
                 $getFollowersQueryResult = $mysqli->query($getFollowersQuery);
 
+                $response['userData']['followers'] = [];
                 if ($getFollowersQueryResult->num_rows > 0) {
+                    $followersArray = [];
                     while ($followerRow = $getFollowersQueryResult->fetch_assoc()) {
-                        $response['userData']['followers'] = [$followerRow];
+                        $followersArray[] = $followerRow;
                     }
-                } else {
-                    $response['userData']['followers'] = [];
+                    $response['userData']['followers'] = $followersArray;
                 }
 
                 $getFollowingsQuery = 'SELECT * FROM followers WHERE followersID = ' . $row['idusers'];
                 $getFollowingsQueryResult = $mysqli->query($getFollowingsQuery);
 
+                $response['userData']['following'] = [];
                 if ($getFollowingsQueryResult->num_rows > 0) {
+                    $followingArray = [];
                     while ($followingRow = $getFollowingsQueryResult->fetch_assoc()) {
-                        $response['userData']['following'] = [$followingRow];
+                        $followingArray[] = $followingRow;
                     }
-                } else {
-                    $response['userData']['following'] = [];
+                    $response['userData']['following'] = $followingArray;
                 }
             }
         }

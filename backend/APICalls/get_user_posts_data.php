@@ -55,13 +55,14 @@ else {
                 foreach ($ret as $key => $value) {
                     $getLikeQuery = 'SELECT * FROM likes WHERE postID = ' . $value['idposts'];
                     $getLikeQueryResult = $mysqli->query($getLikeQuery);
-                
+
+                    $ret[$key]['likes'] = [];
                     if ($getLikeQueryResult->num_rows > 0) {
+                        $likesArray = [];
                         while ($row = $getLikeQueryResult->fetch_assoc()) {
-                            $ret[$key]['likes'] = [$row];
+                            $likesArray[] = $row;
                         }
-                    } else {
-                        $ret[$key]['likes'] = [];
+                        $ret[$key]['likes'] = $likesArray;
                     }
                 }
 
@@ -69,12 +70,13 @@ else {
                     $getCommentQuery = 'SELECT * FROM comments WHERE postID = ' . $value['idposts'];
                     $getCommentQueryResult = $mysqli->query($getCommentQuery);
                 
+                    $ret[$key]['comments'] = [];
                     if ($getCommentQueryResult->num_rows > 0) {
+                        $commentsArray = [];
                         while ($row = $getCommentQueryResult->fetch_assoc()) {
-                            $ret[$key]['comments'] = [$row];
+                            $commentsArray[] = $row;
                         }
-                    } else {
-                        $ret[$key]['comments'] = [];
+                        $ret[$key]['comments'] = $commentsArray;
                     }
                 }
 

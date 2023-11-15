@@ -87,11 +87,24 @@
     background-color: var(--second-color);
 }
 
+.post-footer-btn.disabled:hover {
+    background-color: var(--bg-color);
+}
+
 .post-footer-btn svg {
     height: 3rem;
     width: 3rem;
 }
 
+.post-footer-btn.disabled svg {
+    filter: invert(98%) sepia(21%) saturate(102%) hue-rotate(241deg) brightness(114%) contrast(80%);
+}
+
 .post-footer-btn span {
     margin-left: 1rem;
+}
+
+.post-footer-btn.disabled span {
+    filter: invert(98%) sepia(21%) saturate(102%) hue-rotate(241deg) brightness(114%) contrast(80%);
+
 }

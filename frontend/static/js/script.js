@@ -12,8 +12,6 @@ const modal = document.querySelector('.modal');
 const closeModalBtn = document.querySelector('#closeModalBtn');
 const modalContent = document.querySelector('.modal-content');
 
-
-
 // Theme's variable
 var actualTheme = 0;
 
@@ -109,6 +107,52 @@ closeModalBtn.addEventListener('click', () => {
     });
 });
 
+function likeButton(postId, likeButtonElem) {
+    if (actualUserID != -1) {
+        requests.updatePostLike(actualUserID, postId)
+            .then((data) => {
+                let likeCountElem = likeButtonElem.querySelector('#post-like');
+                let svgLikeElem = likeButtonElem.querySelector('#svg-like');
+                let svgLikeFillElem = likeButtonElem.querySelector('#svg-like-fill');
+
+                if (data.message == "Added") {
+                    likeCountElem.textContent++;
+                    svgLikeElem.classList.add('hidden');
+                    svgLikeFillElem.classList.remove('hidden');
+                } else {
+                    likeCountElem.textContent--;
+                    svgLikeElem.classList.remove('hidden');
+                    svgLikeFillElem.classList.add('hidden');
+                }
+            })
+            .catch((error) => {
+                console.error('Error in updatePostLike:', error);
+            });
+    }
+}
+
+function commentButton(postId) {
+
+}
+
+document.querySelector('.home-ctn').addEventListener('click', function(event) {
+    let elem = event.target;
+
+    if (elem.nodeName == 'svg' || elem.nodeName == 'SPAN')
+        elem = elem.parentNode;
+    if (elem.nodeName == 'path')
+        elem = elem.parentNode.parentNode;
+    if (elem.nodeName == 'BUTTON') {
+        const elemName = elem.getAttribute('name');
+        const postId = elem.parentElement.parentElement.getAttribute('data-post-id');
+
+        if (elemName == 'likeBtn') {
+            likeButton(parseInt(postId), elem);
+        }
+        else if (elemName == 'commentBtn')
+            commentButton(parseInt(postId));
+    }
+});
 
 function changeIcon(nameIcon) {
     const names = ['home', 'create', 'profile', 'settings'];
@@ -147,10 +191,12 @@ function changeTheme() {
     let sendTheme = 0;
     actualTheme ? sendTheme = 1 : sendTheme = 0;
 
-    requests.updateThemeData(userId, sendTheme)
-    .catch((error) => {
-        console.error('Error in changeThemeData:', error);
-    });
+    if (actualUserID != -1) {
+        requests.updateThemeData(actualUserID, sendTheme)
+        .catch((error) => {
+            console.error('Error in changeThemeData:', error);
+        });
+    }
 
     if (actualTheme == 1) {
         logoIcon.src = "../static/img/instgram-white.png";
@@ -219,23 +265,44 @@ function home() {
         }
     
         postsData.forEach(post => {
-            const postCtn = document.importNode(template.content, true);
+            const postTemplate = document.importNode(template.content, true);
           
-            const postName = postCtn.querySelector('#post-username');
-            const postTitle = postCtn.querySelector('#post-title');
-            const postAvatar = postCtn.querySelector('#post-avatar');
-            const postPicture = postCtn.querySelector('#post-picture');
-            const postLike = postCtn.querySelector('#post-like');
-            const postComment = postCtn.querySelector('#post-comment');
+            const postCtn = postTemplate.querySelector('.post-ctn');
+            const postName = postTemplate.querySelector('#post-username');
+            const postTitle = postTemplate.querySelector('#post-title');
+            const postAvatar = postTemplate.querySelector('#post-avatar');
+            const postPicture = postTemplate.querySelector('#post-picture');
+            const postLike = postTemplate.querySelector('#post-like');
+            const postComment = postTemplate.querySelector('#post-comment');
           
-            postName.textContent = post['userUsername'];
+            postCtn.setAttribute('data-post-id', post['idposts']);
+            postName.textContent = post['username'];
             postTitle.textContent = post['title'];
-            postAvatar.src = post['userAvatarURL'];
+            postAvatar.src = post['avatarURL'];
             postPicture.src = post['URL'];
             postLike.textContent = post['likes'].length;
             postComment.textContent = post['comments'].length;
+
+            post['likes'].forEach((user) => {
+                if (actualUserID == user['userID']) {
+                    postTemplate.getElementById('svg-like').classList.add('hidden');
+                    postTemplate.getElementById('svg-like-fill').classList.remove('hidden');
+                }
+            });
+
+            if (actualUserID == -1) {
+                postTemplate.querySelectorAll('.post-footer-btn').forEach((button) => {
+                    button.disabled = true;
+                    button.classList.add('disabled');
+                });
+            } else {
+                postTemplate.querySelectorAll('.post-footer-btn').forEach((button) => {
+                    button.disabled = false;
+                    button.classList.remove('disabled');
+                });
+            }
           
-            homeCtn.appendChild(postCtn);
+            homeCtn.appendChild(postTemplate);
         });
     })
     .catch((error) => {
@@ -244,7 +311,7 @@ function home() {
 }
 
 function profile() {
-    requests.getProfileData(userId)
+    requests.getProfileData(actualUserID)
     .then((profileData) => {
         if (profileData) {
             // Handle profileData here
@@ -358,13 +425,12 @@ function signInPage() {
         .catch((error) => {
             console.error("Error in signIn():", error);
         });
-
     });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    if (userId != -1) {
-        requests.getTheme(userId)
+    if (actualUserID != -1) {
+        requests.getTheme(actualUserID)
         .then((theme) => {
             if (theme == 1)
                 changeTheme();

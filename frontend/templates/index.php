@@ -100,16 +100,19 @@ session_start();
 									</div>
 								</header>
 								<main class="post-main">
-										<img id="post-picture" alt="post">
+									<img id="post-picture" alt="post">
 								</main>
 								<footer class="post-footer">
-									<button class="post-footer-btn">
-										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+									<button class="post-footer-btn" name="likeBtn">
+										<svg id="svg-like" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
 											<path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+										</svg>
+										<svg id="svg-like-fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 hidden">
+  											<path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
 										</svg>
 										<span id="post-like"></span>
 									</button>
-									<button class="post-footer-btn">
+									<button class="post-footer-btn" name="commentBtn">
 										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
 											<path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
 										</svg>
@@ -175,8 +178,42 @@ session_start();
 					</div>
 
 					<!-- settings -->
-					<div class="settings-ctn hidden"> Settings 
-						
+					<div class="settings-ctn hidden">
+						<form id="username-settings-form" class="settings-form">
+							<div class="form-wrapper">
+								<label for="username-settings">New username</label>
+								<input type="text" id="username-settings" name="username">
+							</div>
+							<button class="button"> Submit </button>
+						</form>
+						<form id="email-settings-form" class="settings-form">
+							<div class="form-wrapper">
+								<label for="email-settings">New email</label>
+								<input type="email" id="email-settings" name="email">
+							</div>
+							<button class="button"> Submit </button>
+						</form>
+						<form id="password-settings-form" class="settings-form">
+							<div class="form-wrapper">
+								<label for="password-settings">New password</label>
+								<input type="password" id="password-settings" name="password">
+							</div>
+							<button class="button"> Submit </button>
+						</form>
+						<form id="avatar-settings-form" class="settings-form">
+							<div class="form-wrapper">
+								<label for="avatar-settings">New avatar</label>
+								<input type="text" id="avatar-settings" name="avatar">
+							</div>
+							<button class="button"> Upldoad </button>
+						</form>
+						<form id="bio-settings-form" class="settings-form">
+							<div class="form-wrapper">
+								<label for="bio-settings">New bio</label>
+								<textarea name="comment" form="bio-settings-form"></textarea>
+							</div>
+							<button class="button"> Submit </button>
+						</form>
 					</div>
 
 				</div>
@@ -239,9 +276,9 @@ session_start();
 		<div class="sign" id="signup">
 			<form class="sign-ctn" id="signUp-form">
 				<img id="signUpLogo" src="../static/img/instgram-black.png" alt="logo" style="margin-bottom: 40px; width: 135px; height: auto;">
-				<input id="username-signup" class="auth-input" placeholder="Username" type="text" name="username">
-				<input id="email-signup" class="auth-input" placeholder="Email" name="email">
-				<input id= "password-signup" class="auth-input" placeholder="Password" type="password" name="password">
+				<input id="username-signup" class="auth-input" placeholder="Username" type="text" name="username" autocomplete="username">
+				<input id="email-signup" class="auth-input" placeholder="Email" name="email" autocomplete="email">
+				<input id= "password-signup" class="auth-input" placeholder="Password" type="password" name="password" autocomplete="new-password">
 				<button class="button"> Submit </button>
 				<div class="error-message" id="error-message-signup"></div>
 			</form>
@@ -251,8 +288,8 @@ session_start();
 		<div class="sign" id="signin">
 			<form class="sign-ctn" id="signIn-form">
 				<img id="signInLogo" src="../static/img/instgram-black.png" alt="logo" style="margin-bottom: 40px; width: 135px; height: auto;">
-				<input id="username-signin" class="auth-input" placeholder="Username" type="text" name="username">
-				<input id="password-signin" class="auth-input" placeholder="Password" type="password" name="password">
+				<input id="username-signin" class="auth-input" placeholder="Username" type="text" name="username" autocomplete="username">
+				<input id="password-signin" class="auth-input" placeholder="Password" type="password" name="password" autocomplete="current-password">
 				<button class="button"> Submit </button>
 				<div class="error-message" id="error-message-signin"></div>
 			</form>
@@ -261,7 +298,7 @@ session_start();
 	</body>
 
 	<script>
-		var userId = <?php	if (isset($_SESSION['id'])) {
+		var actualUserID = <?php	if (isset($_SESSION['id'])) {
 								echo json_encode($_SESSION['id']);
 							} else {
 								echo -1;

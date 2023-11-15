@@ -95,6 +95,7 @@
     width: 4.5rem;
     height: 4.5rem;
     cursor: pointer;
+    margin-left: 15px;
     border: 1px solid var(--main-color);
     border-radius: 50%;
     background-color: var(--bg-color);
