@@ -136,6 +136,34 @@ export async function updatePostLike(userID, postID) {
     }
 }
 
+export async function updateSettings(userID, newUsername, newEmail, newPassword, newAvatar, newBio) {
+    try {
+        const formData = new FormData();
+
+        formData.append('userID', userID);
+        formData.append('newUsername', newUsername);
+        formData.append('newEmail', newEmail);
+        formData.append('newPassword', newPassword);
+        formData.append('newAvatar', newAvatar);
+        formData.append('newBio', newBio);
+
+        const response = await fetch(`${baseUrl}update_settings.php`, {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data.message;
+
+    } catch (error) {
+        throw new Error(`Error fetching data: ${error}`);
+    }
+}
+
 /*##########################################################################*/
 /*##########################################################################*/
 /*####                               Sign                               ####*/
@@ -152,7 +180,7 @@ export async function signUp(username, email, password) {
         const response = await fetch(`${baseUrl}signup.php`, {
             method: "POST",
             body: formData,
-        })
+        });
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);

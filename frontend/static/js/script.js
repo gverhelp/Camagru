@@ -5,6 +5,7 @@ const leftBtns = document.getElementById('leftBtns');
 const bottomBtns = document.getElementById('bottomBtns');
 const navbarBtns = document.getElementById('navbar');
 const dropdownBtn = document.querySelector('.dropdown-btn');
+const updateBtn = document.getElementById('updateBtn');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 
 // Modal's variables
@@ -104,6 +105,32 @@ closeModalBtn.addEventListener('click', () => {
     modal.classList.remove('open');
     document.querySelectorAll('.sign').forEach(s => {
         s.classList.remove('open');
+    });
+});
+
+updateBtn.addEventListener('click', function() {
+    const newUsername = document.getElementById('username-settings').value;
+    const newEmail = document.getElementById('email-settings').value;
+    const newPassword = document.getElementById('password-settings').value;
+    const newAvatar = document.getElementById('avatar-settings').files[0];
+    const newBio = document.getElementById('bio-settings').value;
+
+    console.log("New Username:", newUsername);
+    console.log("New Email:", newEmail);
+    console.log("New Password:", newPassword);
+    console.log("New Avatar:", newAvatar);
+    console.log("New Bio:", newBio);
+
+    requests.updateSettings(actualUserID, newUsername, newEmail, newPassword, newAvatar, newBio)
+    .then((message) => {
+        const settingsResponse = document.getElementById('settings-response');
+        
+        settingsResponse.classList.remove('hidden');
+        settingsResponse.textContent = message;
+        location.reload();
+    })
+    .catch((error) => {
+        console.error('Error in updateSettings():', error);
     });
 });
 
@@ -218,7 +245,7 @@ function changeTheme() {
 }
 
 function changePage(name) {
-    hiddenPage(name);
+    displayPage(name);
 
     switch (name) {
         case 'home':
@@ -236,7 +263,7 @@ function changePage(name) {
     }
 }
 
-function hiddenPage(name) {
+function displayPage(name) {
     const pages = ['home', 'profile', 'create', 'settings'];
 
     pages.forEach(elem => {

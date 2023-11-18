@@ -179,41 +179,42 @@ session_start();
 
 					<!-- settings -->
 					<div class="settings-ctn hidden">
-						<form id="username-settings-form" class="settings-form">
-							<div class="form-wrapper">
-								<label for="username-settings">New username</label>
-								<input type="text" id="username-settings" name="username">
-							</div>
-							<button class="button"> Submit </button>
-						</form>
-						<form id="email-settings-form" class="settings-form">
-							<div class="form-wrapper">
-								<label for="email-settings">New email</label>
-								<input type="email" id="email-settings" name="email">
-							</div>
-							<button class="button"> Submit </button>
-						</form>
-						<form id="password-settings-form" class="settings-form">
-							<div class="form-wrapper">
-								<label for="password-settings">New password</label>
-								<input type="password" id="password-settings" name="password">
-							</div>
-							<button class="button"> Submit </button>
-						</form>
-						<form id="avatar-settings-form" class="settings-form">
-							<div class="form-wrapper">
-								<label for="avatar-settings">New avatar</label>
-								<input type="text" id="avatar-settings" name="avatar">
-							</div>
-							<button class="button"> Upldoad </button>
-						</form>
-						<form id="bio-settings-form" class="settings-form">
-							<div class="form-wrapper">
-								<label for="bio-settings">New bio</label>
-								<textarea name="comment" form="bio-settings-form"></textarea>
-							</div>
-							<button class="button"> Submit </button>
-						</form>
+						<div class="settings-title">
+							Settings
+						</div>
+						<div class="settings-section">
+							<!-- <form class="settings-form-ctn" id="settings-form"> -->
+								<div class="settings-form-wrapper">
+									<label for="username-settings">New username</label>
+									<input type="text" id="username-settings" name="username">
+								</div>
+								<div class="settings-form-wrapper">
+									<label for="email-settings">New email</label>
+									<input type="email" id="email-settings" name="email">
+								</div>
+								<div class="settings-form-wrapper">
+									<label for="password-settings">New password</label>
+									<input type="password" id="password-settings" name="password">
+								</div>
+								<div class="settings-form-wrapper">
+									<label for="avatar-settings">New avatar</label>
+									<input type="file" id="avatar-settings" name="avatar">
+								</div>
+								<div class="settings-form-wrapper">
+									<label for="bio-settings">New bio</label>
+									<textarea form="settings-form" id="bio-settings" name="bio"></textarea>
+								</div>
+							<!-- </form> -->
+						</div>
+						<div class="settings-section">
+							<button id="updateBtn" class="button"> Update </button>
+							<div class="hidden" id="settings-response"></div>
+						</div>
+						<div class="settings-section">
+							<label class="settings-checkbox">Email notifications :</label>
+							<input type="checkbox">
+							<!-- <span class="checkmark"></span> -->
+						</div>
 					</div>
 
 				</div>

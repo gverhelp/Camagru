@@ -21,7 +21,8 @@ if (!isset($userId) || !isset($postId)) {
     if ($checkStmt === false) {
         $response = [
             "success" => false,
-            "message" => "Error in SQL query preparation: " . $mysqli->error
+            "message" => "Error in SQL query preparation: " . $mysqli->error,
+            "response_code" => 500 // Internal Server Error
         ];
     } else {
         $checkStmt->bind_param("ii", $userId, $postId);
@@ -36,7 +37,8 @@ if (!isset($userId) || !isset($postId)) {
             if ($addStmt === false) {
                 $response = [
                     "success" => false,
-                    "message" => "Error in SQL query preparation: " . $mysqli->error
+                    "message" => "Error in SQL query preparation: " . $mysqli->error,
+                    "response_code" => 500 // Internal Server Error
                 ];
             } else {
                 $addStmt->bind_param("ii", $userId, $postId);
@@ -63,7 +65,8 @@ if (!isset($userId) || !isset($postId)) {
             if ($deleteStmt === false) {
                 $response = [
                     "success" => false,
-                    "message" => "Error in SQL query preparation: " . $mysqli->error
+                    "message" => "Error in SQL query preparation: " . $mysqli->error,
+                    "response_code" => 500 // Internal Server Error
                 ];
             } else {
                 $deleteStmt->bind_param("ii", $userId, $postId);
