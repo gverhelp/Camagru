@@ -202,7 +202,7 @@ session_start();
 								</div>
 								<div class="settings-form-wrapper">
 									<label for="bio-settings">New bio</label>
-									<textarea form="settings-form" id="bio-settings" name="bio"></textarea>
+									<textarea id="bio-settings" name="bio"></textarea>
 								</div>
 							<!-- </form> -->
 						</div>
@@ -263,7 +263,7 @@ session_start();
 					echo '<button name="sign-up" class="dropdown-menu-btn">Sign Up</button>';
 					echo '<button name="sign-in" class="dropdown-menu-btn">Sign In</button>';
 				} else {
-					echo '<form action="../../backend/APICalls/logout.php" method="post">';
+					echo '<form id="logoutForm" action="../../backend/APICalls/logout.php" method="post">';
 					echo '	<button class="dropdown-menu-btn"> Log out </button>';
 					echo '</form>';
 				}

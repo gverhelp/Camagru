@@ -145,6 +145,10 @@
     display: flex;
 }
 
+.dropdown-menu #logoutForm {
+    width: 100%;
+}
+
 .dropdown-menu-btn {
     background-color: var(--bg-color);
     font-size: 1.8rem;

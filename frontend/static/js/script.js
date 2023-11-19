@@ -109,57 +109,72 @@ closeModalBtn.addEventListener('click', () => {
 });
 
 updateBtn.addEventListener('click', function() {
+    const maxLengthBio = 150;
+    const maxLengthUsername = 15;
+    const settingsResponse = document.getElementById('settings-response');
     const newUsername = document.getElementById('username-settings').value;
     const newEmail = document.getElementById('email-settings').value;
     const newPassword = document.getElementById('password-settings').value;
     const newAvatar = document.getElementById('avatar-settings').files[0];
     const newBio = document.getElementById('bio-settings').value;
 
-    console.log("New Username:", newUsername);
-    console.log("New Email:", newEmail);
-    console.log("New Password:", newPassword);
-    console.log("New Avatar:", newAvatar);
-    console.log("New Bio:", newBio);
-
-    requests.updateSettings(actualUserID, newUsername, newEmail, newPassword, newAvatar, newBio)
-    .then((message) => {
-        const settingsResponse = document.getElementById('settings-response');
-        
+    if (newUsername.length > maxLengthUsername) {
         settingsResponse.classList.remove('hidden');
-        settingsResponse.textContent = message;
-        location.reload();
-    })
-    .catch((error) => {
-        console.error('Error in updateSettings():', error);
-    });
+        settingsResponse.textContent = "Username too long.";
+    } else if (newBio.length > maxLengthBio) {
+        settingsResponse.classList.remove('hidden');
+        settingsResponse.textContent = "Bio too long.";
+    } else {
+        requests.updateSettings(actualUserID, newUsername, newEmail, newPassword, newAvatar, newBio)
+        .then((message) => {
+            
+            document.getElementById('username-settings').value = "";
+            document.getElementById('email-settings').value = "";
+            document.getElementById('password-settings').value = "";
+            document.getElementById('avatar-settings').value = "";
+            document.getElementById('bio-settings').value = "";
+            settingsResponse.classList.remove('hidden');
+            settingsResponse.textContent = message;
+        })
+        .catch((error) => {
+            console.error('Error in updateSettings():', error);
+        });
+    }
 });
 
 function likeButton(postId, likeButtonElem) {
     if (actualUserID != -1) {
         requests.updatePostLike(actualUserID, postId)
-            .then((data) => {
-                let likeCountElem = likeButtonElem.querySelector('#post-like');
-                let svgLikeElem = likeButtonElem.querySelector('#svg-like');
-                let svgLikeFillElem = likeButtonElem.querySelector('#svg-like-fill');
+        .then((data) => {
+            let likeCountElem = likeButtonElem.querySelector('#post-like');
+            let svgLikeElem = likeButtonElem.querySelector('#svg-like');
+            let svgLikeFillElem = likeButtonElem.querySelector('#svg-like-fill');
 
-                if (data.message == "Added") {
-                    likeCountElem.textContent++;
-                    svgLikeElem.classList.add('hidden');
-                    svgLikeFillElem.classList.remove('hidden');
-                } else {
-                    likeCountElem.textContent--;
-                    svgLikeElem.classList.remove('hidden');
-                    svgLikeFillElem.classList.add('hidden');
-                }
-            })
-            .catch((error) => {
-                console.error('Error in updatePostLike:', error);
-            });
+            if (data.message == "Added") {
+                likeCountElem.textContent++;
+                svgLikeElem.classList.add('hidden');
+                svgLikeFillElem.classList.remove('hidden');
+            } else {
+                likeCountElem.textContent--;
+                svgLikeElem.classList.remove('hidden');
+                svgLikeFillElem.classList.add('hidden');
+            }
+        })
+        .catch((error) => {
+            console.error('Error in updatePostLike:', error);
+        });
+    } else {
+        alert("You're not connected. Please sign up or sign in to your account before liking any post.");
     }
 }
 
 function commentButton(postId) {
+    if (actualUserID != -1) {
 
+    } else {
+        alert("You're not connected. Please sign up or sign in to your account before commenting any post.");
+
+    }
 }
 
 document.querySelector('.home-ctn').addEventListener('click', function(event) {
@@ -274,14 +289,7 @@ function displayPage(name) {
     });
 }
 
-// function setAsFlex(elem) {
-//     setTimeout(function() {
-//         elem.style.display = "flex";
-//     });
-// }
-
 function home() {
-
     requests.getHomeData()
     .then((postsData) => {
         const template = document.getElementById('post-ctn');
@@ -319,12 +327,12 @@ function home() {
 
             if (actualUserID == -1) {
                 postTemplate.querySelectorAll('.post-footer-btn').forEach((button) => {
-                    button.disabled = true;
+                    // button.disabled = true;
                     button.classList.add('disabled');
                 });
             } else {
                 postTemplate.querySelectorAll('.post-footer-btn').forEach((button) => {
-                    button.disabled = false;
+                    // button.disabled = false;
                     button.classList.remove('disabled');
                 });
             }
@@ -392,6 +400,7 @@ function create() {
 }
 
 function settings() {
+    document.getElementById('settings-response').classList.add('hidden');
 }
 
 function signUpPage() {
@@ -469,3 +478,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     changePage('home');
 });
+
+
+
+
+// function setAsFlex(elem) {
+//     setTimeout(function() {
+//         elem.style.display = "flex";
+//     });
+// }

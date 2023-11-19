@@ -7,17 +7,27 @@ $userID = $_POST['userID'];
 $newUsername = $_POST['newUsername'];
 $newEmail = $_POST['newEmail'];
 $newPassword = $_POST['newPassword'];
-$newAvatar = $_POST['newAvatar'];
 $newBio = $_POST['newBio'];
 
-if (!isset($userID) || !isset($newUsername) || !isset($newEmail) ||
-    !isset($newPassword) || !isset($newAvatar) || !isset($newBio)) {
+// Vérifiez si au moins un champ est rempli
+if (empty($newUsername) && empty($newEmail) && empty($newPassword) && empty($newBio) && empty($_FILES['newAvatar'])) {
     $response = [
         "success" => false,
-        "message" => "Some data are not provided.",
-        "response_code" => 400 // Bad Request
+        "message" => "Please fill in at least one field.",
+        "response_code" => 200 // Success
     ];
 } else {
+    // Vérifiez l'unicité du nom d'utilisateur
+    if (!empty($newUsername)) {
+        // ... (rest of your code for username check)
+    }
+
+    // Vérifiez la validité du courriel
+    if (!empty($newEmail)) {
+        // ... (rest of your code for email check)
+    }
+
+    // Continuez avec la mise à jour des champs
     $query = "UPDATE `camagru_db`.`users` SET ";
     $params = [];
     $types = "";
@@ -41,11 +51,32 @@ if (!isset($userID) || !isset($newUsername) || !isset($newEmail) ||
         $types .= "s";
     }
 
-    // if (!empty($newAvatar)) {
-    //     $query .= "`avatar` = ?, ";
-    //     $params[] = $newAvatar;
-    //     $types .= "s";
-    // }
+    if (!empty($_FILES['newAvatar']['name'])) {
+        // Récupérer le nom du fichier
+        $avatarFileName = $_FILES['newAvatar']['name'];
+        // Construire le chemin du répertoire de destination
+        $destinationPath = "../usersAvatarImg/" . $userID . $avatarFileName;
+
+        // Déplacer le fichier téléchargé vers le répertoire de destination
+        if (move_uploaded_file($_FILES['newAvatar']['tmp_name'], $destinationPath)) {
+            // Ajouter le champ à la requête
+            $query .= "`avatarURL` = ?, ";
+            $params[] = "../../backend/usersAvatarImg/" . $userID . $avatarFileName; // Utilisez le chemin complet du fichier
+            $types .= "s";
+        } else {
+            // Échec du déplacement du fichier
+            $response = [
+                "success" => false,
+                "message" => "Failed to move the uploaded avatar image.",
+                "response_code" => 500 // Internal Server Error
+            ];
+
+            http_response_code($response["response_code"]);
+            header("Content-Type: application/json");
+            echo json_encode($response);
+            exit;
+        }
+    }
 
     if (!empty($newBio)) {
         $query .= "`bio` = ?, ";
