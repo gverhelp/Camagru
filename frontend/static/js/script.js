@@ -110,7 +110,7 @@ closeModalBtn.addEventListener('click', () => {
 
 updateBtn.addEventListener('click', function() {
     const maxLengthBio = 150;
-    const maxLengthUsername = 15;
+    const maxLengthUsername = 25;
     const settingsResponse = document.getElementById('settings-response');
     const newUsername = document.getElementById('username-settings').value;
     const newEmail = document.getElementById('email-settings').value;

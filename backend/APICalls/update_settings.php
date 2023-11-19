@@ -19,12 +19,96 @@ if (empty($newUsername) && empty($newEmail) && empty($newPassword) && empty($new
 } else {
     // Vérifiez l'unicité du nom d'utilisateur
     if (!empty($newUsername)) {
-        // ... (rest of your code for username check)
+        $checkUsernameQuery = "SELECT * FROM `camagru_db`.`users` WHERE `username` = ?";
+        $checkUsernameStmt = $mysqli->prepare($checkUsernameQuery);
+
+        if ($checkUsernameStmt === false) {
+            $response = [
+                "success" => false,
+                "message" => "Error in SQL query preparation: " . $mysqli->error,
+                "response_code" => 500 // Internal Server Error
+            ];
+        } else {
+            $checkUsernameStmt->bind_param("s", $newUsername);
+            $checkUsernameStmt->execute();
+            $checkUsernameResult = $checkUsernameStmt->get_result();
+
+            if ($checkUsernameResult->num_rows > 0) {
+                // Le nom d'utilisateur existe déjà
+                $response = [
+                    "success" => false,
+                    "message" => "Username already exists. Please choose a different username.",
+                    "response_code" => 200 // Success
+                ];
+
+                $checkUsernameStmt->close();
+                $mysqli->close();
+                http_response_code($response["response_code"]);
+                header("Content-Type: application/json");
+                echo json_encode($response);
+                exit; // Arrêtez l'exécution du script
+            }
+
+            $checkUsernameStmt->close();
+        }
     }
 
     // Vérifiez la validité du courriel
     if (!empty($newEmail)) {
-        // ... (rest of your code for email check)
+        if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL)) {
+            // Le courriel n'est pas valide
+            $response = [
+                "success" => false,
+                "message" => "Invalid email format.",
+                "response_code" => 200 // Success
+            ];
+
+            $mysqli->close();
+            http_response_code($response["response_code"]);
+            header("Content-Type: application/json");
+            echo json_encode($response);
+            exit; // Arrêtez l'exécution du script
+        }
+
+        // Vérifiez l'unicité du courriel
+        $checkEmailQuery = "SELECT * FROM `camagru_db`.`users` WHERE `email` = ?";
+        $checkEmailStmt = $mysqli->prepare($checkEmailQuery);
+
+        if ($checkEmailStmt === false) {
+            $response = [
+                "success" => false,
+                "message" => "Error in SQL query preparation: " . $mysqli->error,
+                "response_code" => 500 // Internal Server Error
+            ];
+
+            $mysqli->close();
+            http_response_code($response["response_code"]);
+            header("Content-Type: application/json");
+            echo json_encode($response);
+            exit; // Arrêtez l'exécution du script
+        }
+
+        $checkEmailStmt->bind_param("s", $newEmail);
+        $checkEmailStmt->execute();
+        $checkEmailResult = $checkEmailStmt->get_result();
+
+        if ($checkEmailResult->num_rows > 0) {
+            // Le courriel existe déjà
+            $response = [
+                "success" => false,
+                "message" => "Email already exists. Please choose a different email.",
+                "response_code" => 200 // Success
+            ];
+
+            $checkEmailStmt->close();
+            $mysqli->close();
+            http_response_code($response["response_code"]);
+            header("Content-Type: application/json");
+            echo json_encode($response);
+            exit; // Arrêtez l'exécution du script
+        }
+
+        $checkEmailStmt->close();
     }
 
     // Continuez avec la mise à jour des champs
