@@ -91,6 +91,21 @@ export async function getHomeData() {
     }
 }
 
+// export async function getPost(postID) {
+//     try {
+//         const response = await fetch(`${baseUrl}get_post.php?postID=${postID}`);
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+
+//         const data = await response.json();
+//         return data.postURL;
+
+//     } catch (error) {
+//         throw new Error(`Error fetching data: ${error}`);
+//     }
+// }
+
 /*##########################################################################*/
 /*##########################################################################*/
 /*####                              Update                              ####*/

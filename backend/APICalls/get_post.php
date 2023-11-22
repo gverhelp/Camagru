@@ -5,7 +5,7 @@ require 'connect_db.php';
 $response = [];
 
 // Get the user ID from the request
-$postID = $_GET['postId'];
+$postID = $_GET['postID'];
 
 if (!isset($postID)) {
     $response = [
@@ -17,7 +17,7 @@ if (!isset($postID)) {
 else {
     // Query the database to fetch user data based on $userId
     // Prepare a SQL query to retrieve the user's data by idusers
-    $sql = "SELECT * FROM likes WHERE postID = ?";
+    $sql = "SELECT * FROM posts WHERE idposts = ?";
     $stmt = $mysqli->prepare($sql);
 
     if ($stmt === false) {
@@ -38,21 +38,12 @@ else {
             ];
         } else {
             $result = $stmt->get_result();
-
+            $row = $result->fetch_assoc();
             $response = [
                 "success" => true,
+                "postURL" => $row['URL'],
                 "response_code" => 200 // OK
             ];
-
-            // Check if a user with the provided id was found
-            $response['likes'] = [];
-            if ($result->num_rows > 0) {
-                $likesArray = [];
-                while ($row = $result->fetch_assoc()) {
-                    $likesArray[] = $row;
-                }
-                $response['likes'] = $likesArray;
-            }
         }
     }
 }

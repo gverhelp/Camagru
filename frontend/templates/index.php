@@ -91,7 +91,7 @@ session_start();
 					<!-- home -->
 					<div class="home-ctn hidden">
 						<template id="post-ctn">
-							<div class="post-ctn">
+							<div class="post-ctn" name="post-ctn">
 								<header class="post-header">
 									<img id="post-avatar" class="post-avatar" alt="avatar">
 									<div class="post-header-infos">
@@ -170,11 +170,18 @@ session_start();
 					<div class="create-ctn hidden">
 						<div class="create-wrapper">
 							<div class="create-main">
-								<div class="create-canva"></div>
+								<div class="create-canva">
+									<video autoplay></video>
+									<!-- <canvas> -->
+									<!-- </canvas> -->
 								</div>
-								<div class="create-side"></div>
 							</div>
-						<div class="create-footer"></div>
+							<div class="create-side">
+									
+							</div>
+						</div>
+						<div class="create-footer">
+						</div>
 					</div>
 
 					<!-- settings -->
@@ -195,6 +202,10 @@ session_start();
 								<div class="settings-form-wrapper">
 									<label for="password-settings">New password</label>
 									<input type="password" id="password-settings" name="password">
+								</div>
+								<div class="settings-form-wrapper">
+									<label for="password-verification-settings">New password verification</label>
+									<input type="password" id="password-verification-settings" name="password-verification">
 								</div>
 								<div class="settings-form-wrapper">
 									<label for="avatar-settings">New avatar</label>
@@ -252,6 +263,51 @@ session_start();
 				<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
 			</svg>
 			<div class="modal-content">
+			</div>
+		</div>
+
+		<div class="individual-post-ctn hidden">
+			<div class="individual-post-picture">
+				<img id="indivPicture" alt="picture">
+			</div>
+			<div class="individual-post-comments-ctn">
+				<header class="individual-post-header-ctn">
+					<img class="individual-post-avatar" src="../../backend/usersAvatarImg/21carla.JPG" alt="avatar">
+					<div class="individual-post-infos-wrapper">
+						<h3 id="individual-post-username">Garreth Verhelpen</h3>
+						<p id="individual-post-title">Local</p>
+					</div>
+				</header>
+				<main class="individual-post-main-ctn">
+					<ul>
+						<!-- <template id="commentsList"> -->
+							<li>
+								Comments
+							</li>
+							<li>
+								Comments
+							</li>
+							<li>
+								Comments
+							</li>
+							<li>
+								Comments
+							</li>
+							<li>
+								Comments
+							</li>
+							<li>
+								Comments
+							</li>
+							<li>
+								Comments
+							</li>
+						<!-- </template> -->
+					</ul>
+					<div class="individual-post-comment-input-ctn">
+						<input type="text" placeholder="Add a comment...">
+					</div>
+				</main>
 			</div>
 		</div>
 

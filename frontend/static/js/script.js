@@ -98,6 +98,8 @@ window.addEventListener('click', (e) => {
         document.querySelectorAll('.sign').forEach(s => {
             s.classList.remove('open');
         });
+        document.querySelector('.individual-post-ctn').classList.add('hidden');
+        document.getElementById('indivPicture').src = "";
     }
 });
 
@@ -106,40 +108,63 @@ closeModalBtn.addEventListener('click', () => {
     document.querySelectorAll('.sign').forEach(s => {
         s.classList.remove('open');
     });
+    document.querySelector('.individual-post-ctn').classList.add('hidden');
+    document.getElementById('indivPicture').src = "";
 });
 
 updateBtn.addEventListener('click', function() {
     const maxLengthBio = 150;
     const maxLengthUsername = 25;
     const settingsResponse = document.getElementById('settings-response');
-    const newUsername = document.getElementById('username-settings').value;
-    const newEmail = document.getElementById('email-settings').value;
-    const newPassword = document.getElementById('password-settings').value;
-    const newAvatar = document.getElementById('avatar-settings').files[0];
-    const newBio = document.getElementById('bio-settings').value;
+    const newUsername = document.getElementById('username-settings');
+    const newEmail = document.getElementById('email-settings');
+    const newPassword = document.getElementById('password-settings');
+    const newPasswordVerif = document.getElementById('password-verification-settings');
+    const newAvatar = document.getElementById('avatar-settings');
+    const newBio = document.getElementById('bio-settings');
 
-    if (newUsername.length > maxLengthUsername) {
+    if (newUsername.value.length > maxLengthUsername) {
         settingsResponse.classList.remove('hidden');
         settingsResponse.textContent = "Username too long.";
-    } else if (newBio.length > maxLengthBio) {
+    } else if (newBio.value.length > maxLengthBio) {
         settingsResponse.classList.remove('hidden');
         settingsResponse.textContent = "Bio too long.";
-    } else {
-        requests.updateSettings(actualUserID, newUsername, newEmail, newPassword, newAvatar, newBio)
-        .then((message) => {
-            
-            document.getElementById('username-settings').value = "";
-            document.getElementById('email-settings').value = "";
-            document.getElementById('password-settings').value = "";
-            document.getElementById('avatar-settings').value = "";
-            document.getElementById('bio-settings').value = "";
-            settingsResponse.classList.remove('hidden');
-            settingsResponse.textContent = message;
-        })
-        .catch((error) => {
-            console.error('Error in updateSettings():', error);
-        });
     }
+
+    if (newPassword.value.length > 0) {
+        if (newPasswordVerif.value.length == 0) {
+            settingsResponse.classList.remove('hidden');
+            settingsResponse.textContent = "Please fill the password verification field.";
+            newPasswordVerif.style.borderColor = "red";
+            return;
+        } else if (newPassword.value != newPasswordVerif.value) {
+            settingsResponse.classList.remove('hidden');
+            settingsResponse.textContent = "Please enter the same password in both fields.";
+            newPasswordVerif.style.borderColor = "red";
+            newPassword.style.borderColor = "red";
+            return;
+        } else {
+            newPasswordVerif.style.borderColor = "var(--second-color)";
+            newPassword.style.borderColor = "var(--second-color)";
+        }
+    }
+    requests.updateSettings(actualUserID, newUsername.value, newEmail.value, newPassword.value, newAvatar.files[0], newBio.value)
+    .then((message) => {
+        newUsername.value = "";
+        newEmail.value = "";
+        newPassword.value = "";
+        newPasswordVerif.value = "";
+        newAvatar.value = "";
+        newBio.value = "";
+        newPasswordVerif.style.borderColor = "var(--second-color)";
+        newPassword.style.borderColor = "var(--second-color)";
+
+        settingsResponse.classList.remove('hidden');
+        settingsResponse.textContent = message;
+    })
+    .catch((error) => {
+        console.error('Error in updateSettings():', error);
+    });
 });
 
 function likeButton(postId, likeButtonElem) {
@@ -161,38 +186,48 @@ function likeButton(postId, likeButtonElem) {
             }
         })
         .catch((error) => {
-            console.error('Error in updatePostLike:', error);
+            console.error('Error in updatePostLike():', error);
         });
     } else {
         alert("You're not connected. Please sign up or sign in to your account before liking any post.");
     }
 }
 
-function commentButton(postId) {
-    if (actualUserID != -1) {
+function displayIndivPicture(picSrc) {
+    const indivPostCtn = document.querySelector('.individual-post-ctn');
+    const indivPicture = document.getElementById('indivPicture');
 
-    } else {
-        alert("You're not connected. Please sign up or sign in to your account before commenting any post.");
-
-    }
+    modalContent.appendChild(indivPostCtn);
+    modal.classList.add('open');
+    indivPostCtn.classList.remove('hidden');
+    indivPicture.src = picSrc;
 }
 
 document.querySelector('.home-ctn').addEventListener('click', function(event) {
     let elem = event.target;
 
-    if (elem.nodeName == 'svg' || elem.nodeName == 'SPAN')
-        elem = elem.parentNode;
-    if (elem.nodeName == 'path')
-        elem = elem.parentNode.parentNode;
-    if (elem.nodeName == 'BUTTON') {
-        const elemName = elem.getAttribute('name');
-        const postId = elem.parentElement.parentElement.getAttribute('data-post-id');
+    while (elem.parentNode) {
+        if (elem.getAttribute('name') == "likeBtn") {
+            const postId = elem.parentElement.parentElement.getAttribute('data-post-id');
 
-        if (elemName == 'likeBtn') {
             likeButton(parseInt(postId), elem);
+            break;
+        } if (elem.getAttribute('name') == "commentBtn") {
+            const picSrc = elem.parentElement.parentElement.querySelector('#post-picture').src;
+
+            if (actualUserID != -1) {
+                displayIndivPicture(picSrc);
+            } else {
+                alert("You're not connected. Please sign up or sign in to your account before commenting any post.");
+            }
+            break;
+        } if (elem.getAttribute('name') == 'post-ctn') {
+            const picSrc = elem.querySelector('#post-picture').src;
+
+            displayIndivPicture(picSrc);
+            break;
         }
-        else if (elemName == 'commentBtn')
-            commentButton(parseInt(postId));
+        elem = elem.parentNode;
     }
 });
 
@@ -397,10 +432,103 @@ function profile() {
 }
 
 function create() {
+    // if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+    //     console.log("Let's get this party started")
+    // }
+    // navigator.mediaDevices.getUserMedia({video: true})
+
+
+
+    // feather.replace();
+
+    // const controls = document.querySelector('.controls');
+    // const cameraOptions = document.querySelector('.video-options>select');
+    const video = document.querySelector('video');
+    // const canvas = document.querySelector('canvas');
+    // const screenshotImage = document.querySelector('img');
+    // const buttons = [...controls.querySelectorAll('button')];
+    let streamStarted = false;
+
+    // const [play, pause, screenshot] = buttons;
+
+    // canvas.width = 1920;
+    // canvas.height = 1080;
+    video.play();
+    const constraints = {
+        video: {
+            width: {
+            min: 1280,
+            ideal: 1920,
+            max: 2560,
+            },
+            height: {
+            min: 720,
+            ideal: 1080,
+            max: 1440
+            },
+        }
+    };
+
+    // const getCameraSelection = async () => {
+    //   const devices = await navigator.mediaDevices.enumerateDevices();
+    //   const videoDevices = devices.filter(device => device.kind === 'videoinput');
+    //   const options = videoDevices.map(videoDevice => {
+    //     return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
+    //   });
+    //   cameraOptions.innerHTML = options.join('');
+    // };
+
+    // play.onclick = () => {
+    // if (streamStarted) {
+    //     video.play();
+    //     play.classList.add('d-none');
+    //     pause.classList.remove('d-none');
+    //     return;
+    // }
+    // };
+
+    const startStream = async (constraints) => {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    handleStream(stream);
+    };
+
+    if ('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia) {
+        const updatedConstraints = {
+        ...constraints,
+        // deviceId: {
+        //     exact: cameraOptions.value
+        // }
+        };
+        startStream(updatedConstraints);
+    }
+
+    const handleStream = (stream) => {
+    video.srcObject = stream;
+    // play.classList.add('d-none');
+    // pause.classList.remove('d-none');
+    screenshot.classList.remove('d-none');
+    streamStarted = true;
+    };
+
+    // getCameraSelection();
 }
 
 function settings() {
-    document.getElementById('settings-response').classList.add('hidden');
+    const settingsResponse = document.getElementById('settings-response');
+    const newUsername = document.getElementById('username-settings');
+    const newEmail = document.getElementById('email-settings');
+    const newPassword = document.getElementById('password-settings');
+    const newPasswordVerif = document.getElementById('password-verification-settings');
+    const newBio = document.getElementById('bio-settings');
+    
+    settingsResponse.classList.add('hidden');
+    newUsername.value = "";
+    newEmail.value = "";
+    newPassword.value = "";
+    newPasswordVerif.value = "";
+    newBio.value = "";
+    newPassword.style.borderColor = "var(--second-color)";
+    newPasswordVerif.style.borderColor = "var(--second-color)";
 }
 
 function signUpPage() {

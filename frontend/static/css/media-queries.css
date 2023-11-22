@@ -78,6 +78,32 @@
     .dropdown-btn-ctn {
         display: block;
     }
+
+    .individual-post-ctn {
+        flex-direction: column;
+    }
+    
+    .individual-post-picture {
+        flex: 4
+    }
+
+    .individual-post-header-ctn {
+        display: none;
+    }
+
+    .individual-post-comments-ctn {
+        flex: 0;
+        border-left: 0;
+        border-top: 1px solid var(--main-color);
+    }
+
+    .individual-post-main-ctn ul {
+        display: none;
+    }
+
+    .individual-post-comment-input-ctn {
+        border: none;
+    }
 }
 
 @keyframes change-page {
