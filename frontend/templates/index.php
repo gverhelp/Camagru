@@ -95,7 +95,7 @@ session_start();
 								<header class="post-header">
 									<img id="post-avatar" class="post-avatar" alt="avatar">
 									<div class="post-header-infos">
-										<h3 id="post-username"></h3>
+										<h3 id="post-username" name="post-username"></h3>
 										<p id="post-title"></p>
 									</div>
 								</header>
@@ -154,8 +154,8 @@ session_start();
 						<div class="profile-gallery">
 							<template id="gallery-ctn">
 								<div class="gallery-item">
-									<img id="gallery-item" alt="picture" class="gallery-image">
-									<div class="gallery-item-infos" data-target="individual-picture">
+									<img id="gallery-image" alt="picture" class="gallery-image">
+									<div class="gallery-item-infos" name="galleryItemInfos">
 										<img src="../static/img/white-heart.png" alt="like">
 										<span id="gallery-like"></span>
 										<img src="../static/img/white-comment.png" alt="comment">
@@ -266,48 +266,37 @@ session_start();
 			</div>
 		</div>
 
+		<!-- individual post -->
 		<div class="individual-post-ctn hidden">
 			<div class="individual-post-picture">
-				<img id="indivPicture" alt="picture">
+				<img id="indiv-picture" alt="picture">
 			</div>
 			<div class="individual-post-comments-ctn">
 				<header class="individual-post-header-ctn">
-					<img class="individual-post-avatar" src="../../backend/usersAvatarImg/21carla.JPG" alt="avatar">
+					<img id="indiv-avatar" class="individual-post-avatar" src="../../backend/usersAvatarImg/21carla.JPG" alt="avatar">
 					<div class="individual-post-infos-wrapper">
-						<h3 id="individual-post-username">Garreth Verhelpen</h3>
-						<p id="individual-post-title">Local</p>
+						<h3 id="individual-post-username"></h3>
+						<p id="individual-post-title"></p>
 					</div>
 				</header>
 				<main class="individual-post-main-ctn">
-					<ul>
-						<!-- <template id="commentsList"> -->
+					<ul id="commentsUl">
+						<template id="commentsList">
 							<li>
-								Comments
+								<img id="comment-avatar" class="individual-post-avatar" alt="avatar">
+								<div class="comment-infos-wrapper">
+									<h3 id="comment-username"></h3>
+									<span id="comment-text"></span>
+								</div>
 							</li>
-							<li>
-								Comments
-							</li>
-							<li>
-								Comments
-							</li>
-							<li>
-								Comments
-							</li>
-							<li>
-								Comments
-							</li>
-							<li>
-								Comments
-							</li>
-							<li>
-								Comments
-							</li>
-						<!-- </template> -->
+						</template>
 					</ul>
-					<div class="individual-post-comment-input-ctn">
-						<input type="text" placeholder="Add a comment...">
-					</div>
 				</main>
+				<div class="individual-post-comment-input-ctn">
+					<form id="comment-form">
+       					<input id="comment-input" type="text" placeholder="Add a comment...">
+    				</form>				
+				</div>
 			</div>
 		</div>
 

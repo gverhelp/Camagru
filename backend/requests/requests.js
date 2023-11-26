@@ -91,20 +91,20 @@ export async function getHomeData() {
     }
 }
 
-// export async function getPost(postID) {
-//     try {
-//         const response = await fetch(`${baseUrl}get_post.php?postID=${postID}`);
-//         if (!response.ok) {
-//             throw new Error(`HTTP error! Status: ${response.status}`);
-//         }
+export async function getPost(postID) {
+    try {
+        const response = await fetch(`${baseUrl}get_post.php?postID=${postID}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-//         const data = await response.json();
-//         return data.postURL;
+        const data = await response.json();
+        return data;
 
-//     } catch (error) {
-//         throw new Error(`Error fetching data: ${error}`);
-//     }
-// }
+    } catch (error) {
+        throw new Error(`Error fetching data: ${error}`);
+    }
+}
 
 /*##########################################################################*/
 /*##########################################################################*/
@@ -173,6 +173,31 @@ export async function updateSettings(userID, newUsername, newEmail, newPassword,
 
         const data = await response.json();
         return data.message;
+
+    } catch (error) {
+        throw new Error(`Error fetching data: ${error}`);
+    }
+}
+
+export async function sendComment(userID, postID, text) {
+    try {
+        const formData = new FormData();
+
+        formData.append('userID', userID);
+        formData.append('postID', postID);
+        formData.append('text', text);
+
+        const response = await fetch(`${baseUrl}send_comment.php`, {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        // const data = await response.json();
+        // return data;
 
     } catch (error) {
         throw new Error(`Error fetching data: ${error}`);

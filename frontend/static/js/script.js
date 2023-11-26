@@ -99,7 +99,13 @@ window.addEventListener('click', (e) => {
             s.classList.remove('open');
         });
         document.querySelector('.individual-post-ctn').classList.add('hidden');
-        document.getElementById('indivPicture').src = "";
+        // document.getElementById('indiv-picture').src = "";
+        // document.getElementById('indiv-avatar').src = "";
+        // document.getElementById('individual-post-username').textContent = "";
+        // document.getElementById('individual-post-title').textContent = "";
+        // document.getElementById('comment-username').textContent = "";
+        // document.getElementById('comment-text').textContent = "";
+        // document.getElementById('comment-avatar').src = "";
     }
 });
 
@@ -109,7 +115,13 @@ closeModalBtn.addEventListener('click', () => {
         s.classList.remove('open');
     });
     document.querySelector('.individual-post-ctn').classList.add('hidden');
-    document.getElementById('indivPicture').src = "";
+    // document.getElementById('indiv-picture').src = "";
+    // document.getElementById('indiv-avatar').src = "";
+    // document.getElementById('individual-post-username').textContent = "";
+    // document.getElementById('individual-post-title').textContent = "";
+    // document.getElementById('comment-username').textContent = "";
+    // document.getElementById('comment-text').textContent = "";
+    // document.getElementById('comment-avatar').src = "";
 });
 
 updateBtn.addEventListener('click', function() {
@@ -167,6 +179,23 @@ updateBtn.addEventListener('click', function() {
     });
 });
 
+document.getElementById('comment-form').addEventListener('submit', (event) => {
+    event.preventDefault(); // Prevents the default form submission behavior
+    const commentInput = document.getElementById('comment-input');
+    const postID = commentInput.getAttribute('data-post-id')
+
+    if (actualUserID != -1) {
+        requests.sendComment(actualUserID, postID, commentInput.value)
+        .then(() => {
+            commentInput.value = "";
+            displayIndivPicture(postID);
+        })
+        .catch((error) => {
+            console.error('Error in sendComment():', error);
+        });
+    }
+});
+
 function likeButton(postId, likeButtonElem) {
     if (actualUserID != -1) {
         requests.updatePostLike(actualUserID, postId)
@@ -193,41 +222,103 @@ function likeButton(postId, likeButtonElem) {
     }
 }
 
-function displayIndivPicture(picSrc) {
+function displayIndivPicture(postId) {
     const indivPostCtn = document.querySelector('.individual-post-ctn');
-    const indivPicture = document.getElementById('indivPicture');
+    const indivPicture = document.getElementById('indiv-picture');
+    const indivAvatar = document.getElementById('indiv-avatar');
+    const indivUsername = document.getElementById('individual-post-username');
+    const indivTitle = document.getElementById('individual-post-title');
+    const commentInput = document.getElementById('comment-input');
 
+    commentInput.setAttribute('data-post-id', postId)
     modalContent.appendChild(indivPostCtn);
     modal.classList.add('open');
     indivPostCtn.classList.remove('hidden');
-    indivPicture.src = picSrc;
+
+    if (actualUserID == -1) {
+        commentInput.setAttribute('placeholder', "You have to be connected to comment a post.");
+    }
+
+    requests.getPost(postId)
+    .then((data) => {
+        if (data['postData']) {
+            indivPicture.src = data['postData']['URL'];
+            indivTitle.textContent = data['postData']['title'];
+            indivAvatar.src = data['userData']['avatarURL'];
+            indivUsername.textContent = data['userData']['username'];
+
+            if (data['commentsData']) {
+                const template = document.getElementById('commentsList');
+                const commentsUl = document.getElementById('commentsUl');
+
+                while (commentsUl.children.length != 1) {
+                    commentsUl.lastChild.remove();
+                }
+
+                data['commentsData'].forEach((comment) => {
+                    const commentList = document.importNode(template.content, true);
+
+                    const tempUsername = commentList.getElementById('comment-username');
+                    const tempText = commentList.getElementById('comment-text');
+                    const tempAvatar = commentList.getElementById('comment-avatar');
+
+                    tempUsername.textContent = comment['userData']['username'];
+                    tempAvatar.src = comment['userData']['avatarURL']
+                    tempText.textContent = comment['text'];
+
+                    commentsUl.appendChild(commentList);
+                });
+            }
+        }
+    })
+    .catch((error) => {
+        console.error('Error in getPost():', error);
+    });
 }
 
 document.querySelector('.home-ctn').addEventListener('click', function(event) {
     let elem = event.target;
 
-    while (elem.parentNode) {
+    while (elem.parentElement) {
         if (elem.getAttribute('name') == "likeBtn") {
             const postId = elem.parentElement.parentElement.getAttribute('data-post-id');
 
             likeButton(parseInt(postId), elem);
             break;
         } if (elem.getAttribute('name') == "commentBtn") {
-            const picSrc = elem.parentElement.parentElement.querySelector('#post-picture').src;
-
             if (actualUserID != -1) {
-                displayIndivPicture(picSrc);
+                const postId = elem.parentElement.parentElement.getAttribute('data-post-id');
+
+                displayIndivPicture(postId);
             } else {
                 alert("You're not connected. Please sign up or sign in to your account before commenting any post.");
             }
             break;
+        } if (elem.getAttribute('name') == 'post-username') {
+            if (elem.getAttribute('data-user-id') == actualUserID) {
+                changeIcon('profile');
+                changePage('profile');
+            } else
+                changePage('profile', elem.getAttribute('data-user-id'));
+            break;
         } if (elem.getAttribute('name') == 'post-ctn') {
-            const picSrc = elem.querySelector('#post-picture').src;
+            const postId = elem.getAttribute('data-post-id');
 
-            displayIndivPicture(picSrc);
+            displayIndivPicture(postId);
             break;
         }
         elem = elem.parentNode;
+    }
+});
+
+document.querySelector('.profile-gallery').addEventListener('click', function(event) {
+    let elem = event.target;
+
+    while (elem.parentElement) {
+        if (elem.getAttribute('name') == 'galleryItemInfos') {
+            displayIndivPicture(elem.getAttribute('data-post-id'));
+            break;
+        }
     }
 });
 
@@ -271,7 +362,7 @@ function changeTheme() {
     if (actualUserID != -1) {
         requests.updateThemeData(actualUserID, sendTheme)
         .catch((error) => {
-            console.error('Error in changeThemeData:', error);
+            console.error('Error in changeThemeData():', error);
         });
     }
 
@@ -294,7 +385,7 @@ function changeTheme() {
     changeIcon('');
 }
 
-function changePage(name) {
+function changePage(name, userID = actualUserID) {
     displayPage(name);
 
     switch (name) {
@@ -305,7 +396,7 @@ function changePage(name) {
             create();
             break;
         case 'profile':
-            profile();
+            profile(userID);
             break;
         case 'settings':
             settings();
@@ -346,6 +437,7 @@ function home() {
             const postComment = postTemplate.querySelector('#post-comment');
           
             postCtn.setAttribute('data-post-id', post['idposts']);
+            postName.setAttribute('data-user-id', post['userID']);
             postName.textContent = post['username'];
             postTitle.textContent = post['title'];
             postAvatar.src = post['avatarURL'];
@@ -380,11 +472,10 @@ function home() {
     });
 }
 
-function profile() {
-    requests.getProfileData(actualUserID)
+function profile(userID) {
+    requests.getProfileData(userID)
     .then((profileData) => {
         if (profileData) {
-            // Handle profileData here
             const template = document.getElementById('gallery-ctn');
             const profileGallery = document.querySelector('.profile-gallery');
 
@@ -410,10 +501,12 @@ function profile() {
                     const itemIMG = itemCtn.querySelector('.gallery-image');
                     const itemLikes = itemCtn.querySelector('#gallery-like');
                     const itemComments = itemCtn.querySelector('#gallery-comment');
+                    const itemInfo = itemCtn.querySelector('.gallery-item-infos');
 
                     itemIMG.src = item['URL'];
                     itemLikes.textContent = item['likes'].length;
                     itemComments.textContent = item['comments'].length;
+                    itemInfo.setAttribute('data-post-id', item['idposts']);
 
                     profileGallery.appendChild(itemCtn);
                 });
@@ -427,7 +520,7 @@ function profile() {
         }
     })
     .catch((error) => {
-        console.error('Error in getProfileData:', error);
+        console.error('Error in getProfileData():', error);
     });
 }
 
@@ -548,11 +641,9 @@ function signUpPage() {
         requests.signUp(username, email, password)
         .then(data => {
             if (data.success) {
-                // Redirect to a success page or perform other actions.
                 document.getElementById('signUp-form').textContent = "Your account has been created successfuly!";
                 location.reload();
             } else {
-                // Display the error message on the current page.
                 document.getElementById('error-message-signup').textContent = data.message;
             }
         })
@@ -578,11 +669,9 @@ function signInPage() {
         requests.signIn(username, password)
         .then(data => {
             if (data.success) {
-                // Redirect to a success page or perform other actions.
                 document.getElementById('signIn-form').textContent = "You're connected, well done!";
                 location.reload();
             } else {
-                // Display the error message on the current page.
                 document.getElementById('error-message-signin').textContent = data.message;
             }
         })
