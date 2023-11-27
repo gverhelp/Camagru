@@ -13,10 +13,6 @@
         width: 90px;
     }
 
-    /* .main-left-ctn {
-        width: 9rem;
-    } */
-
     .left-btn {
         justify-content: center;
     }
@@ -35,6 +31,11 @@
 
     .create-wrapper {
         flex-direction: column;
+    }
+
+    .create-side {
+        height: 100px;
+        width: 100%;
     }
 }
 

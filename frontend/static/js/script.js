@@ -307,7 +307,7 @@ document.querySelector('.home-ctn').addEventListener('click', function(event) {
             displayIndivPicture(postId);
             break;
         }
-        elem = elem.parentNode;
+        elem = elem.parentElement;
     }
 });
 
@@ -315,10 +315,12 @@ document.querySelector('.profile-gallery').addEventListener('click', function(ev
     let elem = event.target;
 
     while (elem.parentElement) {
+        console.log(elem);
         if (elem.getAttribute('name') == 'galleryItemInfos') {
             displayIndivPicture(elem.getAttribute('data-post-id'));
             break;
         }
+        elem = elem.parentElement;
     }
 });
 
@@ -525,85 +527,77 @@ function profile(userID) {
 }
 
 function create() {
-    // if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-    //     console.log("Let's get this party started")
-    // }
-    // navigator.mediaDevices.getUserMedia({video: true})
-
-
-
-    // feather.replace();
-
-    // const controls = document.querySelector('.controls');
-    // const cameraOptions = document.querySelector('.video-options>select');
+    const cameraOptions = document.querySelector('.video-options>select');
     const video = document.querySelector('video');
-    // const canvas = document.querySelector('canvas');
-    // const screenshotImage = document.querySelector('img');
-    // const buttons = [...controls.querySelectorAll('button')];
-    let streamStarted = false;
-
-    // const [play, pause, screenshot] = buttons;
-
-    // canvas.width = 1920;
-    // canvas.height = 1080;
-    video.play();
+    const canvas = document.querySelector('canvas');
+    const screenshotImage = document.querySelector('.screenshot-img');
+    const screenshot = document.querySelector('.screenshot-btn');
+    
     const constraints = {
-        video: {
-            width: {
-            min: 1280,
-            ideal: 1920,
-            max: 2560,
-            },
-            height: {
-            min: 720,
-            ideal: 1080,
-            max: 1440
-            },
-        }
+      video: {
+        width: {
+          min: 1280,
+          ideal: 1920,
+        //   max: 2560,
+        },
+        height: {
+          min: 720,
+          ideal: 1080,
+        //   max: 1440
+        },
+      }
     };
-
-    // const getCameraSelection = async () => {
-    //   const devices = await navigator.mediaDevices.enumerateDevices();
-    //   const videoDevices = devices.filter(device => device.kind === 'videoinput');
-    //   const options = videoDevices.map(videoDevice => {
-    //     return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
-    //   });
-    //   cameraOptions.innerHTML = options.join('');
-    // };
-
-    // play.onclick = () => {
-    // if (streamStarted) {
-    //     video.play();
-    //     play.classList.add('d-none');
-    //     pause.classList.remove('d-none');
-    //     return;
-    // }
-    // };
-
+    
+    const getCameraSelection = async () => {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const videoDevices = devices.filter(device => device.kind === 'videoinput');
+        const options = videoDevices.map(videoDevice => {
+            return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
+        });
+        cameraOptions.innerHTML = options.join('');
+    };
+    
     const startStream = async (constraints) => {
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
-    handleStream(stream);
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        handleStream(stream);
+    };
+    
+    const handleStream = (stream) => {
+        video.srcObject = stream;
+        screenshot.classList.remove('hidden');
+    };
+    
+    getCameraSelection();
+
+    cameraOptions.onchange = () => {
+        const updatedConstraints = {
+            ...constraints,
+            deviceId: {
+                exact: cameraOptions.value
+            }
+        };
+        startStream(updatedConstraints);
     };
 
+    const doScreenshot = () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        screenshotImage.src = canvas.toDataURL('image/webp');
+        screenshotImage.classList.remove('hidden');
+        video.classList.add('hidden');
+    };
+
+    screenshot.onclick = doScreenshot;
     if ('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia) {
         const updatedConstraints = {
-        ...constraints,
-        // deviceId: {
-        //     exact: cameraOptions.value
-        // }
+            ...constraints,
+            deviceId: {
+                exact: cameraOptions.value
+            }
         };
         startStream(updatedConstraints);
     }
-
-    const handleStream = (stream) => {
-    video.srcObject = stream;
-    // play.classList.add('d-none');
-    // pause.classList.remove('d-none');
-    screenshot.classList.remove('d-none');
-    streamStarted = true;
-    };
-
-    // getCameraSelection();
 }
 
 function settings() {

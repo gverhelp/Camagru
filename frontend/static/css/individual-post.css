@@ -54,7 +54,7 @@
   font-size: 1.5rem;
 }
 
-.individual-post-infos-wrapper p {
+.individual-post-infos-wrapper span {
   font-size: 1.3rem;
 }
 
@@ -85,11 +85,11 @@
   margin-inline: 1rem;
 }
 
-.individual-post-main-ctn h3 {
+.comment-infos-wrapper h3 {
   font-size: 1.5rem;
 }
 
-.individual-post-main-ctn span {
+.comment-infos-wrapper span {
   font-size: 1.3rem;
 }
 

@@ -170,10 +170,11 @@ session_start();
 					<div class="create-ctn hidden">
 						<div class="create-wrapper">
 							<div class="create-main">
-								<div class="create-canva">
+								<div class="display-cover">
 									<video autoplay></video>
-									<!-- <canvas> -->
-									<!-- </canvas> -->
+									<canvas class="hidden"></canvas>
+
+									<img class="screenshot-img hidden" alt="screenshot">
 								</div>
 							</div>
 							<div class="create-side">
@@ -181,6 +182,12 @@ session_start();
 							</div>
 						</div>
 						<div class="create-footer">
+							<div class="video-options">
+								<select name="" id="" class="custom-select">
+									<option value="">Select camera</option>
+								</select>
+								<button class="button screenshot-btn hidden" title="ScreenShot">Take picture</button>
+							</div>
 						</div>
 					</div>
 
@@ -190,7 +197,6 @@ session_start();
 							Settings
 						</div>
 						<div class="settings-section">
-							<!-- <form class="settings-form-ctn" id="settings-form"> -->
 								<div class="settings-form-wrapper">
 									<label for="username-settings">New username</label>
 									<input type="text" id="username-settings" name="username">
@@ -215,7 +221,6 @@ session_start();
 									<label for="bio-settings">New bio</label>
 									<textarea id="bio-settings" name="bio"></textarea>
 								</div>
-							<!-- </form> -->
 						</div>
 						<div class="settings-section">
 							<button id="updateBtn" class="button"> Update </button>
@@ -276,7 +281,7 @@ session_start();
 					<img id="indiv-avatar" class="individual-post-avatar" src="../../backend/usersAvatarImg/21carla.JPG" alt="avatar">
 					<div class="individual-post-infos-wrapper">
 						<h3 id="individual-post-username"></h3>
-						<p id="individual-post-title"></p>
+						<span id="individual-post-title"></span>
 					</div>
 				</header>
 				<main class="individual-post-main-ctn">
