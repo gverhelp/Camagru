@@ -1,4 +1,4 @@
-import * as requests from '../../../backend/requests/requests.js';
+import * as requests from '/backend/requests/requests.js';
 
 // Button's variables
 const leftBtns = document.getElementById('leftBtns');
