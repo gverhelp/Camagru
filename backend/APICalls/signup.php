@@ -33,6 +33,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             "message" => "Password is required.",
             "response_code" => 200 // Success
         ];
+    } elseif (strlen($_POST['password']) < 6 || !preg_match('/[A-Z]/', $_POST['password'])) {
+        $response = [
+            "success" => false,
+            "message" => "Password should be at least 6 characters long and contain at least one capital letter.",
+            "response_code" => 200 // Success
+        ];
     } else {
         $username = verify_input($_POST['username']);
         $email = verify_input($_POST["email"]);

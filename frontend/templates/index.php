@@ -170,24 +170,45 @@ session_start();
 					<div class="create-ctn hidden">
 						<div class="create-wrapper">
 							<div class="create-main">
-								<div class="display-cover">
-									<video autoplay></video>
-									<canvas class="hidden"></canvas>
+								<video autoplay></video>
+								<canvas class="hidden"></canvas>
 
-									<img class="screenshot-img hidden" alt="screenshot">
-								</div>
+								<img class="screenshot-img hidden" alt="screenshot">
 							</div>
 							<div class="create-side">
-									
+								<img class="create-sticker" src="../../backend/usersAvatarImg/21carla.JPG" alt="">
+								<img class="create-sticker" src="../../backend/usersAvatarImg/21carla.JPG" alt="">
+								<img class="create-sticker" src="../../backend/usersAvatarImg/21carla.JPG" alt="">
+								<img class="create-sticker" src="../../backend/usersAvatarImg/21carla.JPG" alt="">
+								<img class="create-sticker" src="../../backend/usersAvatarImg/21carla.JPG" alt="">
 							</div>
 						</div>
 						<div class="create-footer">
-							<div class="video-options">
-								<select name="" id="" class="custom-select">
-									<option value="">Select camera</option>
-								</select>
-								<button class="button screenshot-btn hidden" title="ScreenShot">Take picture</button>
+							
+							<div class="create-footer-wrapper">
+								<div class="create-footer-select-camera">
+									<select name="" id="" class="custom-select">
+										<option value="">Select camera</option>
+									</select>
+								</div>
+								<div class="create-footer-buttons">
+									<button class="button screenshot-btn hidden" title="ScreenShot">Take picture</button>
+									<span>or</span>
+									<input type="file" id="upload-photo" name="photo">
+								</div>
+								<div class="create-footer-buttons-options hidden">
+									<button class="button option-button" title="publish">Publish</button>
+									<button class="button option-button" title="cancel">Cancel</button>
+								</div>
 							</div>
+
+							<div class="create-footer-wrapper">
+								<div class="create-footer-title-input"> 
+									<label for="post-title">Title of your photo</label>
+									<textarea id="post-title" name="title"></textarea>
+								</div>
+							</div>
+
 						</div>
 					</div>
 

@@ -84,6 +84,7 @@ export async function getHomeData() {
             returnData['postsData'][i]['username'] = userDataJSON['userData']['username'];
         }
 
+        // console.log(returnData['postsData']);
         return returnData['postsData'];
 
     } catch (error) {
@@ -179,7 +180,7 @@ export async function updateSettings(userID, newUsername, newEmail, newPassword,
     }
 }
 
-export async function sendComment(userID, postID, text) {
+export async function addComment(userID, postID, text) {
     try {
         const formData = new FormData();
 
@@ -187,7 +188,7 @@ export async function sendComment(userID, postID, text) {
         formData.append('postID', postID);
         formData.append('text', text);
 
-        const response = await fetch(`${baseUrl}send_comment.php`, {
+        const response = await fetch(`${baseUrl}add_comment.php`, {
             method: "POST",
             body: formData
         });
@@ -198,6 +199,27 @@ export async function sendComment(userID, postID, text) {
         
         // const data = await response.json();
         // return data;
+
+    } catch (error) {
+        throw new Error(`Error fetching data: ${error}`);
+    }
+}
+
+export async function addPost(userID, screenshotDataURL) {
+    try {
+        const formData = new FormData();
+
+        formData.append('userID', userID);
+        formData.append('screenshotDataURL', screenshotDataURL);
+
+        const response = await fetch(`${baseUrl}add_post.php`, {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
     } catch (error) {
         throw new Error(`Error fetching data: ${error}`);

@@ -5,7 +5,7 @@ const leftBtns = document.getElementById('leftBtns');
 const bottomBtns = document.getElementById('bottomBtns');
 const navbarBtns = document.getElementById('navbar');
 const dropdownBtn = document.querySelector('.dropdown-btn');
-const updateBtn = document.getElementById('updateBtn');
+const updateSettingsBtn = document.getElementById('updateBtn');
 const dropdownMenu = document.querySelector('.dropdown-menu');
 
 // Modal's variables
@@ -115,16 +115,44 @@ closeModalBtn.addEventListener('click', () => {
         s.classList.remove('open');
     });
     document.querySelector('.individual-post-ctn').classList.add('hidden');
-    // document.getElementById('indiv-picture').src = "";
-    // document.getElementById('indiv-avatar').src = "";
-    // document.getElementById('individual-post-username').textContent = "";
-    // document.getElementById('individual-post-title').textContent = "";
-    // document.getElementById('comment-username').textContent = "";
-    // document.getElementById('comment-text').textContent = "";
-    // document.getElementById('comment-avatar').src = "";
 });
 
-updateBtn.addEventListener('click', function() {
+function displayError(settingsResponse, message) {
+    settingsResponse.classList.remove('hidden');
+    settingsResponse.textContent = message;
+}
+
+function validatePassword(settingsResponse, newPassword, newPasswordVerif) {
+    if (newPassword.value.length > 0) {
+        if (newPasswordVerif.value.length == 0) {
+            displayError(settingsResponse, "Please fill the password verification field.");
+            newPasswordVerif.style.borderColor = "red";
+            return false;
+        } else if (newPassword.value != newPasswordVerif.value) {
+            displayError(settingsResponse, "Please enter the same password in both fields.");
+            newPasswordVerif.style.borderColor = "red";
+            newPassword.style.borderColor = "red";
+            return false;
+        } else if (newPassword.value.length < 6) {
+            displayError(settingsResponse, "Password must contain at least 6 characters.");
+            newPassword.style.borderColor = "red";
+            return false;
+        } else if (!/[A-Z]/.test(newPassword.value)) {
+            displayError(settingsResponse, "Password must contain at least one capital letter.");
+            newPassword.style.borderColor = "red";
+            return false;
+        } else {
+            newPasswordVerif.style.borderColor = "var(--second-color)";
+            newPassword.style.borderColor = "var(--second-color)";
+        }
+    }
+    return true;
+}
+
+updateSettingsBtn.addEventListener('click', function () {
+    if (actualUserID == -1)
+        return
+
     const maxLengthBio = 150;
     const maxLengthUsername = 25;
     const settingsResponse = document.getElementById('settings-response');
@@ -136,90 +164,78 @@ updateBtn.addEventListener('click', function() {
     const newBio = document.getElementById('bio-settings');
 
     if (newUsername.value.length > maxLengthUsername) {
-        settingsResponse.classList.remove('hidden');
-        settingsResponse.textContent = "Username too long.";
+        displayError(settingsResponse, "Username too long.");
     } else if (newBio.value.length > maxLengthBio) {
-        settingsResponse.classList.remove('hidden');
-        settingsResponse.textContent = "Bio too long.";
+        displayError(settingsResponse, "Bio too long.");
     }
 
-    if (newPassword.value.length > 0) {
-        if (newPasswordVerif.value.length == 0) {
-            settingsResponse.classList.remove('hidden');
-            settingsResponse.textContent = "Please fill the password verification field.";
-            newPasswordVerif.style.borderColor = "red";
-            return;
-        } else if (newPassword.value != newPasswordVerif.value) {
-            settingsResponse.classList.remove('hidden');
-            settingsResponse.textContent = "Please enter the same password in both fields.";
-            newPasswordVerif.style.borderColor = "red";
-            newPassword.style.borderColor = "red";
-            return;
-        } else {
+    if (!validatePassword(settingsResponse, newPassword, newPasswordVerif)) {
+        return;
+    }
+
+    requests.updateSettings(actualUserID, newUsername.value, newEmail.value, newPassword.value, newAvatar.files[0], newBio.value)
+        .then((message) => {
+            newUsername.value = "";
+            newEmail.value = "";
+            newPassword.value = "";
+            newPasswordVerif.value = "";
+            newAvatar.value = "";
+            newBio.value = "";
             newPasswordVerif.style.borderColor = "var(--second-color)";
             newPassword.style.borderColor = "var(--second-color)";
-        }
-    }
-    requests.updateSettings(actualUserID, newUsername.value, newEmail.value, newPassword.value, newAvatar.files[0], newBio.value)
-    .then((message) => {
-        newUsername.value = "";
-        newEmail.value = "";
-        newPassword.value = "";
-        newPasswordVerif.value = "";
-        newAvatar.value = "";
-        newBio.value = "";
-        newPasswordVerif.style.borderColor = "var(--second-color)";
-        newPassword.style.borderColor = "var(--second-color)";
 
-        settingsResponse.classList.remove('hidden');
-        settingsResponse.textContent = message;
-    })
-    .catch((error) => {
-        console.error('Error in updateSettings():', error);
-    });
+            settingsResponse.classList.remove('hidden');
+            settingsResponse.textContent = message;
+        })
+        .catch((error) => {
+            console.error('Error in updateSettings():', error);
+        });
 });
+
 
 document.getElementById('comment-form').addEventListener('submit', (event) => {
     event.preventDefault(); // Prevents the default form submission behavior
     const commentInput = document.getElementById('comment-input');
     const postID = commentInput.getAttribute('data-post-id')
 
-    if (actualUserID != -1) {
-        requests.sendComment(actualUserID, postID, commentInput.value)
-        .then(() => {
-            commentInput.value = "";
-            displayIndivPicture(postID);
-        })
-        .catch((error) => {
-            console.error('Error in sendComment():', error);
-        });
-    }
+    if (actualUserID == -1)
+        return
+
+    requests.addComment(actualUserID, postID, commentInput.value)
+    .then(() => {
+        commentInput.value = "";
+        displayIndivPicture(postID);
+    })
+    .catch((error) => {
+        console.error('Error in addComment():', error);
+    });
 });
 
 function likeButton(postId, likeButtonElem) {
-    if (actualUserID != -1) {
-        requests.updatePostLike(actualUserID, postId)
-        .then((data) => {
-            let likeCountElem = likeButtonElem.querySelector('#post-like');
-            let svgLikeElem = likeButtonElem.querySelector('#svg-like');
-            let svgLikeFillElem = likeButtonElem.querySelector('#svg-like-fill');
-
-            if (data.message == "Added") {
-                likeCountElem.textContent++;
-                svgLikeElem.classList.add('hidden');
-                svgLikeFillElem.classList.remove('hidden');
-            } else {
-                likeCountElem.textContent--;
-                svgLikeElem.classList.remove('hidden');
-                svgLikeFillElem.classList.add('hidden');
-            }
-        })
-        .catch((error) => {
-            console.error('Error in updatePostLike():', error);
-        });
-    } else {
+    if (actualUserID == -1) {
         alert("You're not connected. Please sign up or sign in to your account before liking any post.");
+        return
     }
+
+    requests.updatePostLike(actualUserID, postId)
+    .then((data) => {
+        let likeCountElem = likeButtonElem.querySelector('#post-like');
+        let svgLikeElem = likeButtonElem.querySelector('#svg-like');
+        let svgLikeFillElem = likeButtonElem.querySelector('#svg-like-fill');
+
+        if (data.message == "Added") {
+            likeCountElem.textContent++;
+            svgLikeElem.classList.add('hidden');
+            svgLikeFillElem.classList.remove('hidden');
+        } else {
+            likeCountElem.textContent--;
+            svgLikeElem.classList.remove('hidden');
+            svgLikeFillElem.classList.add('hidden');
+        }
+    })
+    .catch((error) => {
+        console.error('Error in updatePostLike():', error);
+    });
 }
 
 function displayIndivPicture(postId) {
@@ -315,7 +331,6 @@ document.querySelector('.profile-gallery').addEventListener('click', function(ev
     let elem = event.target;
 
     while (elem.parentElement) {
-        console.log(elem);
         if (elem.getAttribute('name') == 'galleryItemInfos') {
             displayIndivPicture(elem.getAttribute('data-post-id'));
             break;
@@ -447,6 +462,22 @@ function home() {
             postLike.textContent = post['likes'].length;
             postComment.textContent = post['comments'].length;
 
+            // console.log(post['URL']);
+
+
+            // // Assuming binaryImageData is retrieved properly
+            // const binaryImageData = atob(post['URL']);
+
+            // // Create Blob from base64-encoded string
+            // const blob = new Blob([binaryImageData], { type: 'image/jpeg' });
+
+            // // Create Object URL for the Blob
+            // const imageUrl = URL.createObjectURL(blob);
+
+            // // Assign Image URL to src attribute of your image element
+            // postPicture.src = imageUrl;
+
+
             post['likes'].forEach((user) => {
                 if (actualUserID == user['userID']) {
                     postTemplate.getElementById('svg-like').classList.add('hidden');
@@ -527,21 +558,28 @@ function profile(userID) {
 }
 
 function create() {
-    const cameraOptions = document.querySelector('.video-options>select');
+    if (actualUserID == -1)
+        return
+
+    const cameraOptions = document.querySelector('select');
+    const selectCameraCtn = document.querySelector('.create-footer-select-camera');
     const video = document.querySelector('video');
     const canvas = document.querySelector('canvas');
     const screenshotImage = document.querySelector('.screenshot-img');
     const screenshot = document.querySelector('.screenshot-btn');
+    const optionsButtons = document.querySelector('.create-footer-buttons-options');
+    const [publishButton, cancelButton] = [...document.querySelectorAll('.option-button')];
+    let screenshotDone = false;
     
     const constraints = {
       video: {
         width: {
-          min: 1280,
+        //   min: 1280,
           ideal: 1920,
         //   max: 2560,
         },
         height: {
-          min: 720,
+        //   min: 720,
           ideal: 1080,
         //   max: 1440
         },
@@ -580,12 +618,18 @@ function create() {
     };
 
     const doScreenshot = () => {
+        if (screenshotDone)
+            return
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         canvas.getContext('2d').drawImage(video, 0, 0);
         screenshotImage.src = canvas.toDataURL('image/webp');
         screenshotImage.classList.remove('hidden');
         video.classList.add('hidden');
+        screenshotDone = true;
+        document.querySelector('.create-footer-buttons').classList.add('hidden');
+        selectCameraCtn.classList.add('hidden');
+        optionsButtons.classList.remove('hidden');
     };
 
     screenshot.onclick = doScreenshot;
@@ -598,6 +642,27 @@ function create() {
         };
         startStream(updatedConstraints);
     }
+
+    cancelButton.onclick = () => {
+        screenshotImage.classList.add('hidden');
+        video.classList.remove('hidden');
+        screenshotDone = false;
+        document.querySelector('.create-footer-buttons').classList.remove('hidden');
+        optionsButtons.classList.add('hidden');
+        selectCameraCtn.classList.remove('hidden');
+    };
+
+    publishButton.onclick = () => {
+        if (!screenshotDone)
+            return;
+
+        const screenshotDataURL = canvas.toDataURL('image/webp');
+        requests.addPost(actualUserID, screenshotDataURL)
+        .catch((error) => {
+            console.error('Error in addPost():', error);
+        });
+        // Optionally, reset UI or perform other actions after publishing
+    };
 }
 
 function settings() {

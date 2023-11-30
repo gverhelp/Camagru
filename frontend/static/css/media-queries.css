@@ -34,8 +34,7 @@
     }
 
     .create-side {
-        height: 100px;
-        width: 100%;
+        flex-direction: row;
     }
 }
 
@@ -84,9 +83,9 @@
         flex-direction: column;
     }
     
-    .individual-post-picture {
-        flex: 4
-    }
+    /* .individual-post-picture {
+        flex: 4;
+    } */
 
     .individual-post-header-ctn {
         display: none;
@@ -104,6 +103,15 @@
 
     .individual-post-comment-input-ctn {
         border: none;
+    }
+
+    .create-footer {
+        flex-direction: column;
+    }
+
+    .create-footer-wrapper:last-of-type {
+        border-left: 0;
+        border-top: 1px solid var(--main-color);
     }
 }
 
