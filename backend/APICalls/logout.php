@@ -6,7 +6,7 @@ $_SESSION = array();
 
 session_destroy();
 
-header("Location: http://127.0.0.1/Camagru/frontend/templates/index.php");
+header("Location: http://127.0.0.1/frontend/templates/");
 exit()
 
 ?>

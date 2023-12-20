@@ -205,7 +205,7 @@ session_start();
 							<div class="create-footer-wrapper">
 								<div class="create-footer-title-input"> 
 									<label for="post-title">Title of your photo</label>
-									<textarea id="post-title" name="title"></textarea>
+									<textarea id="create-post-title" name="title"></textarea>
 								</div>
 							</div>
 

@@ -1,5 +1,11 @@
 import * as requests from '/backend/requests/requests.js';
 
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                             Variables                            ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
 // Button's variables
 const leftBtns = document.getElementById('leftBtns');
 const bottomBtns = document.getElementById('bottomBtns');
@@ -15,6 +21,13 @@ const modalContent = document.querySelector('.modal-content');
 
 // Theme's variable
 var actualTheme = 0;
+
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                     Nav and menu buttons                         ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
 navbarBtns.addEventListener('click', (event) => {
     let elem = event.target;
@@ -92,6 +105,13 @@ dropdownBtn.addEventListener('click', () => {
     }
 });
 
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                              Modal                               ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
 window.addEventListener('click', (e) => {
     if (e.target === modal) {
         modal.classList.remove('open');
@@ -116,6 +136,12 @@ closeModalBtn.addEventListener('click', () => {
     });
     document.querySelector('.individual-post-ctn').classList.add('hidden');
 });
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                         Settings form                            ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
 function displayError(settingsResponse, message) {
     settingsResponse.classList.remove('hidden');
@@ -192,6 +218,11 @@ updateSettingsBtn.addEventListener('click', function () {
         });
 });
 
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                          Indiv Picture                           ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
 document.getElementById('comment-form').addEventListener('submit', (event) => {
     event.preventDefault(); // Prevents the default form submission behavior
@@ -339,6 +370,12 @@ document.querySelector('.profile-gallery').addEventListener('click', function(ev
     }
 });
 
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                            Load page                             ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
 function changeIcon(nameIcon) {
     const names = ['home', 'create', 'profile', 'settings'];
 
@@ -432,6 +469,12 @@ function displayPage(name) {
     });
 }
 
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                               Home                               ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
 function home() {
     requests.getHomeData()
     .then((postsData) => {
@@ -505,6 +548,12 @@ function home() {
     });
 }
 
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                              Profile                             ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
 function profile(userID) {
     requests.getProfileData(userID)
     .then((profileData) => {
@@ -557,6 +606,12 @@ function profile(userID) {
     });
 }
 
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                              Create                              ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
 function create() {
     if (actualUserID == -1)
         return
@@ -569,7 +624,7 @@ function create() {
     const screenshot = document.querySelector('.screenshot-btn');
     const optionsButtons = document.querySelector('.create-footer-buttons-options');
     const [publishButton, cancelButton] = [...document.querySelectorAll('.option-button')];
-    let screenshotDone = false;
+    let fileToUpload = null;
     
     const constraints = {
       video: {
@@ -617,22 +672,6 @@ function create() {
         startStream(updatedConstraints);
     };
 
-    const doScreenshot = () => {
-        if (screenshotDone)
-            return
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext('2d').drawImage(video, 0, 0);
-        screenshotImage.src = canvas.toDataURL('image/webp');
-        screenshotImage.classList.remove('hidden');
-        video.classList.add('hidden');
-        screenshotDone = true;
-        document.querySelector('.create-footer-buttons').classList.add('hidden');
-        selectCameraCtn.classList.add('hidden');
-        optionsButtons.classList.remove('hidden');
-    };
-
-    screenshot.onclick = doScreenshot;
     if ('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia) {
         const updatedConstraints = {
             ...constraints,
@@ -643,27 +682,94 @@ function create() {
         startStream(updatedConstraints);
     }
 
+    const uploadPhoto = document.getElementById('upload-photo');
+
+    uploadPhoto.onchange = (event) => {
+        fileToUpload = event.target.files[0];
+
+        if (fileToUpload) {
+            // Create a URL for the selected file
+            const objectURL = URL.createObjectURL(fileToUpload);
+    
+            // Set the source of the image element to the created URL
+            screenshotImage.src = objectURL;
+    
+            // Update other variables and UI elements as needed
+            screenshotImage.classList.remove('hidden');
+            video.classList.add('hidden');
+            document.querySelector('.create-footer-buttons').classList.add('hidden');
+            selectCameraCtn.classList.add('hidden');
+            optionsButtons.classList.remove('hidden');
+        }
+    };
+
+    screenshot.onclick = () => {
+        if (fileToUpload)
+            return
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        const dataURL = canvas.toDataURL('image/webp');
+        screenshotImage.src = dataURL
+        screenshotImage.classList.remove('hidden');
+        video.classList.add('hidden');
+        document.querySelector('.create-footer-buttons').classList.add('hidden');
+        selectCameraCtn.classList.add('hidden');
+        optionsButtons.classList.remove('hidden');
+
+        // Convert data URL to Blob
+        const blob = dataURLToBlob(dataURL);
+
+        // Create a File from the Blob with a specified name
+        const fileName = 'newPic.webp';
+        fileToUpload = new File([blob], fileName, { type: 'image/webp' });
+
+        // Now 'file' is a File object that you can use as needed
+
+        function dataURLToBlob(dataURL) {
+            const arr = dataURL.split(',');
+            const mime = arr[0].match(/:(.*?);/)[1];
+            const bstr = atob(arr[1]);
+            let n = bstr.length;
+            const u8arr = new Uint8Array(n);
+
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+
+            return new Blob([u8arr], { type: mime });
+        }
+    };
+
     cancelButton.onclick = () => {
         screenshotImage.classList.add('hidden');
         video.classList.remove('hidden');
-        screenshotDone = false;
+        uploadPhoto.value = "";
+        fileToUpload = null;
         document.querySelector('.create-footer-buttons').classList.remove('hidden');
         optionsButtons.classList.add('hidden');
         selectCameraCtn.classList.remove('hidden');
     };
 
     publishButton.onclick = () => {
-        if (!screenshotDone)
+        if (!fileToUpload)
             return;
 
-        const screenshotDataURL = canvas.toDataURL('image/webp');
-        requests.addPost(actualUserID, screenshotDataURL)
+        const title = document.getElementById('create-post-title').value;
+        
+        requests.addPost(actualUserID, title, fileToUpload)
         .catch((error) => {
             console.error('Error in addPost():', error);
         });
         // Optionally, reset UI or perform other actions after publishing
     };
 }
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                             Settings                             ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
 function settings() {
     const settingsResponse = document.getElementById('settings-response');
@@ -682,6 +788,12 @@ function settings() {
     newPassword.style.borderColor = "var(--second-color)";
     newPasswordVerif.style.borderColor = "var(--second-color)";
 }
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                              Sign Up                             ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
 function signUpPage() {
     const signup = document.getElementById('signup');
@@ -711,6 +823,12 @@ function signUpPage() {
         });
     });
 }
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                              Sign In                             ####*/
+/*##########################################################################*/
+/*##########################################################################*/
 
 function signInPage() {
     const signin = document.getElementById('signin');

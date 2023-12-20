@@ -12,49 +12,63 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     ];
 } else {
     $userID = $_POST['userID'];
-    $screenshotDataURL = file_get_contents($_POST['screenshotDataURL']);
+    $title = $_POST['title'];
 
-    if (!isset($userID)) {
-        $response = [
-            "success" => false,
-            "message" => "UserID not provided.",
-            "response_code" => 400 // Bad Request
-        ];
-    } elseif (!isset($screenshotDataURL)) {
-        $response = [
-            "success" => false,
-            "message" => "Screenshot data URL not provided.",
-            "response_code" => 400 // Bad Request
-        ];
-    } else {
-        $sql = "INSERT INTO posts (userID, URL) VALUES (?, ?)";
-        $stmt = $mysqli->prepare($sql);
+    // Handle file upload
+    if (isset($_FILES['newPost'])) {
+        $file = $_FILES['newPost'];
+        $fileName = $file['name'];
 
-        if ($stmt === false) {
-            $response = [
-                "success" => false,
-                "message" => "Error in SQL query preparation: " . $mysqli->error,
-                "response_code" => 500 // Internal Server Error
-            ];
-        } else {
-            $stmt->bind_param("ib", $userID, $screenshotDataURL);
+        // Create a unique name for the file (e.g., "50exemple")
+        $uniqueFileName = generateUniqueFileName($fileName);
 
-            echo $screenshotDataURL;
+        // Set the destination path
+        $destinationPath = "../usersPicturesImg/" . $uniqueFileName;
 
-            if (!$stmt->execute()) {
+        // Move the file to the destination path
+        if (move_uploaded_file($file['tmp_name'], $destinationPath)) {
+            // Update the database with the file information
+            $sql = "INSERT INTO posts (userID, title, URL) VALUES (?, ?, ?)";
+            $stmt = $mysqli->prepare($sql);
+
+            if ($stmt === false) {
                 $response = [
                     "success" => false,
-                    "message" => "Error executing the query: " . $stmt->error,
+                    "message" => "Error in SQL query preparation: " . $mysqli->error,
                     "response_code" => 500 // Internal Server Error
                 ];
             } else {
-                $response = [
-                    "success" => true,
-                    "message" => "Post added successfully.",
-                    "response_code" => 200 // OK
-                ];
+                $url = "../../backend/usersPicturesImg/" . $uniqueFileName; // Update with the actual URL format
+
+                $stmt->bind_param("sss", $userID, $title, $url);
+
+                if (!$stmt->execute()) {
+                    $response = [
+                        "success" => false,
+                        "message" => "Error executing the query: " . $stmt->error,
+                        "response_code" => 500 // Internal Server Error
+                    ];
+                } else {
+                    $response = [
+                        "success" => true,
+                        "message" => "Post added successfully.",
+                        "response_code" => 200 // OK
+                    ];
+                }
             }
+        } else {
+            $response = [
+                "success" => false,
+                "message" => "Error moving uploaded file.",
+                "response_code" => 500 // Internal Server Error
+            ];
         }
+    } else {
+        $response = [
+            "success" => false,
+            "message" => "New post file not provided.",
+            "response_code" => 400 // Bad Request
+        ];
     }
 }
 
@@ -64,5 +78,28 @@ echo json_encode($response);
 
 $stmt->close();
 $mysqli->close();
+
+function getImageCountFromDatabase() {
+    require 'connect_db.php'; // Include your database connection code
+
+    $sql = "SELECT COUNT(*) as imageCount FROM posts";
+    $result = $mysqli->query($sql);
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+        return isset($row['imageCount']) ? (int)$row['imageCount'] : 0;
+    } else {
+        // Handle database query error
+        return 0;
+    }
+}
+
+function generateUniqueFileName($fileName) {
+    // Assuming you have a function to get the current image count from the database
+    $imageCount = getImageCountFromDatabase(); // Implement this function
+
+    $uniqueFileName = ($imageCount + 1) . $fileName;
+    return $uniqueFileName;
+}
 
 ?>

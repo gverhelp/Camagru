@@ -205,12 +205,13 @@ export async function addComment(userID, postID, text) {
     }
 }
 
-export async function addPost(userID, screenshotDataURL) {
+export async function addPost(userID, title, newPost) {
     try {
         const formData = new FormData();
 
         formData.append('userID', userID);
-        formData.append('screenshotDataURL', screenshotDataURL);
+        formData.append('title', title);
+        formData.append('newPost', newPost);
 
         const response = await fetch(`${baseUrl}add_post.php`, {
             method: "POST",

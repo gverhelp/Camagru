@@ -29,7 +29,8 @@ else {
 
         $postsData = [];
         while ($row = $result->fetch_assoc()) {
-            $postsData[] = $row;
+            // Prepend each row to the beginning of the $postsData array
+            array_unshift($postsData, $row);
         }
 
         foreach ($postsData as $key => $value) {
