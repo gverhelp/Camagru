@@ -176,11 +176,11 @@ session_start();
 								<img class="screenshot-img hidden" alt="screenshot">
 							</div>
 							<div class="create-side">
-								<img class="create-sticker" src="../../backend/usersAvatarImg/21carla.JPG" alt="">
-								<img class="create-sticker" src="../../backend/usersAvatarImg/21carla.JPG" alt="">
-								<img class="create-sticker" src="../../backend/usersAvatarImg/21carla.JPG" alt="">
-								<img class="create-sticker" src="../../backend/usersAvatarImg/21carla.JPG" alt="">
-								<img class="create-sticker" src="../../backend/usersAvatarImg/21carla.JPG" alt="">
+								<img id="1-sticker" class="create-sticker" src="../../backend/usersAvatarImg/21carla.JPG" alt="">
+								<img id="2-sticker" class="create-sticker" src="../../backend/usersAvatarImg/22arcoucou.JPG" alt="">
+								<img id="3-sticker" class="create-sticker" src="../../backend/usersAvatarImg/28kumkum.JPG" alt="">
+								<img id="4-sticker" class="create-sticker" src="../../backend/usersAvatarImg/28kumkum2.JPG" alt="">
+								<img id="5-sticker" class="create-sticker" src="../../backend/usersAvatarImg/29loulou.JPG" alt="">
 							</div>
 						</div>
 						<div class="create-footer">
@@ -194,7 +194,8 @@ session_start();
 								<div class="create-footer-buttons">
 									<button class="button screenshot-btn hidden" title="ScreenShot">Take picture</button>
 									<span>or</span>
-									<input type="file" id="upload-photo" name="photo">
+									<input type="file" id="upload-photo" name="photo" style="display: none;">
+									<label for="upload-photo" class="button" title="upload">Upload</label>
 								</div>
 								<div class="create-footer-buttons-options hidden">
 									<button class="button option-button" title="publish">Publish</button>
@@ -248,7 +249,7 @@ session_start();
 							<div class="hidden" id="settings-response"></div>
 						</div>
 						<div class="settings-section">
-							<label class="settings-checkbox">Email notifications :</label>
+							<label class="settings-checkbox">Email notifications</label>
 							<input type="checkbox">
 							<!-- <span class="checkmark"></span> -->
 						</div>
@@ -304,6 +305,7 @@ session_start();
 						<h3 id="individual-post-username"></h3>
 						<span id="individual-post-title"></span>
 					</div>
+					<img id="indiv-post-delete" src="../static/img/x-mark.svg" class="individual-post-delete hidden" alt="delete">
 				</header>
 				<main class="individual-post-main-ctn">
 					<ul id="commentsUl">
@@ -338,7 +340,7 @@ session_start();
 					echo '	<button class="dropdown-menu-btn"> Log out </button>';
 					echo '</form>';
 				}
-				?>
+			?>
 			<button name="theme" class="dropdown-menu-btn">
 				Switch theme
 			</button>

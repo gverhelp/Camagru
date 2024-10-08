@@ -1,4 +1,4 @@
-const baseUrl = "http://127.0.0.1/backend/APICalls/";
+const baseURL = "http://127.0.0.1/backend/APICalls/";
 
 /*##########################################################################*/
 /*##########################################################################*/
@@ -9,7 +9,7 @@ const baseUrl = "http://127.0.0.1/backend/APICalls/";
 export async function getProfileData(id) {
     let returnData = []
     try {
-        const userDataResponse = await fetch(`${baseUrl}get_user_data.php?userId=${id}`);
+        const userDataResponse = await fetch(`${baseURL}get_user_data.php?userId=${id}`);
         if (!userDataResponse.ok) {
             throw new Error(`HTTP error! Status: ${userDataResponse.status}`);
         }
@@ -17,7 +17,7 @@ export async function getProfileData(id) {
         const userDataJSON = await userDataResponse.json();
         returnData['userData'] = userDataJSON.userData;
 
-        const userPostsResponse = await fetch(`${baseUrl}get_user_posts_data.php?userId=${id}`);
+        const userPostsResponse = await fetch(`${baseURL}get_user_posts_data.php?userId=${id}`);
         if (!userPostsResponse.ok) {
             throw new Error(`HTTP error! Status: ${userPostsResponse.status}`);
         }
@@ -34,7 +34,7 @@ export async function getProfileData(id) {
 
 export async function getUserData(userID) {
     try {
-        const response = await fetch(`${baseUrl}get_user_data.php?userId=${userID}`);
+        const response = await fetch(`${baseURL}get_user_data.php?userId=${userID}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -49,7 +49,7 @@ export async function getUserData(userID) {
 
 export async function getTheme(userID) {
     try {
-        const response = await fetch(`${baseUrl}get_user_data.php?userId=${userID}`);
+        const response = await fetch(`${baseURL}get_user_data.php?userId=${userID}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -65,7 +65,7 @@ export async function getTheme(userID) {
 export async function getHomeData() {
     let returnData = [];
     try {
-        const postsDataResponse = await fetch(`${baseUrl}get_all_posts_data.php`);
+        const postsDataResponse = await fetch(`${baseURL}get_all_posts_data.php`);
         if (!postsDataResponse.ok) {
             throw new Error(`HTTP error! Status: ${postsDataResponse.status}`);
         }
@@ -74,7 +74,7 @@ export async function getHomeData() {
         returnData['postsData'] = postsDataJSON.postsData;
 
         for (let i = 0; i < returnData['postsData'].length; i++) {
-            const userDataResponse = await fetch(`${baseUrl}get_user_data.php?userId=${returnData['postsData'][i]['userID']}`);
+            const userDataResponse = await fetch(`${baseURL}get_user_data.php?userId=${returnData['postsData'][i]['userID']}`);
             if (!userDataResponse.ok) {
                 throw new Error(`HTTP error! Status: ${userDataResponse.status}`);
             }
@@ -94,7 +94,7 @@ export async function getHomeData() {
 
 export async function getPost(postID) {
     try {
-        const response = await fetch(`${baseUrl}get_post.php?postID=${postID}`);
+        const response = await fetch(`${baseURL}get_post.php?postID=${postID}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -115,7 +115,7 @@ export async function getPost(postID) {
 
 export async function updateAvatar(userID, avatarURL) {
     try {
-        const response = await fetch(`${baseUrl}update_avatar.php?userId=${userID}&avatarURL=${avatarURL}`);
+        const response = await fetch(`${baseURL}update_avatar.php?userId=${userID}&avatarURL=${avatarURL}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -127,7 +127,7 @@ export async function updateAvatar(userID, avatarURL) {
 
 export async function updateThemeData(userID, theme) {
     try {
-        const response = await fetch(`${baseUrl}update_theme.php?userId=${userID}&theme=${theme}`);
+        const response = await fetch(`${baseURL}update_theme.php?userId=${userID}&theme=${theme}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -139,7 +139,7 @@ export async function updateThemeData(userID, theme) {
 
 export async function updatePostLike(userID, postID) {
     try {
-        const response = await fetch(`${baseUrl}update_post_like.php?userId=${userID}&postId=${postID}`);
+        const response = await fetch(`${baseURL}update_post_like.php?userId=${userID}&postId=${postID}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -163,7 +163,7 @@ export async function updateSettings(userID, newUsername, newEmail, newPassword,
         formData.append('newAvatar', newAvatar);
         formData.append('newBio', newBio);
 
-        const response = await fetch(`${baseUrl}update_settings.php`, {
+        const response = await fetch(`${baseURL}update_settings.php`, {
             method: "POST",
             body: formData
         });
@@ -188,7 +188,7 @@ export async function addComment(userID, postID, text) {
         formData.append('postID', postID);
         formData.append('text', text);
 
-        const response = await fetch(`${baseUrl}add_comment.php`, {
+        const response = await fetch(`${baseURL}add_comment.php`, {
             method: "POST",
             body: formData
         });
@@ -213,7 +213,7 @@ export async function addPost(userID, title, newPost) {
         formData.append('title', title);
         formData.append('newPost', newPost);
 
-        const response = await fetch(`${baseUrl}add_post.php`, {
+        const response = await fetch(`${baseURL}add_post.php`, {
             method: "POST",
             body: formData
         });
@@ -222,6 +222,28 @@ export async function addPost(userID, title, newPost) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
+    } catch (error) {
+        throw new Error(`Error fetching data: ${error}`);
+    }
+}
+
+/*##########################################################################*/
+/*##########################################################################*/
+/*####                              Delete                              ####*/
+/*##########################################################################*/
+/*##########################################################################*/
+
+export async function deletePost(postID) {
+    try {
+        const response = await fetch(`${baseURL}delete_post.php?postID=${postID}`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    
     } catch (error) {
         throw new Error(`Error fetching data: ${error}`);
     }
@@ -240,7 +262,7 @@ export async function signUp(username, email, password) {
         formData.append('email', email);
         formData.append('password', password);
 
-        const response = await fetch(`${baseUrl}signup.php`, {
+        const response = await fetch(`${baseURL}signup.php`, {
             method: "POST",
             body: formData,
         });
@@ -263,7 +285,7 @@ export async function signIn(username, password) {
         formData.append('username', username);
         formData.append('password', password);
 
-        const response = await fetch(`${baseUrl}signin.php`, {
+        const response = await fetch(`${baseURL}signin.php`, {
             method: "POST",
             body: formData,
         })

@@ -33,6 +33,7 @@
     flex-direction: column;
     justify-content: space-between;
     border-radius: 5px;
+    gap: 3px;
     /* border: 1px solid var(--main-color); */
 }
 
@@ -42,6 +43,10 @@
     /* margin: 5px 5px; */
     border-radius: 5px;
     object-fit: cover;
+}
+
+.create-sticker.selected {
+    border: 5px solid var(--second-color);
 }
 
 .create-footer {
@@ -59,7 +64,6 @@
 }
 
 .create-footer-wrapper:last-of-type {
-    align-items: center;
     border-left: 1px solid var(--main-color);
 }
 
@@ -78,8 +82,9 @@
 .create-footer-title-input {
     display: flex;
     flex-direction: column;
+    text-align: center;
     width: 100%;
-    gap: 4px;
+    gap: 15px;
     font-weight: 500;
     padding: 10px 10px 10px 10px;
 }

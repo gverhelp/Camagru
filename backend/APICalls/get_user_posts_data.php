@@ -49,7 +49,7 @@ else {
             } else {
                 $ret = [];
                 while ($row = $result->fetch_assoc()) {
-                    $ret[] = $row;
+                    array_unshift($ret, $row);
                 }
 
                 foreach ($ret as $key => $value) {

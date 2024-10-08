@@ -3,30 +3,16 @@
 require 'connect_db.php';
 
 $response = [];
-$userID = $_POST['userID'];
-$postID = $_POST['postID'];
-$text = $_POST['text'];
+$postID = $_GET['postID'];
 
-if (!isset($userID)) {
-    $response = [
-        "success" => false,
-        "message" => "UserID not provided.",
-        "response_code" => 400 // Bad Request
-    ];
-} elseif (!isset($postID)) {
+if (!isset($postID)) {
     $response = [
         "success" => false,
         "message" => "postID not provided.",
         "response_code" => 400 // Bad Request
     ];
-} elseif (!isset($text)) {
-    $response = [
-        "success" => false,
-        "message" => "Text not provided.",
-        "response_code" => 400 // Bad Request
-    ];
- } else {
-    $sql = "INSERT INTO comments (userID, postID, text) VALUES (?, ?, ?)";
+} else {
+    $sql = "DELETE FROM posts WHERE idposts = ?";
     $stmt = $mysqli->prepare($sql);
 
     if ($stmt === false) {
@@ -36,7 +22,7 @@ if (!isset($userID)) {
             "response_code" => 500 // Internal Server Error
         ];
     } else {
-        $stmt->bind_param("iis", $userID, $postID, $text);
+        $stmt->bind_param("i", $postID);
 
         if (!$stmt->execute()) {
             $response = [
@@ -47,7 +33,7 @@ if (!isset($userID)) {
         } else {
             $response = [
                 "success" => True,
-                "message" => "Comment added successfuly.",
+                "message" => "Post deleted successfuly.",
                 "response_code" => 200 // OK
             ];
         }

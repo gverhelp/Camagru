@@ -224,10 +224,30 @@ updateSettingsBtn.addEventListener('click', function () {
 /*##########################################################################*/
 /*##########################################################################*/
 
+document.getElementById('indiv-post-delete').addEventListener('click', () => {
+    if (document.querySelector('.individual-post-ctn').getAttribute('data-user-id') != actualUserID) {
+        return ;
+    }
+
+    const indivPostCtn = document.querySelector('.individual-post-ctn');
+    const postID = indivPostCtn.getAttribute('data-post-id');
+
+    requests.deletePost(postID)
+    .then((data) => {
+        if (data.success) {
+            location.reload();
+        }
+    })
+    .catch((error) => {
+        console.error('Error in updatePostLike():', error);
+    });
+});
+
 document.getElementById('comment-form').addEventListener('submit', (event) => {
     event.preventDefault(); // Prevents the default form submission behavior
+    const indivPostCtn = document.querySelector('.individual-post-ctn');
     const commentInput = document.getElementById('comment-input');
-    const postID = commentInput.getAttribute('data-post-id')
+    const postID = indivPostCtn.getAttribute('data-post-id');
 
     if (actualUserID == -1)
         return
@@ -245,7 +265,7 @@ document.getElementById('comment-form').addEventListener('submit', (event) => {
 function likeButton(postId, likeButtonElem) {
     if (actualUserID == -1) {
         alert("You're not connected. Please sign up or sign in to your account before liking any post.");
-        return
+        return ;
     }
 
     requests.updatePostLike(actualUserID, postId)
@@ -276,8 +296,9 @@ function displayIndivPicture(postId) {
     const indivUsername = document.getElementById('individual-post-username');
     const indivTitle = document.getElementById('individual-post-title');
     const commentInput = document.getElementById('comment-input');
+    const deleteButton = document.getElementById('indiv-post-delete')
 
-    commentInput.setAttribute('data-post-id', postId)
+    indivPostCtn.setAttribute('data-post-id', postId)
     modalContent.appendChild(indivPostCtn);
     modal.classList.add('open');
     indivPostCtn.classList.remove('hidden');
@@ -289,10 +310,17 @@ function displayIndivPicture(postId) {
     requests.getPost(postId)
     .then((data) => {
         if (data['postData']) {
+            if (data['postData']['userID'] == actualUserID) {
+                deleteButton.classList.remove('hidden');
+            } else {
+                deleteButton.classList.add('hidden');
+            }
+
             indivPicture.src = data['postData']['URL'];
             indivTitle.textContent = data['postData']['title'];
             indivAvatar.src = data['userData']['avatarURL'];
             indivUsername.textContent = data['userData']['username'];
+            indivPostCtn.setAttribute('data-user-id', data['postData']['userID']);
 
             if (data['commentsData']) {
                 const template = document.getElementById('commentsList');
@@ -505,22 +533,6 @@ function home() {
             postLike.textContent = post['likes'].length;
             postComment.textContent = post['comments'].length;
 
-            // console.log(post['URL']);
-
-
-            // // Assuming binaryImageData is retrieved properly
-            // const binaryImageData = atob(post['URL']);
-
-            // // Create Blob from base64-encoded string
-            // const blob = new Blob([binaryImageData], { type: 'image/jpeg' });
-
-            // // Create Object URL for the Blob
-            // const imageUrl = URL.createObjectURL(blob);
-
-            // // Assign Image URL to src attribute of your image element
-            // postPicture.src = imageUrl;
-
-
             post['likes'].forEach((user) => {
                 if (actualUserID == user['userID']) {
                     postTemplate.getElementById('svg-like').classList.add('hidden');
@@ -624,23 +636,22 @@ function create() {
     const screenshot = document.querySelector('.screenshot-btn');
     const optionsButtons = document.querySelector('.create-footer-buttons-options');
     const [publishButton, cancelButton] = [...document.querySelectorAll('.option-button')];
+    const uploadPhoto = document.getElementById('upload-photo');
+    const stickers = document.querySelectorAll('.create-sticker');
     let fileToUpload = null;
-    
+    let selectedStickers = [];
+
     const constraints = {
-      video: {
-        width: {
-        //   min: 1280,
-          ideal: 1920,
-        //   max: 2560,
-        },
-        height: {
-        //   min: 720,
-          ideal: 1080,
-        //   max: 1440
-        },
-      }
+        video: {
+            width: {
+                ideal: 1920,
+            },
+            height: {
+                ideal: 1080,
+            },
+        }
     };
-    
+
     const getCameraSelection = async () => {
         const devices = await navigator.mediaDevices.enumerateDevices();
         const videoDevices = devices.filter(device => device.kind === 'videoinput');
@@ -649,17 +660,17 @@ function create() {
         });
         cameraOptions.innerHTML = options.join('');
     };
-    
+
     const startStream = async (constraints) => {
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
         handleStream(stream);
     };
-    
+
     const handleStream = (stream) => {
         video.srcObject = stream;
         screenshot.classList.remove('hidden');
     };
-    
+
     getCameraSelection();
 
     cameraOptions.onchange = () => {
@@ -682,19 +693,13 @@ function create() {
         startStream(updatedConstraints);
     }
 
-    const uploadPhoto = document.getElementById('upload-photo');
-
     uploadPhoto.onchange = (event) => {
         fileToUpload = event.target.files[0];
 
         if (fileToUpload) {
-            // Create a URL for the selected file
             const objectURL = URL.createObjectURL(fileToUpload);
-    
-            // Set the source of the image element to the created URL
+
             screenshotImage.src = objectURL;
-    
-            // Update other variables and UI elements as needed
             screenshotImage.classList.remove('hidden');
             video.classList.add('hidden');
             document.querySelector('.create-footer-buttons').classList.add('hidden');
@@ -704,41 +709,22 @@ function create() {
     };
 
     screenshot.onclick = () => {
-        if (fileToUpload)
+        if (fileToUpload || selectedStickers.length === 0)
             return
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         canvas.getContext('2d').drawImage(video, 0, 0);
         const dataURL = canvas.toDataURL('image/webp');
-        screenshotImage.src = dataURL
+        screenshotImage.src = dataURL;
         screenshotImage.classList.remove('hidden');
         video.classList.add('hidden');
         document.querySelector('.create-footer-buttons').classList.add('hidden');
         selectCameraCtn.classList.add('hidden');
         optionsButtons.classList.remove('hidden');
 
-        // Convert data URL to Blob
         const blob = dataURLToBlob(dataURL);
-
-        // Create a File from the Blob with a specified name
         const fileName = 'newPic.webp';
         fileToUpload = new File([blob], fileName, { type: 'image/webp' });
-
-        // Now 'file' is a File object that you can use as needed
-
-        function dataURLToBlob(dataURL) {
-            const arr = dataURL.split(',');
-            const mime = arr[0].match(/:(.*?);/)[1];
-            const bstr = atob(arr[1]);
-            let n = bstr.length;
-            const u8arr = new Uint8Array(n);
-
-            while (n--) {
-                u8arr[n] = bstr.charCodeAt(n);
-            }
-
-            return new Blob([u8arr], { type: mime });
-        }
     };
 
     cancelButton.onclick = () => {
@@ -746,23 +732,102 @@ function create() {
         video.classList.remove('hidden');
         uploadPhoto.value = "";
         fileToUpload = null;
+        selectedStickers = [];
         document.querySelector('.create-footer-buttons').classList.remove('hidden');
         optionsButtons.classList.add('hidden');
         selectCameraCtn.classList.remove('hidden');
     };
 
     publishButton.onclick = () => {
-        if (!fileToUpload)
+        if (!fileToUpload || selectedStickers.length === 0)
             return;
-
+    
         const title = document.getElementById('create-post-title').value;
-        
-        requests.addPost(actualUserID, title, fileToUpload)
-        .catch((error) => {
-            console.error('Error in addPost():', error);
+    
+        const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
+    
+        const image = new Image();
+        image.src = URL.createObjectURL(fileToUpload);
+    
+        const stickerPromises = selectedStickers.map(sticker => {
+            return new Promise((resolve, reject) => {
+                const stickerImg = new Image();
+                stickerImg.src = sticker.src;
+    
+                stickerImg.onload = () => {
+                    resolve({ stickerImg, sticker });
+                };
+    
+                stickerImg.onerror = () => {
+                    reject(new Error(`Error loading sticker: ${sticker.src}`));
+                };
+            });
         });
-        // Optionally, reset UI or perform other actions after publishing
+    
+        // Wait for all sticker images to be loaded
+        Promise.all(stickerPromises)
+            .then(stickerDataArray => {
+                tempCanvas.width = image.width;
+                tempCanvas.height = image.height;
+    
+                tempCtx.drawImage(image, 0, 0);
+    
+                for (const { stickerImg, sticker } of stickerDataArray) {
+                    const stickerWidth = 150;
+                    const stickerHeight = 150;
+    
+                    // Generate random coordinates for the sticker
+                    const randomX = Math.floor(Math.random() * (tempCanvas.width - stickerWidth));
+                    const randomY = Math.floor(Math.random() * (tempCanvas.height - stickerHeight));
+    
+                    tempCtx.drawImage(stickerImg, randomX, randomY, stickerWidth, stickerHeight);
+                }
+    
+                // Convert the canvas to a new File object
+                tempCanvas.toBlob((blob) => {
+                    const newFile = new File([blob], 'newPicWithStickers.webp', { type: 'image/webp' });
+    
+                    // Send the newFile to the server
+                    requests.addPost(actualUserID, title, newFile)
+                        .catch((error) => {
+                            console.error('Error in addPost():', error);
+                        });
+                    location.reload();
+                }, 'image/webp');
+            })
+            .catch(error => {
+                console.error('Error loading sticker images:', error);
+            });
     };
+
+    stickers.forEach((sticker) => {
+        sticker.onclick = () => {
+            // Toggle selection
+            if (selectedStickers.includes(sticker)) {
+                selectedStickers = selectedStickers.filter((selected) => selected !== sticker);
+            } else {
+                selectedStickers.push(sticker);
+            }
+
+            // Optionally, provide visual feedback for selected stickers
+            sticker.classList.toggle('selected');
+        };
+    });
+    
+    function dataURLToBlob(dataURL) {
+        const arr = dataURL.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new Blob([u8arr], { type: mime });
+    }
 }
 
 /*##########################################################################*/

@@ -109,6 +109,10 @@
         flex-direction: column;
     }
 
+    /* .create-footer-buttons {
+        flex-direction: column;
+    } */
+
     .create-footer-wrapper:last-of-type {
         border-left: 0;
         border-top: 1px solid var(--main-color);

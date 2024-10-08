@@ -5,6 +5,7 @@
   transform: translate(-50%, -50%);
   width: 80%;
   max-width: 1200px;
+  max-height: 90%;
   min-height: 600px;
   aspect-ratio: 16/11;
   overflow: hidden;
@@ -45,6 +46,13 @@
   width: 4.5rem;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.individual-post-delete {
+  margin-left: auto;
+  height: 3.5rem;
+  width: 3.5rem;
+  cursor: pointer;
 }
 
 .individual-post-infos-wrapper {
